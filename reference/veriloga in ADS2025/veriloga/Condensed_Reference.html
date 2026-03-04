@@ -1,0 +1,1525 @@
+﻿<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_unplugged" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-toc-path="Home|Component Libraries|Verilog-A|Using Verilog-A in Advanced Design System" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> </meta>
+        <meta Name="header-title" content=""> </meta>
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta charset="utf-8" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>
+   Condensed Reference
+  </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/foundation.6.2.3.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/unplugged.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/normalize.css" />
+        <link rel="stylesheet" id="stylesheet" href="../../Resources/Stylesheets/darktheme.css" disabled="Disabled" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/load_first.css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/github.min.css" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../Resources/Scripts/PIE.htc');
+}
+
+</style>
+        <style>
+        </style>
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script language="JavaScript" src="../CallFeedBack.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
+        </script>
+        <script src="../../../Resources/Scripts/purify.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.6.2.3_custom.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/config.js">
+        </script>
+        <script src="../../Resources/Scripts/photoswipe.js">
+        </script>
+        <script src="../../Resources/Scripts/unplugged.min.js">
+        </script>
+        <script src="../../Resources/Scripts/highlight.min.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-left" role="navigation" id="offCanvas" data-off-canvas="" data-position="left" data-mc-ignore="true">
+                    <ul class="off-canvas-accordion vertical menu off-canvas-list" data-accordion-menu="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" role="banner" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="only screen and (max-device-width: 300px)" data-mc-ignore="true"><a class="skip-to-content fluid-skip showOnFocus" href="#">Skip To Main Content</a>
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <div class="central-account-wrapper">
+                                        <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                            <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                                <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="menu-icon" aria-label="Show Navigation Panel" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../support/Home.html" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" role="navigation" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="central-account-wrapper">
+                                    <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                        <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                            <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" aria-label="Search Field" placeholder="Search" />
+                                                <div class="search-filter-wrapper"><span class="invisible-label" id="search-filters-label">Filter: </span>
+                                                    <div class="search-filter" aria-haspopup="true" aria-controls="sf-content" aria-expanded="false" aria-label="Search Filter" title="All Files" role="button" tabindex="0">
+                                                    </div>
+                                                    <div class="search-filter-content" id="sf-content">
+                                                        <ul>
+                                                            <li>
+                                                                <button class="mc-dropdown-item" aria-labelledby="search-filters-label filterSelectorLabel-00001"><span id="filterSelectorLabel-00001">All Files</span>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search" role="button" tabindex="0"><span class="invisible-label">Submit Search</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <nav class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </nav>
+                            <div class="body-container">
+                                <div data-mc-content-body="True">
+                                    <!--Toolbar-->
+                                    <div id="header-bottom" style="visibility:hidden">
+                                        <div id="header-bottom-wrapper">
+                                            <div id="breadcrumbs">
+                                                <div class="nocontent">
+                                                    <div class="MCBreadcrumbsBox_breadcrumbsProxy_0 breadcrumbs" role="navigation" aria-label="Breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="toolbar">
+                                                <button id="pdfbutton" class="btn scroll-pdf-launcher featurebutton tippy" tooltip-content="Download PDF (P)"><i class="material-icons material-icons-filled" style="font-size:18px">picture_as_pdf</i><span id="pdficontext" class="featurebarlabels">PDF</span>
+                                                </button>
+                                                <button id="themebutton" class="themetoggle featurebutton tippy" type="button" tooltip-content="Change Theme Settings (T)"><i class="material-icons material-icons-filled" style="font-size:18px">invert_colors</i><span id="themeicontext" class="featurebarlabels">Theme</span>
+                                                </button>
+                                                <button id="feedbackbutton" class="featurebutton tippy" tooltip-content="Share Feedback (F)"><i class="material-icons material-icons-round" style="font-size:18px">rate_review</i><span id="feedbackicontext" class="featurebarlabels">Feedback</span>
+                                                </button>
+                                                <button id="sidebarlightboxbutton" class="btn btn-info featurebutton tippy" type="button" tooltip-content="Display TOC ([)"><i class="material-icons material-icons-outlined" style="font-size:18px">menu</i><span id="contentsicontext" class="featurebarlabels">Contents</span>
+                                                </button>
+                                                <button id="viewonlinebutton" class="btn btn-info featurebutton tippy" tooltip-content="View Online Version (W)"><i class="material-icons" style="font-size:18px">public</i><span id="viewonlineicontext" class="featurebarlabels">Online</span>
+                                                </button>
+                                                <div class="helpmenu featurebutton">
+                                                    <button id="helpbutton"><i class="material-icons material-icons-round" style="font-size:18px">help_center</i><span id="helpicontext" class="featurebarlabels">Help</span>
+                                                    </button>
+                                                    <div class="help-content featurebutton" id="helpcontent"><a id="helplink1" href=""></a><a id="helplink2" href=""></a><a id="helplink3" href=""></a><a id="launchtour">Help Tour</a><a id="keyboardshortcuts">Keyboard Shortcuts (?)</a><a id="qrcodegen">QR Code (Q)</a><a id="about">About</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Uncomment the following Breadcrumbs code if using JS to insert toolbar and breadcrumbs and then comment the Toolbar snippet above-->
+                                    <!--Breadcrumbs-->
+                                    <!--
+            <div id="crumbs">
+            <MadCap:breadcrumbsProxy class="breadcrumbsProxy" />
+        </div>
+		 -->
+                                    <div id="unplugged-content">
+                                        <!--Content -->
+                                        <div class="js-toc-content">
+                                            <div role="main" id="mc-main-content">
+                                                <div class="conf-macro output-block" data-hasbody="true" data-macro-name="scroll-ignore" style=" background-color: #efefef" title="The content of this Scroll Ignore macro will not be part of the export for selected Scroll apps">
+                                                    <p><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span>
+                                                    </p>
+                                                    <p><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span>
+                                                    </p>
+                                                </div>
+                                                <p>
+                                                    <br /><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1113493"></span><a name="CondensedReference-1113493"></a>
+                                                </p>
+                                                <h1 id="CondensedReference-CondensedReference">
+   Condensed Reference
+  </h1><a name="CondensedReference-CondensedReference"></a>
+                                                <p>
+   Verilog-A is an analog hardware description language standard from Open Verilog International (www.ovi.org). It can be used to describe analog circuit behavior at a wide range of abstraction from behavioral models of circuits to compact transistor model descriptions. The Verilog-A source code is compiled automatically, if necessary, during a simulation. The netlist format follows the conventional ADS netlisting scheme. Modules whose names match ADS components will automatically override the built-in model description.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1113222"></span><a name="CondensedReference-1113222"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-Verilog-AModuleTemplate">
+   Verilog-A Module Template
+  </h2><a name="CondensedReference-Verilog-AModuleTemplate"></a>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "disciplines.vams"   // Natures and disciplines
+`include "constants.vams"     // Common physical and math constants
+module myModel(port1, port2); 
+    electrical port1, port2;
+    parameter real input1= 1.0 from [0:inf]; 
+    parameter integer input2 = 1 from [-1:1] exclude 0;
+    real X;
+    // this is a comment
+    /* this is a 
+      * comment block */
+    analog begin 
+        @( initial_step ) begin
+            // performed at the first timestep of an analysis
+        end
+        if (input2 &gt; 0) begin
+            $strobe("input2 is positive",input1)
+            // module behavioral description
+            V(port1, port2) &lt;+ I(port1, port2) * input1;
+        end
+        @( final_step ) begin 
+            // performed at the last time step of an analysis
+        end
+    end
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1113381"></span><a name="CondensedReference-1113381"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-DataTypes">
+   Data Types
+  </h2><a name="CondensedReference-DataTypes"></a>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p><strong>
+         Data type
+        </strong>
+                                                                    </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p><strong>
+         Description
+        </strong>
+                                                                    </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        integer
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Discrete numerical type
+        <br />
+        integer [integer_name {, integer_name};
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        real
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Continuous numerical type
+        <br />
+        real[real_name {, real_name...};
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        parameter
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Attribute that indicates data type is determined at module instantiation.
+        <br />
+        parameter parameter_type param_name = default_value [from [range_begin:range_end] [exclude exclude_value];
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1113387"></span><a name="CondensedReference-1113387"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-AnalogOperatorsandFilters">
+   Analog Operators and Filters
+  </h2><a name="CondensedReference-AnalogOperatorsandFilters"></a>
+                                                <p>
+   Analog operators and filters maintain memory states of past behavior. They can not be used in an analog function.
+  </p>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p><strong>
+         Operator
+        </strong>
+                                                                    </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p><strong>
+         Function
+        </strong>
+                                                                    </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Time derivative
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        The ddt operator computes the time derivative of its argument.
+        <br />
+        ddt(expr)
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Time integral
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        The idt operator computes the time-integral of its argument.
+        <br />
+        idt(expr, [ic [ , assert [ , abstol ] ] ] )
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Linear time delay
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        absdelay() implements the absolute transport delay for continuous waveform.
+        <br />
+        absdelay(input, time_delay [, maxdelay ])
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Discrete waveform filters
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        The transition filter smooths out piecewise linear waveforms.
+        <br />
+        transition( expr [ , td [ , rise_time [ , fall_time [ , time_tol ] ] ] ] )
+        <br />
+        The slew analog operator bounds the rate of change (slope) of the waveform.
+        <br />
+        slew( expr [ , max_pos_slew_rate [ , max_neg_slew_rate ] ] )
+        <br />
+        The last_crossing() function returns a real value representing the simulation time when a signal expression last crossed zero.
+        <br />
+        last_crossing(expr, direction)
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Laplace transform filters
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        laplace_zd() implements the zero-denominator form of the Laplace transform filter. The laplace_np() implements the numerator-pole form of the Laplace transform filter. laplace_nd() implements the numerator-denominator form of the Laplace transform filter. laplace_zp() implements the zero-pole form of the Laplace transform filter.
+        <br />
+        laplace_zp(expr, z, r)
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Z-transform filters
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        The Z-transform filters implement linear discrete-time filters. Each filter uses a parameter T which specifies the filter's sampling period. The zeros argument may be represented as a null argument. The null argument is produced by two adjacent commas (,,) in the argument list.
+        <br />
+        All Z-transform filters share three common arguments: T, t, and t0.
+        <br />
+        T specifies the period of the filter, is mandatory, and must be positive. t specifies the transition time, is optional, and must be nonnegative.
+        <br />
+        zi_zd() implements the zero-denominator form of the Z-transform filter. zi_np() implements the numerator-pole form of the Z-transform filter. zi_nd() implements the numerator-denominator form of the Z-transform filter. zi_zp() implements the zero-pole form of the Z-transform filter.
+        <br />
+        zi_zp( expr , z , r , T [ , t [ , t0 ] ] )
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        limexp
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Limits exponential argument change from one iteration to the next.
+        <br />
+        limexp(arg)
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1114419"></span><a name="CondensedReference-1114419"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-MathematicalFunctions">
+   Mathematical Functions
+  </h2><a name="CondensedReference-MathematicalFunctions"></a>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Function
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Description
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Domain
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Return value
+       </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        ln()
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        natural log
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        x&gt;0
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        real
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        log(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        log base 10
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        x&gt;0
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        real
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        exp(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        exponential
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        X&lt;80
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        real
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        sqrt(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        square root
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        x&gt;=0
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        real
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        min(x,y)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        minimum of x and y
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x, y
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        if either is real, returns real, otherwise returns the type of x,y.
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        max(x,y)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        maximum of x and y
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x, y
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        if either is real, returns real, otherwise returns the type of x,y.
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        abs(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        absolute value
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        same as x
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        pow(x,y)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        x
+        <sup>
+         y
+        </sup></p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        if x&gt;=0, all y;
+        <br />
+        if x&lt;0, int(y)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        real
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        floor(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        floor
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        real
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        ceil(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        ceiling
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        real
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1114646"></span><a name="CondensedReference-1114646"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-TranscendentalFunctions">
+   Transcendental Functions
+  </h2><a name="CondensedReference-TranscendentalFunctions"></a>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Function
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Description
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Domain
+       </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        sin(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        sine
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        cos(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        cosine
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        tan(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        tangent
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        x != n (pi/2), n is odd
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        asin(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        arc-sine
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        -1&lt;= x &lt;= 1
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        acos(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        arc-cosine
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        -1&lt;= x &lt;= 1
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        atan(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        arc-tangent
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        atan2(x,y)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        arc-tangent of x/y
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x, all y
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        hypot(x,y)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        sqrt(x
+        <sup>
+         2
+        </sup>
+        + y
+        <sup>
+         2
+        </sup>
+        )
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x, all y
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        sinh(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        hyperbolic sine
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        x &lt; 80
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        cosh(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        hyperbolic cosine
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        x &lt; 80
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        tanh(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        hyperbolic tangent
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        asinh(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        arc-hyperbolic sine
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        all x
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        acosh(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        arc-hyperbolic cosine
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        x &gt;= 1
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        atanh(x)
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        arch-hyperbolic tangent
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        -1 &lt;= x &lt;= 1
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1116005"></span><a name="CondensedReference-1116005"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-ACAnalysisStimuli">
+   AC Analysis Stimuli
+  </h2><a name="CondensedReference-ACAnalysisStimuli"></a>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Function
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Description
+       </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        AC Stimulus
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        The AC stimulus function produces a sinusoidal stimulus for use during a small-signal analysis.
+        <br />
+        ac_stim([analysis_name [, mag [, phase ]]])
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1116033"></span><a name="CondensedReference-1116033"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-NoiseFunctions">
+   Noise Functions
+  </h2><a name="CondensedReference-NoiseFunctions"></a>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Function
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Description
+       </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        White Noise
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Generates a frequency-independent noise of power pwr.
+        <br />
+        white_noise(pwr [, name])
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Flicker Noise
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Generates a frequency-dependent noise of power pwr at 1 Hz which varies in proportion to the expression 1/fexp.
+        <br />
+        flicker_noise(pwr, exp [, name])
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Noise Table
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Define noise via a piecewise linear function of frequency. Vector is frequency, pwr pairs in ascending frequencies.
+        <br />
+        noise_table(vector [, name])
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1113270"></span><a name="CondensedReference-1113270"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-AnalogEvents">
+   Analog Events
+  </h2><a name="CondensedReference-AnalogEvents"></a>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Function
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Description
+       </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Initial Step
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Event trigger at initial step.
+        <br />
+        @(initial_step [(list_of_analyses)])
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Final Step
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Event trigger at final step.
+        <br />
+        @(final_step [(list_of_analyses)])
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Cross
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Zero crossing threshold detection.
+        <br />
+        cross(expr [ , dir [ , time_tol [ , expr_tol]]] );
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Timer
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Generate analog event at specific time.
+        <br />
+        timer ( start_time [ , period [ , time_tol ] ] );
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1114874"></span><a name="CondensedReference-1114874"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-TimestepControl">
+   Timestep Control
+  </h2><a name="CondensedReference-TimestepControl"></a>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Function
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Purpose
+       </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $bound_step
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Controls the maximum time step the simulator will take during a transient simulation.
+        <br />
+        $bound_step( expression );
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $discontinuity
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Provides the simulator information about known discontinuities to provide help for simulator convergence algorithms.
+        <br />
+        $discontinuity [( constant_expression )];
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1114875"></span><a name="CondensedReference-1114875"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-Input/OutputFunctions">
+   Input/Output Functions
+  </h2><a name="CondensedReference-Input/OutputFunctions"></a>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Function
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Return Value
+       </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $strobe
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Display simulation data when the simulator has converged on a solution for all nodes using a printf() style format.
+        <br />
+        $strobe(args)
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $fopen
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Open a file for writing and assign it to an associated channel.
+        <br />
+        multi-channel_desc = $fopen("file");
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $fclose
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Close a file from a previously opened channel(s).
+        <br />
+        $fclose(multi-channel_desc);
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $fstrobe
+        <br />
+        $fdisplay
+        <br />
+        $fwrite
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Write simulation data to an opened channel(s) when the simulator has converged. Follows format for $strobe.
+        <br />
+        $fstrobe(multi-channel_desc, "info to be written");
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1113293"></span><a name="CondensedReference-1113293"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-SimulatorEnvironmentFunctions">
+   Simulator Environment Functions
+  </h2><a name="CondensedReference-SimulatorEnvironmentFunctions"></a>
+                                                <p>
+   The environment parameter functions return simulator environment information.
+  </p>
+                                                <div class="table-wrap">
+                                                    <table class="wrapped confluenceTable">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Function
+       </p>
+                                                                </th>
+                                                                <th class="confluenceTh">
+                                                                    <p>
+        Return Value
+       </p>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $temperature
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Return circuit ambient temperature in Kelvin.
+        <br />
+        $temperature
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $abstime
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Return absolute time in seconds.
+        <br />
+        $abstime
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $vt
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $vt can optionally have
+        <em>
+         Temperature
+        </em>
+        (in Kelvin) as an input argument and returns the thermal voltage (kT/q) at the given temperature. $vt without the optional input temperature argument returns the thermal voltage using $temperature.
+        <br />
+        $vt[(Temperature)]
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        $analysis
+       </p>
+                                                                </td>
+                                                                <td class="confluenceTd">
+                                                                    <p>
+        Returns true (1) if current analysis matches any one of the passed arguments.
+        <br />
+        $analysis(str {, str} )
+       </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1113310"></span><a name="CondensedReference-1113310"></a>
+                                                </p>
+                                                <h2 id="CondensedReference-ModuleHierarchy">
+   Module Hierarchy
+  </h2><a name="CondensedReference-ModuleHierarchy"></a>
+                                                <p>
+   Structural statements are used inside the module block but cannot be used inside the analog block.
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     module_or_primative #({.param1(expr){, .param2(expr})} instance_name ({node {, node});
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="CondensedReference-1115629"></span><a name="CondensedReference-1115629"></a>
+                                                </p>
+                                                <h4 id="CondensedReference-Example">
+   Example
+  </h4><a name="CondensedReference-Example"></a>
+                                                <blockquote>
+                                                    <p><code>
+     my_src #(.fstart(100), .ramp(z));
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <form action="https://feedback.software.keysight.com/pathwave/feedback/form" id="FeedForm" method="post" onsubmit="target_popup(this)">
+                                                    <input id="spacename" name="spacename" type="hidden" value="ADS.2025update2" />
+                                                    <input id="spacekey" name="spacekey" type="hidden" value="ads2025update2" />
+                                                    <input id="pagetitle" name="pagetitle" type="hidden" value="Condensed Reference" />
+                                                    <input id="pageid" name="pageid" type="hidden" value="905249555" />
+                                                    <input id="DocGroup" name="DocGroup" type="hidden" value="PSS" />
+                                                    <input id="feedbacktype" name="feedbacktype" type="hidden" value="offline" />
+                                                    <div class="lozenge-body" id="Unpluggedfeedbackbar" style="width:320px;padding-top: 20px;">
+    Was this page helpful ?
+    <input class="washelpful" name="washelpful" type="submit" value="Yes" /><input class="washelpful" name="washelpful" type="submit" value="No" /></div>
+                                                </form>
+                                                <div id="buildmetadata" style="display:none">
+                                                    <img id="productlogo" src="../docimages/product_logo.png" />
+                                                    <li id="productname">
+                                                    </li>
+                                                    <li id="productrelease">
+                                                    </li>
+                                                    <li id="buildtimestamp">
+    04:09:47, Mon 02/24/2025
+   </li>
+                                                    <li id="showpdflink">
+    1
+   </li>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--On this page -->
+                                        <div id="onthispage_wrapper">
+                                            <div class="ks-onthispage" id="stickytoc"><span id="onthispageheader">On this page</span>
+                                                <div class="ks-stickytoc js-toc" id="onthispage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Previous Next Links-->
+                                    <p>
+                                        <div class="buttons popup-container clearfix topicToolbarProxy _Skins_unpluggedPreviousNextLinks mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic;">
+                                            <div class="button-group-container-left">
+                                                <button class="button needs-pie previous-topic-button" title="Navigate previous" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate previous">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                                <button class="button needs-pie next-topic-button" title="Navigate next" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate next">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </p>
+                                    <!--Feedback-->
+                                    <script>/* <![CDATA[ */
+			function target_popup(form) {
+			window.open(
+			'',
+			'FeedForm',
+			'width=950,height=700,resizeable,scrollbars,toolbar=no,status=no,location=no,left=0,top=0,directori' +
+			'es=no'
+			);
+			form.target = 'FeedForm';
+			}
+		/* ]]> */</script>
+                                    <!--
+        <form id="FeedForm" action="https://feedback.software.keysight.com/pathwave/feedback/form" method="post" onsubmit="target_popup(this)">
+            <input type="hidden" name="spacename" value="" />
+            <input type="hidden" name="spacename" value="$space.name" />
+            <input type="hidden" name="spacekey" value="$space.key" />
+            <input type="hidden" name="pageid" value="$page.id" />
+            <input type="hidden" name="wikilogin" value="$user.email" />
+            <input type="hidden" name="DocGroup" value="eesof" />
+            <input type="hidden" name="feedbacktype" value="ONLINE" />
+            <div id="feedbackbar" class="lozenge-body" style="width:320px;padding-top: 20px;">
+                Was this page helpful ?
+                <input type="submit" class="washelpful" name="washelpful" value="Yes"/>
+                <input type="submit" class="washelpful" name="washelpful" value="No"/>
+            </div>
+        </form>
+     -->
+                                    <!--Footer-->
+                                    <div id="footer">
+                                        <div id="copyright">
+                                            <ul>
+                                                <li>
+                    © Keysight Technologies 2000–<span class="mc-variable unplugged.CopyrightYearRangeYearTo variable">2025</span><![CDATA[
+                    ]]></li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/privacy.html" class="dtmData">Privacy</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/terms-of-use.html" class="dtmData">Terms</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/support/site-feedback.html" class="dtmData">Feedback</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--Back To Top-->
+                                    <button onclick="backToTop()" id="backtotop" title="Go to top">
+Top</button>
+                                    <!--Variables--><span class="mc-variable unplugged.BuildTimeStamp variable">11:51 PM, Sunday, Feb 23, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><a data-close="true"></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

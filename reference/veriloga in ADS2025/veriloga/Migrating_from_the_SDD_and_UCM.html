@@ -1,0 +1,999 @@
+﻿<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_unplugged" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-toc-path="Home|Component Libraries|Verilog-A|Using Verilog-A in Advanced Design System" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> </meta>
+        <meta Name="header-title" content=""> </meta>
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta charset="utf-8" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>
+   Migrating from the SDD and UCM
+  </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/foundation.6.2.3.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/unplugged.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/normalize.css" />
+        <link rel="stylesheet" id="stylesheet" href="../../Resources/Stylesheets/darktheme.css" disabled="Disabled" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/load_first.css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/github.min.css" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../Resources/Scripts/PIE.htc');
+}
+
+</style>
+        <style>
+        </style>
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script language="JavaScript" src="../CallFeedBack.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
+        </script>
+        <script src="../../../Resources/Scripts/purify.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.6.2.3_custom.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/config.js">
+        </script>
+        <script src="../../Resources/Scripts/photoswipe.js">
+        </script>
+        <script src="../../Resources/Scripts/unplugged.min.js">
+        </script>
+        <script src="../../Resources/Scripts/highlight.min.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-left" role="navigation" id="offCanvas" data-off-canvas="" data-position="left" data-mc-ignore="true">
+                    <ul class="off-canvas-accordion vertical menu off-canvas-list" data-accordion-menu="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" role="banner" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="only screen and (max-device-width: 300px)" data-mc-ignore="true"><a class="skip-to-content fluid-skip showOnFocus" href="#">Skip To Main Content</a>
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <div class="central-account-wrapper">
+                                        <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                            <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                                <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="menu-icon" aria-label="Show Navigation Panel" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../support/Home.html" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" role="navigation" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="central-account-wrapper">
+                                    <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                        <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                            <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" aria-label="Search Field" placeholder="Search" />
+                                                <div class="search-filter-wrapper"><span class="invisible-label" id="search-filters-label">Filter: </span>
+                                                    <div class="search-filter" aria-haspopup="true" aria-controls="sf-content" aria-expanded="false" aria-label="Search Filter" title="All Files" role="button" tabindex="0">
+                                                    </div>
+                                                    <div class="search-filter-content" id="sf-content">
+                                                        <ul>
+                                                            <li>
+                                                                <button class="mc-dropdown-item" aria-labelledby="search-filters-label filterSelectorLabel-00001"><span id="filterSelectorLabel-00001">All Files</span>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search" role="button" tabindex="0"><span class="invisible-label">Submit Search</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <nav class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </nav>
+                            <div class="body-container">
+                                <div data-mc-content-body="True">
+                                    <!--Toolbar-->
+                                    <div id="header-bottom" style="visibility:hidden">
+                                        <div id="header-bottom-wrapper">
+                                            <div id="breadcrumbs">
+                                                <div class="nocontent">
+                                                    <div class="MCBreadcrumbsBox_breadcrumbsProxy_0 breadcrumbs" role="navigation" aria-label="Breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="toolbar">
+                                                <button id="pdfbutton" class="btn scroll-pdf-launcher featurebutton tippy" tooltip-content="Download PDF (P)"><i class="material-icons material-icons-filled" style="font-size:18px">picture_as_pdf</i><span id="pdficontext" class="featurebarlabels">PDF</span>
+                                                </button>
+                                                <button id="themebutton" class="themetoggle featurebutton tippy" type="button" tooltip-content="Change Theme Settings (T)"><i class="material-icons material-icons-filled" style="font-size:18px">invert_colors</i><span id="themeicontext" class="featurebarlabels">Theme</span>
+                                                </button>
+                                                <button id="feedbackbutton" class="featurebutton tippy" tooltip-content="Share Feedback (F)"><i class="material-icons material-icons-round" style="font-size:18px">rate_review</i><span id="feedbackicontext" class="featurebarlabels">Feedback</span>
+                                                </button>
+                                                <button id="sidebarlightboxbutton" class="btn btn-info featurebutton tippy" type="button" tooltip-content="Display TOC ([)"><i class="material-icons material-icons-outlined" style="font-size:18px">menu</i><span id="contentsicontext" class="featurebarlabels">Contents</span>
+                                                </button>
+                                                <button id="viewonlinebutton" class="btn btn-info featurebutton tippy" tooltip-content="View Online Version (W)"><i class="material-icons" style="font-size:18px">public</i><span id="viewonlineicontext" class="featurebarlabels">Online</span>
+                                                </button>
+                                                <div class="helpmenu featurebutton">
+                                                    <button id="helpbutton"><i class="material-icons material-icons-round" style="font-size:18px">help_center</i><span id="helpicontext" class="featurebarlabels">Help</span>
+                                                    </button>
+                                                    <div class="help-content featurebutton" id="helpcontent"><a id="helplink1" href=""></a><a id="helplink2" href=""></a><a id="helplink3" href=""></a><a id="launchtour">Help Tour</a><a id="keyboardshortcuts">Keyboard Shortcuts (?)</a><a id="qrcodegen">QR Code (Q)</a><a id="about">About</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Uncomment the following Breadcrumbs code if using JS to insert toolbar and breadcrumbs and then comment the Toolbar snippet above-->
+                                    <!--Breadcrumbs-->
+                                    <!--
+            <div id="crumbs">
+            <MadCap:breadcrumbsProxy class="breadcrumbsProxy" />
+        </div>
+		 -->
+                                    <div id="unplugged-content">
+                                        <!--Content -->
+                                        <div class="js-toc-content">
+                                            <div role="main" id="mc-main-content">
+                                                <div class="conf-macro output-block" data-hasbody="true" data-macro-name="scroll-ignore" style=" background-color: #efefef" title="The content of this Scroll Ignore macro will not be part of the export for selected Scroll apps">
+                                                    <p><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span>
+                                                    </p>
+                                                    <p><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span>
+                                                    </p>
+                                                </div>
+                                                <p>
+                                                    <br /><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="MigratingfromtheSDDandUCM-1109121"></span><a name="MigratingfromtheSDDandUCM-1109121"></a>
+                                                </p>
+                                                <h1 id="MigratingfromtheSDDandUCM-MigratingfromtheSDDandUCM">
+   Migrating from the SDD and UCM
+  </h1><a name="MigratingfromtheSDDandUCM-MigratingfromtheSDDandUCM"></a>
+                                                <p>
+   Symbolically defined devices (SDDs) and the user-compiled model (UCM) interface provide alternate methods to implement and distribute models with their own unique advantages. It is possible for advanced users to translate these models into Verilog-A with a fraction of the original effort required to develop the models. Unfortunately, due to the flexible natures of these interfaces, it is not possible to provide an automatic translation capability. However, this section will provide a general discussion of the issues and steps necessary to translate a model. This topic will only deal with generating the Verilog-A source code, as the other aspects of the model translation (AEL, symbols, etc.) are the same as with other models.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="MigratingfromtheSDDandUCM-1111662"></span><a name="MigratingfromtheSDDandUCM-1111662"></a>
+                                                </p>
+                                                <h2 id="MigratingfromtheSDDandUCM-SymbolicallyDefinedDevices">
+   Symbolically Defined Devices
+  </h2><a name="MigratingfromtheSDDandUCM-SymbolicallyDefinedDevices"></a>
+                                                <p>
+   The SDD interface is similar to Verilog-A. The SDD describes the model in terms of charges and currents and automatically generates the derivatives and load information, as does Verilog-A. However, SDDs automatically determine the relationship between equations whereas Verilog-A is a procedural language where the order of the equations is important. As an example, the Gummel_Poon SDD model provided in the
+   <code>
+    examples/Behavioral_Models/SDD_Examples_wrk
+   </code>
+   will be used to illustrate the necessary steps. To begin,
+  </p>
+                                                <ol>
+                                                    <li value="1">
+    Copy the
+    <em>
+     SDD_Examples_wrk
+    </em>
+    to a local directory.
+   </li>
+                                                    <li value="2">
+    Open a new schematic window and insert the
+    <em>
+     GumPoon
+    </em>
+    subcircuit.
+   </li>
+                                                    <li value="3">
+    Start a simulation. The simulator will report that no simulation component has been specified and will stop. This can be ignored as the step was used to create the netlist.
+   </li>
+                                                    <li value="4">
+    Copy the
+    <em>
+     netlist.log
+    </em>
+    file found in the workspace directory to a new file named
+    <em>
+     gumpoon.va
+    </em>
+    and open the file.
+   </li>
+                                                    <li value="5">
+                                                        <p>
+     The first line of the
+     <em>
+      gumpoon.va
+     </em>
+     file can be deleted. Add the necessary include files and module definition block as shown below. Note that three internal nodes,
+     <em>
+      bi
+     </em>
+     ,
+     <em>
+      ci
+     </em>
+     , and
+     <em>
+      ei,
+     </em>
+     have been defined.
+    </p>
+                                                        <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                            <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "disciplines.vams"
+`include "constants.vams"
+module gumpoon\(b, c, e\);
+  electrical b, c, e, bi, ci, ei;
+  analog begin
+    // SDD netlist fragment
+  end
+endmodule
+</pre>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                                <p>
+   The subcircuit parameter list provides a convenient starting point to convert parameters to Verilog-A using word processor functions to substitute a comma for the spaces between parameters:
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     parameter real n=1, xti=3, Rth=0, Tau=0, Tamb=27, eg0=1.16, xtb=1, rbm=1e-12, jrb=10e-3, mje=0.5, mjc=0.333, vjc=585.8e-3, vtf=1.124, vje=1.993, nf=1.002, nr=0.9649, ne=1.630, nc=1.055, tf=14.19e-12, tr=1e-9, cje=1.178e-12, cjc=392.9e-15, jtf=914.3e-3, xtf=32.13, rb=6.549, rc=6.314, re=.15, vbf=32.37, vbr=10, jbr=8.26e-3, jbf=914.3e-3, jle=0, jlc=0, bf=127, br=10, js=16.55e-15;
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   The _vn quantities for the SDDcorrespond to system values of the port values. These are converted to voltage accesses and should be moved to the beginning of the module:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">analog begin
+      vei=V(ei);
+      vci=V(ci);
+      vbi=V(bi);
+      ve=V(e);
+      vc=V(c);
+      vb=V(b);
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   Note that the SDD is defined with the port pin grounded so the Verilog-A voltages are implicitly referenced to ground.
+  </p>
+                                                <p>
+   The SDD:SDD1 line corresponds to the load contribution of a Verilog-A device. This line can be moved to the end of the file and converted to contribution statements. The statements of the form I[...] are explicit current port relations and easily convert to contribution statements. For example,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     I[1,0]=ib+_v1*1e-12
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   becomes
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     I(b) &lt;+ ib + V(b)*1e-12;
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   and contributions with weighting functions of 1 correspond to applying the d/dt operator, so
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     I[1,1]=qb2+qbe
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   becomes
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     I(b) &lt;+ ddt(qb2+qbe);
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   The implicit equations of the form F[...] relate currents and voltages at ports with an implicit form F[...]=0. So
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">F[4,0]=vbi+ib*Rbb-vb
+F[4,1]=(qb2+qbe)*Rbb
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   is rearranged as
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     vbi-vb= ib*Rbb-ddt(qb2 + qbe)*Rbb
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   and is implemented as
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     V(bi,b) &lt;+ Rbb*(ib + ddt(qb2 + qbe)) ;
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   This process is repeated for the other contributions.
+  </p>
+                                                <p>
+   The SDD uses a function named
+   <em>
+    diode
+   </em>
+   to implement the diode junction relation. This function, and the exponential function
+   <em>
+    exp_soft
+   </em>
+   can easily be converted to analog functions. For example,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     diode(v,is,n)=is*(exp_soft(v/(n*vt)) - 1)
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   becomes
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">analog function real  diode;
+   input v, is, n, vt;
+   real  v, is, n, vt;
+   begin
+      diode = is * (exp_soft(v / (n * vt)) - 1);
+   end
+endfunction
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   while
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     exp_soft(x)=if (x &lt; exp_max) then exp(x) else (x+1-exp_max)*exp(exp_max) endif
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   becomes
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">analog function real  exp_soft;
+   input x;
+   real  x;
+   `define max_arg ln(1e16)
+   begin
+      if (x &lt; `max_arg)
+            exp_soft = exp(x);
+      else
+            exp_soft = (x + 1 - `max_arg) * exp(`max_arg);
+   end
+endfunction
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   Note that Verilog-A requires that the analog function
+   <em>
+    exp_soft
+   </em>
+   be defined prior to its use in the analog function diode. Also, the variable
+   <em>
+    max_arg
+   </em>
+   is converted to a macro definition.
+  </p>
+                                                <p>
+   At this point, the source code is as shown below:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "disciplines.vams"
+`include "constants.vams"
+`define max_arg ln(1e16)
+
+module gumpoon(b, c, e);
+      electrical b, c, e, bi, ci, ei;
+      parameter real n=1, xti=3, Rth=0, Tau=0, Tamb=27, eg0=1.16, xtb=1, 
+      rbm=1e-12, jrb=10e-3, mje=0.5, mjc=0.333, vjc=585.8e-3, vtf=1.124,
+      vje=1.993, nf=1.002, nr=0.9649, ne=1.630, nc=1.055, tf=14.19e-12,
+      tr=1e-9, cje=1.178e-12, cjc=392.9e-15, jtf=914.3e-3, xtf=32.13,
+      rb=6.549, rc=6.314, re=.15, vbf=32.37, vbr=10, jbr=8.26e-3,
+      jbf=914.3e-3, jle=0, jlc=0, bf=127, br=10, js=16.55e-15;
+      analog function real  exp_soft;
+          input x;
+          real  x;
+          begin
+          if (x &lt; `max_arg)
+                exp_soft = exp(x);
+          else
+                exp_soft = (x + 1 - `max_arg) * exp(`max_arg);
+          end
+      endfunction
+      analog function real  diode;
+          input v, is, n, vt;
+          real  v, is, n, vt;
+          begin
+                diode = is * (exp_soft(v / (n * vt)) - 1);
+          end
+          endfunction
+
+      real vei, vci, vbi, ve, vc, vb;
+ 
+      analog begin
+            vei=V(ei);
+            vci=V(ci);
+            vbi=V(bi);
+            ve=V(e);
+            vc=V(c);
+            vb=V(b);
+ 
+            vjc_T=vjc
+            vje_T=vje
+            Br_T=br
+            Eg(t)=eg0-7.02e-4*(t+TzeroC)^2/(1108+(t+TzeroC))
+            Bf_T=bf
+            Js_T=js*TempRatio^xti *
+                 exp_soft(Eg(Tamb)*((Tj-Tamb)/((Tamb+TzeroC)*vt)))
+            TempRatio=(Tj+TzeroC)/(Tamb+TzeroC)
+            TzeroC=273.15
+            Tj=Tamb
+            ibb=if (ib &lt; 1pA ) then 1pA else ib endif
+            Rbb=3*(rb - rbm)*(tan(Z) - Z)/(Z*tan(Z)^2) + rbm
+            Z=(-1 + sqrt(144*ibb/(pi^2*jrb) + 1))/((24/pi^2)*sqrt(ibb/jrb))
+            qbc=tr*diode(vbci, Js_T, nr) -
+                 cjc*vjc_T*((1-vbci/vjc_T)^(1-mjc))/(1-mjc)
+            qb2=qbc
+            iff=diode(vbei, Js_T, nf)
+            TFF=tf*(1+xtf*(exp(vbci/(1.44*vtf)*(iff/(iff+jtf))^2)))
+            qbe=diode(vbei, TFF*js/QB, nf) -
+                 cje*vje_T*((1-vbei/vje_T)^(1-mje))/(1-mje)
+            ib2=diode(vbei, jle, ne) + diode(vbci, jlc, nc)
+            ib1=diode(vbei, Js_T/Bf_T, nf) + diode(vbci, Js_T/Br_T, nr)
+            ic2=-diode(vbci, Js_T/Br_T, nr) - diode(vbci, jlc, nc)
+            ic1=diode(vbei, Js_T/QB, nf) - diode(vbci, js/QB, nr)
+            QB=(Q1/2)*(1 + sqrt(1+4*Q2))
+            vt=boltzmann*(Tamb+TzeroC)/qelectron
+            Q2=diode(vbei, Js_T/jbf, nf) + diode(vbci, Js_T/jbr, nr)
+            Q1=1/(1 - vbci/vbf - vbei/vbr)
+            vbei=vbi-vei
+            vbe=vb-ve
+            vbc=vb-vc
+            vbci=vbi-vci
+            ib=ib1+ib2
+            ic=ic1+ic2
+            ie=-(ib+ic)
+            X=1.0 Hz
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   The remaining equations can easily be converted to valid Verilog-A equations by appending semi-colons and declaring the variables. Certain equations, such as the equations for
+   <em>
+    Tamp
+   </em>
+   ,
+   <em>
+    vt
+   </em>
+   , and
+   <em>
+    TzeroC
+   </em>
+   can be updated to system parameter function calls or macro constants. Other equations, such as
+   <em>
+    X=1.0Hz,
+   </em>
+   are superfluous and can be deleted. The final step is to rearrange the order of the equations. The compiler will issue a message indicating a
+   <em>
+    memory state
+   </em>
+   exists. This is a valid outcome but is also indicative of an uninitialized variable, which, in turn, indicates that the equation declaring the variable should be moved before that equation. The final code is shown below.
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "disciplines.vams"
+`include "constants.vams"
+`define max_arg ln(1e16)
+`define TzeroC `P_CELSIUS0
+module gumpoon(b, c, e);
+      electrical b, c, e, bi, ci, ei;
+      parameter real n=1, xti=3, Rth=0, Tau=0, Tamb=27, eg0=1.16, xtb=1, 
+      rbm=1e-12, jrb=10e-3, mje=0.5, mjc=0.333, vjc=585.8e-3, vtf=1.124, 
+      vje=1.993, nf=1.002, nr=0.9649, ne=1.630, nc=1.055, tf=14.19e-12, 
+      tr=1e-9, cje=1.178e-12, cjc=392.9e-15, jtf=914.3e-3, xtf=32.13, 
+      rb=6.549, rc=6.314, re=.15, vbf=32.37, vbr=10, jbr=8.26e-3, 
+      jbf=914.3e-3, jle=0, jlc=0, bf=127, br=10, js=16.55e-15;
+      analog function real  exp_soft;
+      input x;
+      real  x;
+      begin
+      if (x &lt; `max_arg)
+            exp_soft = exp(x);
+      else
+            exp_soft = (x + 1 - `max_arg) * exp(`max_arg);
+      end
+      endfunction
+      analog function real  diode;
+      input v, is, n, vt;
+      real  v, is, n, vt;
+      begin
+            diode = is * (exp_soft(v / (n * vt)) - 1);
+      end
+      endfunction
+ 
+      analog function real Eg;
+      input t, eg0;
+      real  t, eg0;
+      begin
+            Eg=eg0-7.02e-4*(t+`TzeroC)*(t+`TzeroC)/(1108+(t+`TzeroC));
+      end
+      endfunction
+ 
+      real vei, vbe, vbei, vbci, vbc, vci, vbi, ve, vc, vb;
+      real Tj, vjc_T, vje_T, Br_T, Bf_T, Js_T, TempRatio, vth;
+      real ic, ie, ib, ibb, Z, vt, pi2, Rbb, Q1, Q2;
+      real qbc, qb2, iff, TFF, qbe, ib2, ib1, ic1, ic2, QB;
+ 
+      analog begin
+            vei=V(ei);
+            vci=V(ci);
+            vbi=V(bi);
+            ve=V(e);
+            vc=V(c);
+            vb=V(b);
+            vbei=vbi-vei;
+            vbe=vb-ve;
+            vbc=vb-vc;
+            vbci=vbi-vci;
+            Tj=$temperature;
+            vth = $vt;
+            vjc_T=vjc;
+            vje_T=vje;
+            Br_T=br;
+            Bf_T=bf;
+            TempRatio=(Tj+`TzeroC)/(Tamb+`TzeroC);
+            Js_T=js*pow(TempRatio,xti) *
+                   exp_soft(Eg(Tamb,eg0)*((Tj-Tamb)/((Tamb+`TzeroC)*vth)));
+            qbc=tr*diode(vbci, Js_T, nr, vth) -
+                         cjc*vjc_T*(pow(1-vbci/vjc_T,1-mjc))/(1-mjc);
+            qb2=qbc;
+            iff=diode(vbei, Js_T, nf, vth);
+            TFF=tf*(1+xtf*(exp(vbci/(1.44*vtf)*pow(iff/(iff+jtf),2))));
+            ib2=diode(vbei, jle, ne, vth) + diode(vbci, jlc, nc, vth);
+            ib1=diode(vbei, Js_T/Bf_T, vth) + diode(vbci, Js_T/Br_T, nr, vth);
+            ic2=-diode(vbci, Js_T/Br_T, nr, vth) - diode(vbci, jlc, nc, vth);
+            Q1=1/(1 - vbci/vbf - vbei/vbr);
+            Q2=diode(vbei, Js_T/jbf, nf, vth) + diode(vbci, Js_T/jbr, nr, vth);
+            QB=(Q1/2)*(1 + sqrt(1+4*Q2));
+            qbe=diode(vbei, TFF*js/QB, nf, vth) -
+                     cje*vje_T*(pow(1-vbei/vje_T,1-mje))/(1-mje);
+            ic1=diode(vbei, Js_T/QB, nf, vth) - diode(vbci, js/QB, nr, vth);
+            ib=ib1+ib2;
+            if (ib &lt; 1e-12 )
+                  ibb = 1e-12;
+            else
+                  ibb = ib;
+            pi2 = `M_PI * `M_PI;
+            Z=(-1 + sqrt(144*ibb/(pi2*jrb) + 1))/((24/pi2)*sqrt(ibb/jrb));
+            Rbb=3*(rb - rbm)*(tan(Z) - Z)/(Z*pow(tan(Z),2)) + rbm;
+            ic=ic1+ic2;
+            ie=-(ib+ic);
+            V(bi,b) &lt;+ Rbb * (ib + ddt(qb2+qbe));
+            V(e,ei) &lt;+ re * (ie - ddt(qbe));
+            V(c,ci) &lt;+ rc * (ic - ddt(qb2));
+            I(c) &lt;+ -ddt(qb2) + ic+vc*1e-12;
+            I(b) &lt;+ ddt(qb2+qbe) + ib+vb*1e-12;
+            I(e) &lt;+ -ddt(qbe) + ie+ve*1e-12;
+end
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br /><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="MigratingfromtheSDDandUCM-1111668"></span><a name="MigratingfromtheSDDandUCM-1111668"></a>
+                                                </p>
+                                                <h2 id="MigratingfromtheSDDandUCM-User-CompiledModels">
+   User-Compiled Models
+  </h2><a name="MigratingfromtheSDDandUCM-User-CompiledModels"></a>
+                                                <p>
+   Translating user-compiled models (UCMs) is more complicated both due to the additional information in UCM source files, as well as the additional freedom (and, therefore, variations) that C-code provides. Because the UCM interface requires separate loads for transient simulations, this usually forces the model author to modularize the code, making it easier to find the code that needs to be translated.
+  </p>
+                                                <p>
+   The PNDIODE UCM distributed in the
+   <em>
+    examples/RF_Microwave/UserCompiledModel_wrk
+   </em>
+   workspace will be used as an example.
+   <code>
+    PNDIODE.c
+   </code>
+   is the main file. The functions to consider are the
+   <code>
+    analyze_lin, analyze_nl, analyze_ac_n,
+   </code>
+   and
+   <code>
+    diode_nl_iq_gc
+   </code>
+   functions. The
+   <code>
+    analyze_lin
+   </code>
+   function calculates and loads the linear parts of the nonlinear diode model while the
+   <code>
+    analyze_nl
+   </code>
+   function calls
+   <code>
+    diode_nl_iq_gc
+   </code>
+   to calculate the values to load. These functions will be easy to map to corresponding contribution statements. The
+   <code>
+    analyze_ac_n
+   </code>
+   function includes the noise contributions and can also easily be mapped.
+  </p>
+                                                <p>
+   The
+   <code>
+    diode_nl_iq_gc
+   </code>
+   function is typical of UCM code structures in that most of the model evaluation is done in this one function. Stripping the function declaration information, this function becomes:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">csat = IS_P * AREA_P;
+vte = N_P * VT;
+vd = vPin[2] - vPin[1]; /* junction voltage */
+/*
+  * compute current and derivatives with respect to voltage
+  */
+if ( vd &gt;= -5.0*vte )
+{
+    exparg = ( vd/vte &lt; 40.0 ) ? vd/vte : 40.0;
+    evd = exp(exparg);
+    *id = csat * (evd - 1.0) + GMIN * vd;
+    *gd = csat * evd / vte + GMIN;
+}
+else
+{
+    *id = -csat + GMIN * vd;
+    *gd = -csat / vd + GMIN;
+    if ( BV_P != 0.0 &amp;&amp; vd &lt;= (-BV_P+50.0*VT) )
+    {
+        exparg = ( -(BV_P+vd)/VT &lt; 40.0 ) ? -(BV_P+vd)/VT : 40.0;
+        evrev = exp(exparg);
+        *id -= csat * evrev;
+        *gd += csat * evrev / VT;
+    }
+}
+/*
+  * charge storage elements
+  */
+fcpb = FC_P * VJ_P;
+czero = CJO_P * AREA_P;
+if (vd &lt; fcpb)
+{
+    arg = 1.0 - vd / VJ_P;
+    sarg = exp(-M_P * log(arg));
+    *qd = TT_P * (*id) + VJ_P * czero * (1.0 - arg * sarg) / (1.0 - M_P);
+    *capd = TT_P * (*gd) + czero * sarg;
+}
+else
+{
+    xfc = log(1.0 - FC_P);
+    f1 = VJ_P * (1.0-exp((1.0-M_P)*xfc)) / (1.0-M_P);
+    f2 = exp((1.0+M_P)*xfc);
+    f3 = 1.0 - FC_P * (1.0+M_P);
+    czof2 = czero / f2;
+    *qd = TT_P * (*id) + czero * f1 + czof2 * (f3 * (vd - fcpb) + (M_P / (VJ_P + VJ_P)) * (vd * vd - fcpb * fcpb));
+    *capd = TT_P * (*gd) + czof2 * (f3 + M_P * vd / VJ_P);
+}
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   The first step is to remove any capacitance and conductance equations that were used to load the off diagonal elements in the Jacobian. Next, convert { / } blocks to
+   <em>
+    begin / end
+   </em>
+   blocks and convert any math functions and operators to their Verilog-A equivalent.
+  </p>
+                                                <div class="conf-macro output-block" data-hasbody="true" data-macro-name="lp_note">
+                                                    <div class="table-wrap">
+                                                        <table class="note_table confluenceTable">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="note_td_one confluenceTd" style="width:56px; border:none !important;"><span class="confluence-embedded-file-wrapper"><img alt="" data-base-url="https://docs.keysight.com" data-image-src="/download/attachments/4402026/note.svg" data-linked-resource-container-id="4402026" data-linked-resource-container-version="6" data-linked-resource-content-type="image/svg+xml" data-linked-resource-default-alias="note.svg" data-linked-resource-id="733725370" data-linked-resource-type="attachment" data-linked-resource-version="2" data-unresolved-comment-count="0" src="../docimages/note.svg" /></span>
+                                                                    </td>
+                                                                    <td class="note_td_two confluenceTd" style="vertical-align:top !important; border:none !important;">
+        In Verilog-A
+        <em>
+         log
+        </em>
+        is
+        <em>
+         log base 10
+        </em>
+        whereas in the C language it is
+        <em>
+         natural log.
+        </em></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+  The diode terminals will be called anode, cathode, and internal. Access to the
+  <em>
+   vPin
+  </em>
+  array will be converted to voltage access functions and the parameter macros will have their _
+  <em>
+   P
+  </em>
+  suffix stripped.
+  <p>
+   The parameter declarations can be generated by using the
+   <code>
+    PNDIODE.ael
+   </code>
+   create_item's declaration. Temperature dependent variables, such as
+   <em>
+    VT
+   </em>
+   , can be mapped to
+   <code>
+    $vt
+   </code>
+   ,
+   <code>
+    GMIN
+   </code>
+   to a macro definition, and the double declaration of variables in the C-code can be mapped to real declarations in Verilog-A. The final code then becomes:
+  </p><div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;"><div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "constants.vams"
+`include "disciplines.vams"
+`define GMIN 1.0e-12
+module PNDIODE(anode,cathode);
+  inout anode, cathode;
+  electrical anode, cathode, internal;
+  parameter real AREA = 1.0 from (0:inf]; //Area scaling factor
+  parameter real IS = 1e-14 from [0:inf]; //Saturation current [A]
+  parameter real RS = 0.0 from [0:inf];   //Ohmic res [Ohm]
+  parameter real N = 1.0 from [0:inf];    //Emission coef
+  parameter real TT = 0.0 from [0:inf];   //Transit time [s]
+  parameter real CJO = 0.0 from [0:inf];  //Junction capacitance [F]
+  parameter real VJ = 1.0 exclude 0;      //Junction potential [v]
+  parameter real M = 0.5 from [0:inf];    //Grading coef
+  parameter real EG = 0  from (0:inf];    //Activation energy [eV]
+  parameter real XTI = 3.0 from [0:inf];  //IS temp exp.
+  parameter real KF = 0.0;                //Flicker noise coef
+  parameter real AF = 0.0 from (0:inf);   //Flicker noise exponent
+  parameter real FC = 0.0 from [0:1];     //Forward bias junct parm
+  parameter real BV = 0.0 from [0:inf];   //Reverse breakdown voltage [v]
+  parameter real IBV = 0.0 from [0:inf];  //Current at BV [A]
+  real vd, csat, vte, evd, evrev;
+  real id, qd, exparg, vth, T;
+  real fcpb, xfc, f1, f2, f3;
+  real czero, arg, sarg, czof2;
+  analog begin
+    csat = IS * AREA;
+    vth = $vt;
+    vte = N * vth;
+    vd = V(anode, internal); /* junction voltage */
+
+    /*
+    * * compute current and derivatives with respect to voltage
+    * */
+    if ( vd &gt;= -5.0*vte ) begin
+      exparg = ( vd/vte &lt; 40.0 ) ? vd/vte : 40.0;
+      evd = exp(exparg);
+      id = csat * (evd - 1.0) + `GMIN * vd;
+    end
+    else begin
+      id = -csat + `GMIN * vd;
+      if ( BV != 0.0 &amp;&amp; vd &lt;= (-BV+50.0*vth) ) begin
+        exparg = ( -(BV+vd)/vth &lt; 40.0 ) ? -(BV+vd)/vth : 40.0;
+        evrev = exp(exparg);
+        id = id - csat * evrev;
+      end
+    end
+    /*
+    * * charge storage elements
+    * */
+    fcpb = FC * VJ;
+    czero = CJO * AREA;
+    if (vd &lt; fcpb) begin
+      arg = 1.0 - vd / VJ;
+      sarg = exp(-M * ln(arg));
+      qd = TT * id + VJ * czero * (1.0 - arg * sarg) / (1.0 - M);
+    end
+    else begin
+      xfc = ln(1.0 - FC);
+      f1 = VJ * (1.0-exp((1.0-M)*xfc)) / (1.0-M);
+      f2 = exp((1.0+M)*xfc);
+      f3 = 1.0 - FC * (1.0+M);
+      czof2 = czero / f2;
+      qd = TT * id + czero * f1 + czof2 * (f3 * (vd - fcpb) + (M / (VJ + VJ)) * (vd * vd - fcpb * fcpb));
+    end
+    I(anode, internal) &lt;+ id;
+    V(internal, cathode) &lt;+ I(internal, cathode) * (RS / AREA);
+    I(anode, internal) &lt;+ ddt(qd);
+    // Noise
+    T = $temperature;
+    V(internal, cathode) &lt;+ white_noise(4 * `P_K * T * (RS / AREA), "thermal");
+    I(anode, internal)   &lt;+ white_noise(2 * `P_Q * id, "thermal");
+    if (id &gt; 0)
+      I(anode, internal) &lt;+ flicker_noise(KF * pow(id, AF), 1.0, "flicker");
+    else
+      I(anode, internal) &lt;+ flicker_noise(KF * -pow(-id, AF), 1.0, "flicker");
+    end
+endmodule
+</pre></div></div><p><br />
+   Although it is not possible to predict what code style a UCM author might use, it is possible to convert a model to Verilog-A.
+  </p><form action="https://feedback.software.keysight.com/pathwave/feedback/form" id="FeedForm" method="post" onsubmit="target_popup(this)"><input id="spacename" name="spacename" type="hidden" value="ADS.2025update2" /><input id="spacekey" name="spacekey" type="hidden" value="ads2025update2" /><input id="pagetitle" name="pagetitle" type="hidden" value="Migrating from the SDD and UCM" /><input id="pageid" name="pageid" type="hidden" value="905249553" /><input id="DocGroup" name="DocGroup" type="hidden" value="PSS" /><input id="feedbacktype" name="feedbacktype" type="hidden" value="offline" /><div class="lozenge-body" id="Unpluggedfeedbackbar" style="width:320px;padding-top: 20px;">
+    Was this page helpful ?
+    <input class="washelpful" name="washelpful" type="submit" value="Yes" /><input class="washelpful" name="washelpful" type="submit" value="No" /></div></form><div id="buildmetadata" style="display:none"><img id="productlogo" src="../docimages/product_logo.png"><li id="productname"></li><li id="productrelease"></li><li id="buildtimestamp">
+     03:50:27, Mon 02/24/2025
+    </li><li id="showpdflink">
+     1
+    </li></img></div></div>
+                                        </div>
+                                        <!--On this page -->
+                                        <div id="onthispage_wrapper">
+                                            <div class="ks-onthispage" id="stickytoc"><span id="onthispageheader">On this page</span>
+                                                <div class="ks-stickytoc js-toc" id="onthispage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Previous Next Links-->
+                                    <p>
+                                        <div class="buttons popup-container clearfix topicToolbarProxy _Skins_unpluggedPreviousNextLinks mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic;">
+                                            <div class="button-group-container-left">
+                                                <button class="button needs-pie previous-topic-button" title="Navigate previous" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate previous">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                                <button class="button needs-pie next-topic-button" title="Navigate next" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate next">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </p>
+                                    <!--Feedback-->
+                                    <script>/* <![CDATA[ */
+			function target_popup(form) {
+			window.open(
+			'',
+			'FeedForm',
+			'width=950,height=700,resizeable,scrollbars,toolbar=no,status=no,location=no,left=0,top=0,directori' +
+			'es=no'
+			);
+			form.target = 'FeedForm';
+			}
+		/* ]]> */</script>
+                                    <!--
+        <form id="FeedForm" action="https://feedback.software.keysight.com/pathwave/feedback/form" method="post" onsubmit="target_popup(this)">
+            <input type="hidden" name="spacename" value="" />
+            <input type="hidden" name="spacename" value="$space.name" />
+            <input type="hidden" name="spacekey" value="$space.key" />
+            <input type="hidden" name="pageid" value="$page.id" />
+            <input type="hidden" name="wikilogin" value="$user.email" />
+            <input type="hidden" name="DocGroup" value="eesof" />
+            <input type="hidden" name="feedbacktype" value="ONLINE" />
+            <div id="feedbackbar" class="lozenge-body" style="width:320px;padding-top: 20px;">
+                Was this page helpful ?
+                <input type="submit" class="washelpful" name="washelpful" value="Yes"/>
+                <input type="submit" class="washelpful" name="washelpful" value="No"/>
+            </div>
+        </form>
+     -->
+                                    <!--Footer-->
+                                    <div id="footer">
+                                        <div id="copyright">
+                                            <ul>
+                                                <li>
+                    © Keysight Technologies 2000–<span class="mc-variable unplugged.CopyrightYearRangeYearTo variable">2025</span><![CDATA[
+                    ]]></li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/privacy.html" class="dtmData">Privacy</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/terms-of-use.html" class="dtmData">Terms</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/support/site-feedback.html" class="dtmData">Feedback</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--Back To Top-->
+                                    <button onclick="backToTop()" id="backtotop" title="Go to top">
+Top</button>
+                                    <!--Variables--><span class="mc-variable unplugged.BuildTimeStamp variable">11:51 PM, Sunday, Feb 23, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><a data-close="true"></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,1024 @@
+﻿<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_unplugged" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-toc-path="Home|Component Libraries|Verilog-A|Using Verilog-A in Advanced Design System" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> </meta>
+        <meta Name="header-title" content=""> </meta>
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta charset="utf-8" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>
+   About Model Development in Verilog-A
+  </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/foundation.6.2.3.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/unplugged.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/normalize.css" />
+        <link rel="stylesheet" id="stylesheet" href="../../Resources/Stylesheets/darktheme.css" disabled="Disabled" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/load_first.css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/github.min.css" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../Resources/Scripts/PIE.htc');
+}
+
+</style>
+        <style>
+        </style>
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script language="JavaScript" src="../CallFeedBack.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
+        </script>
+        <script src="../../../Resources/Scripts/purify.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.6.2.3_custom.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/config.js">
+        </script>
+        <script src="../../Resources/Scripts/photoswipe.js">
+        </script>
+        <script src="../../Resources/Scripts/unplugged.min.js">
+        </script>
+        <script src="../../Resources/Scripts/highlight.min.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-left" role="navigation" id="offCanvas" data-off-canvas="" data-position="left" data-mc-ignore="true">
+                    <ul class="off-canvas-accordion vertical menu off-canvas-list" data-accordion-menu="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" role="banner" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="only screen and (max-device-width: 300px)" data-mc-ignore="true"><a class="skip-to-content fluid-skip showOnFocus" href="#">Skip To Main Content</a>
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <div class="central-account-wrapper">
+                                        <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                            <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                                <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="menu-icon" aria-label="Show Navigation Panel" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../support/Home.html" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" role="navigation" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="central-account-wrapper">
+                                    <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                        <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                            <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" aria-label="Search Field" placeholder="Search" />
+                                                <div class="search-filter-wrapper"><span class="invisible-label" id="search-filters-label">Filter: </span>
+                                                    <div class="search-filter" aria-haspopup="true" aria-controls="sf-content" aria-expanded="false" aria-label="Search Filter" title="All Files" role="button" tabindex="0">
+                                                    </div>
+                                                    <div class="search-filter-content" id="sf-content">
+                                                        <ul>
+                                                            <li>
+                                                                <button class="mc-dropdown-item" aria-labelledby="search-filters-label filterSelectorLabel-00001"><span id="filterSelectorLabel-00001">All Files</span>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search" role="button" tabindex="0"><span class="invisible-label">Submit Search</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <nav class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </nav>
+                            <div class="body-container">
+                                <div data-mc-content-body="True">
+                                    <!--Toolbar-->
+                                    <div id="header-bottom" style="visibility:hidden">
+                                        <div id="header-bottom-wrapper">
+                                            <div id="breadcrumbs">
+                                                <div class="nocontent">
+                                                    <div class="MCBreadcrumbsBox_breadcrumbsProxy_0 breadcrumbs" role="navigation" aria-label="Breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="toolbar">
+                                                <button id="pdfbutton" class="btn scroll-pdf-launcher featurebutton tippy" tooltip-content="Download PDF (P)"><i class="material-icons material-icons-filled" style="font-size:18px">picture_as_pdf</i><span id="pdficontext" class="featurebarlabels">PDF</span>
+                                                </button>
+                                                <button id="themebutton" class="themetoggle featurebutton tippy" type="button" tooltip-content="Change Theme Settings (T)"><i class="material-icons material-icons-filled" style="font-size:18px">invert_colors</i><span id="themeicontext" class="featurebarlabels">Theme</span>
+                                                </button>
+                                                <button id="feedbackbutton" class="featurebutton tippy" tooltip-content="Share Feedback (F)"><i class="material-icons material-icons-round" style="font-size:18px">rate_review</i><span id="feedbackicontext" class="featurebarlabels">Feedback</span>
+                                                </button>
+                                                <button id="sidebarlightboxbutton" class="btn btn-info featurebutton tippy" type="button" tooltip-content="Display TOC ([)"><i class="material-icons material-icons-outlined" style="font-size:18px">menu</i><span id="contentsicontext" class="featurebarlabels">Contents</span>
+                                                </button>
+                                                <button id="viewonlinebutton" class="btn btn-info featurebutton tippy" tooltip-content="View Online Version (W)"><i class="material-icons" style="font-size:18px">public</i><span id="viewonlineicontext" class="featurebarlabels">Online</span>
+                                                </button>
+                                                <div class="helpmenu featurebutton">
+                                                    <button id="helpbutton"><i class="material-icons material-icons-round" style="font-size:18px">help_center</i><span id="helpicontext" class="featurebarlabels">Help</span>
+                                                    </button>
+                                                    <div class="help-content featurebutton" id="helpcontent"><a id="helplink1" href=""></a><a id="helplink2" href=""></a><a id="helplink3" href=""></a><a id="launchtour">Help Tour</a><a id="keyboardshortcuts">Keyboard Shortcuts (?)</a><a id="qrcodegen">QR Code (Q)</a><a id="about">About</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Uncomment the following Breadcrumbs code if using JS to insert toolbar and breadcrumbs and then comment the Toolbar snippet above-->
+                                    <!--Breadcrumbs-->
+                                    <!--
+            <div id="crumbs">
+            <MadCap:breadcrumbsProxy class="breadcrumbsProxy" />
+        </div>
+		 -->
+                                    <div id="unplugged-content">
+                                        <!--Content -->
+                                        <div class="js-toc-content">
+                                            <div role="main" id="mc-main-content">
+                                                <div class="conf-macro output-block" data-hasbody="true" data-macro-name="scroll-ignore" style=" background-color: #efefef" title="The content of this Scroll Ignore macro will not be part of the export for selected Scroll apps"><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span>
+                                                </div>
+                                                <p>
+                                                    <br /><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1113776"></span><a name="AboutModelDevelopmentinVerilogA-1113776"></a>
+                                                </p>
+                                                <h1 id="AboutModelDevelopmentinVerilogA-AboutModelDevelopmentinVerilog-A">
+   About Model Development in Verilog-A
+  </h1><a name="AboutModelDevelopmentinVerilogA-AboutModelDevelopmentinVerilog-A"></a>
+                                                <p>
+   This topic provides a brief introduction to the Verilog-A language by means of examples. A complete description of the language is available in the
+   <a class="external-link" href="http://www.accellera.org/images/downloads/standards/v-ams/VAMS-LRM-2-3-1.pdf" rel="nofollow">
+    Accellera 2.3 Verilog-A standard
+   </a>
+   for analog modeling. A simple resistor is first defined; then enhanced with noise. Models for capacitors and inductors are then developed. These models use the
+   <code>
+    ddt()
+   </code>
+   operator to automatically generate the time-dependent functionality of the devices. Finally, a nonlinear diode is created demonstrating modeling of more complex behavior.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1113778"></span><a name="AboutModelDevelopmentinVerilogA-1113778"></a>
+                                                </p>
+                                                <h2 id="AboutModelDevelopmentinVerilogA-CreatingaLinearResistorinVerilog-A">
+   Creating a Linear Resistor in Verilog-A
+  </h2><a name="AboutModelDevelopmentinVerilogA-CreatingaLinearResistorinVerilog-A"></a>
+                                                <p>
+   The linear resistor in the example code below was introduced in the previous section. This provides a simple example of the anatomy of a Verilog-A model. Line numbers are used here to help explain the code, but should not be included in the actual source code.
+  </p>
+                                                <ol>
+                                                    <li value="1"><code>
+     `include "disciplines.vams"
+    </code>
+                                                    </li>
+                                                    <li value="2"><code>
+     module R(p,n);
+    </code>
+                                                    </li>
+                                                    <li value="3"><code>
+     electrical p,n;
+    </code>
+                                                    </li>
+                                                    <li value="4"><code>
+     parameter real R=50.0;
+    </code>
+                                                    </li>
+                                                    <li value="5"><code>
+     analog V(p,n) &lt;+ R * I(p,n);
+    </code>
+                                                    </li>
+                                                    <li value="6"><code>
+     endmodule
+    </code>
+                                                    </li>
+                                                </ol>
+                                                <p>
+   Line 1 instructs the compiler to insert the contents of the file
+   <em>
+    disciplines.vams
+   </em>
+   into the text. This file contains the definitions that make the Verilog-A specific for electrical modeling.
+  </p>
+                                                <p>
+   Line 2 and line 6 declares the module block, within which the model behavior will be defined. The model is named
+   <em>
+    R
+   </em>
+   and has two ports, named "p" and "n". Ports provide connections to other modules.
+  </p>
+                                                <p>
+   Line 3 declares that the ports p and n have the
+   <em>
+    nature
+   </em>
+   of those declared in the
+   <em>
+    electrical
+   </em>
+   discipline, as defined in the
+   <em>
+    disciplines.vams
+   </em>
+   header file. Natures and disciplines provide a way to map the general flows and potentials to particular domains, like electrical, thermal, or mechanical.
+  </p>
+                                                <p>
+   Line 4 declares one parameter, called R, and assigns it a default value of 50.0. The default value is set if the simulator is not passed an assignment in the netlist. In this case, the parameter is explicitly declared as
+   <em>
+    real
+   </em>
+   . However, if this attribute (which could also be
+   <em>
+    integer
+   </em>
+   ) is not provided, the language infers the type from the default value. In this case, 50.0 would indicate a real type, whereas 50 would indicate an integer. The parameter declaration also includes a simple method to restrict the range values. This is described in
+   <a href="#AboutModelDevelopmentinVerilogA-UsingParameterRangestoRestrictVerilog-AParameterValues">
+    Using Parameter Ranges to Restrict Verilog-A Parameter Values
+   </a>
+   Parameter values cannot be modified by the Verilog-A code. If the value needs to be modified, it should be assigned to an intermediate variable.
+  </p>
+                                                <p>
+   The keyword
+   <code>
+    analog
+   </code>
+   in line 5 declares the analog block. In this case, it is a single statement. However, statements can be grouped together using
+   <em>
+    begin/end
+   </em>
+   keywords to denote blocks which, in turn, can be named to allow local declarations. The simple, single statement includes several key aspects of the language. On the right-hand side, the access function
+   <code>
+    I(p,n)
+   </code>
+   returns the current flowing from node p to n. This is multiplied by the value of the parameter
+   <em>
+    R
+   </em>
+   . The "&lt;+" in line 5 is called the
+   <em>
+    contribution operator
+   </em>
+   and in this example contributes the value of the evaluated right-hand side expression as the voltage from p to n.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1111603"></span><a name="AboutModelDevelopmentinVerilogA-1111603"></a>
+                                                </p>
+                                                <h3 id="AboutModelDevelopmentinVerilogA-AddingNoisetotheVerilog-AResistor">
+   Adding Noise to the Verilog-A Resistor
+  </h3><a name="AboutModelDevelopmentinVerilogA-AddingNoisetotheVerilog-AResistor"></a>
+                                                <p>
+   Verilog-A provides several ways to add noise, including frequency-independent, frequency-dependent, and piecewise linear frequency-dependent noise. In case of a resistor, the thermal noise is
+   <code>
+    4*K*T/R
+   </code>
+   . The value of Boltzmann's constant is available in another header file,
+   <em>
+    constants.vams
+   </em>
+   , as a macro definition. Verilog-A supports preprocessor commands similar to other languages like C. Macros can be thought of as simple text substitutions, typically used to help make the code more readable and to gather all the constant definitions into one place. In the header file, the definition is
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     `define P_K 1.3806226e-23
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   whereas in the Verilog-A code, the value is used as
+   <em>
+    `P_K
+   </em>
+   . The temperature of the circuit is a value that can be changed outside of the model and so must be dynamically accessed. The Verilog-A models use system functions to retrieve information that the simulator can change. The temperature environment parameter function is
+   <code>
+    $temperature
+   </code>
+   and returns the circuit's ambient temperature in Kelvin.
+  </p>
+                                                <p>
+   The actual contribution of the noise is made with the
+   <code>
+    white_noise()
+   </code>
+   operator, which takes the noise contribution as an argument. Noise functions also allow for an optional string to label the noise contribution. Some simulators can sort the noise according to the labels.
+  </p>
+                                                <ol>
+                                                    <li value="1"><code>
+     `include "disciplines.vams"
+    </code>
+                                                    </li>
+                                                    <li value="2"><code>
+     `include "constants.vams"
+    </code>
+                                                    </li>
+                                                    <li value="3"><code>
+     module R(p,n);
+    </code>
+                                                    </li>
+                                                    <li value="4"><code>
+     electrical p,n;
+    </code>
+                                                    </li>
+                                                    <li value="5"><code>
+     parameter real R=50.0;
+    </code>
+                                                    </li>
+                                                    <li value="6"><code>
+     analog V(p,n) &lt;+ R * I(p,n) + white_noise(4 * `P_K * $temperature / R, "thermal");
+    </code>
+                                                    </li>
+                                                    <li value="7"><code>
+     endmodule
+    </code>
+                                                    </li>
+                                                </ol>
+                                                <p>
+   Note that line 6 of the example code above shows the added noise.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1111612"></span><a name="AboutModelDevelopmentinVerilogA-1111612"></a>
+                                                </p>
+                                                <h2 id="AboutModelDevelopmentinVerilogA-CreatingaLinearCapacitorandInductorinVerilog-A">
+   Creating a Linear Capacitor and Inductor in Verilog-A
+  </h2><a name="AboutModelDevelopmentinVerilogA-CreatingaLinearCapacitorandInductorinVerilog-A"></a>
+                                                <p>
+   Capacitors and inductors are implemented in a similar way to resistors. However, these devices have dependencies on time. In the case of a capacitor, the relationship is,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     I = C * dV / dt
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   In this case, the contribution is a current through the branch. The right-hand side includes a derivative with respect to time. This is implemented with the
+   <code>
+    ddt()
+   </code>
+   operator. The model then becomes,
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "disciplines.vams"
+module C(p,n);
+  inout p,n;
+  electrical p,n;
+  parameter real C=0 from [0:inf);
+  analog I(p,n) &lt;+ C * ddt(V(p,n));
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   This example also illustrates one use of the range functions in the parameter declaration. The "
+   <code>
+    from [0:inf)
+   </code>
+   " addition restricts the value of C from 0 up to, but not including, infinity.
+   <br />
+   Similarly, the inductor relationship is,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     V = L * dI/dt
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   and the source code is:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "disciplines.vams"
+module L(p,n);
+  inout p,n;
+  electrical p,n;
+  parameter real L=0 from [0:inf);
+  analog V(p,n) &lt;+ L * ddt(I(p,n));
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br /><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1113820"></span><a name="AboutModelDevelopmentinVerilogA-1113820"></a>
+                                                </p>
+                                                <h2 id="AboutModelDevelopmentinVerilogA-CreatingaNonlinearDiodeinVerilog-A">
+   Creating a Nonlinear Diode in Verilog-A
+  </h2><a name="AboutModelDevelopmentinVerilogA-CreatingaNonlinearDiodeinVerilog-A"></a>
+                                                <p>
+   Verilog-A is well-suited for describing nonlinear behavior. The basic PN junction diode behavior will be used as an example. The I-V relation is,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     I = Is * (exp(V/Vth - Rs * I) - 1)
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   The implementation is shown below.
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "disciplines.vams"
+`include "constants.vams"
+module diode(anode,cathode);
+  electrical anode, cathode;
+  parameter real Area = 1.0 from (0:inf]; //Area scaling factor
+  parameter real Is = 1e-14 from [0:inf]; //Saturation current [A]
+  parameter real Rs  = 0.0 from [0:inf);  // Series resistance [Ohm]
+  parameter real N = 1.0 from (0:inf);    //Ideality
+  parameter real Tt = 0.0 from [0:inf];   //Transit time [s]
+  parameter real Cjo = 0.0 from [0:inf];  //Junction capacitance [F]
+  parameter real Vj = 1.0 exclude 0;      //Junction potential [v]
+  parameter real M = 0.5 from [0:inf];    //Grading coef
+  parameter real Fc = 0.5 from [0:1];     //Forward bias junct parm
+  parameter real Kf = 0.0;                //Flicker noise coef
+  parameter real Af = 1.0 from (0:inf);   //Flicker noise exponent
+  real Vd, Id, Qd;
+  real f1, f2, f3, Fcp;
+  analog begin
+    f1 = (Vj/(1 - M))*(1 - pow((1 - Fc), 1 - M));
+    f2 = pow((1 - Fc), (1 + M));
+    f3 = 1 - Fc * (1 + M);
+    Fcp = Fc * Vj;
+    Vd = V(anode, cathode);
+    // Intrinsic diode
+    Id = Area * Is * (exp(Vd / (N * $vt) - Rs * I(anode, cathode) / $vt)- 1);
+    // Capacitance (junction and diffusion)
+    if (Vd &lt;= Fcp)
+      Qd = Tt * Id + Area * Cjo * Vj * (1 - pow((1 - Vd / Vj), (1 - M)))/(1 - M);
+    else
+      Qd = Tt * Id + Area * Cjo * (f1 + (1 / f2) * (f3 * (Vd - Fcp) + (0.5* M / Vj) * (Vd * Vd - Fcp * Fcp)));
+      I(anode, cathode) &lt;+ Id + ddt(Qd);
+end
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   The more complicated behavior requires more complicated code. Comments are added to help clarify the source. Verilog-A supports two types of comment characters. Text to the right of
+   <code>
+    //
+   </code>
+   and text between
+   <code>
+    /*
+   </code>
+   and
+   <code>
+    */
+   </code>
+   blocks will be ignored.
+  </p>
+                                                <p>
+   The analog block is extended from a single line to multiple lines using the
+   <em>
+    begin
+   </em>
+   and
+   <em>
+    end
+   </em>
+   keywords to indicate a compound expression. Intermediate variables are declared to make the code more readable. These variables are declared in the module but outside the analog block.
+  </p>
+                                                <p>
+   A new system function,
+   <em>
+    $vt
+   </em>
+   , is used. This function returns the thermal voltage calculated at an optional temperature. If no arguments are passed, the ambient circuit temperature is used. The mathematical operators
+   <code>
+    exp()
+   </code>
+   and
+   <code>
+    pow()
+   </code>
+   are also used. Verilog-A includes a wide range of mathematical functions.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1111621"></span><a name="AboutModelDevelopmentinVerilogA-1111621"></a>
+                                                </p>
+                                                <h3 id="AboutModelDevelopmentinVerilogA-AddinganInternalNodetotheDiode">
+   Adding an Internal Node to the Diode
+  </h3><a name="AboutModelDevelopmentinVerilogA-AddinganInternalNodetotheDiode"></a>
+                                                <p>
+   Note that the transcendental diode relationship includes the drop in the junction voltage due to the series resistance. An alternate method of implementing the series resistance would be to add an internal node. An internal node (also called a net) is added by simply declaring the node as electrical, without adding the node to the port list on the module declaration line. The diode code changes as shown:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "constants.vams"
+`include "disciplines.vams"
+module diode_va(anode,cathode);
+  electrical anode, cathode, internal;
+  parameter real Area = 1.0 from (0:inf]; //Area scaling factor
+  parameter real Is = 1e-14 from [0:inf]; //Saturation current [A]
+  parameter real Rs = 0.0 from [0:inf];   //Ohmic res [Ohm]
+  parameter real N = 1.0 from [0:inf];    //Emission coef
+  parameter real Tt = 0.0 from [0:inf];   //Transit time [s]
+  parameter real Cjo = 0.0 from [0:inf];  //Junction capacitance [F]
+  parameter real Vj = 1.0 exclude 0;      //Junction potential [v]
+  parameter real M = 0.5 from [0:inf];    //Grading coef
+  parameter real Kf = 0.0;                //Flicker noise coef
+  parameter real Af = 1.0 from (0:inf);   //Flicker noise exponent
+  parameter real Fc = 0.5 from [0:1];     //Forward bias junct parm
+  real Vd, Id, Qd;
+  real f1, f2, f3, Fcp;
+  analog begin
+    f1 = (Vj/(1 - M))*(1 - pow((1 - Fc), 1 - M));
+    f2 = pow((1 - Fc), (1 + M));
+    f3 = 1 - Fc * (1 + M);
+    Fcp = Fc * Vj;
+    Vd = V(anode, internal);
+    // Intrinsic diode
+    Id = Area * Is * ((Vd / (N * $vt)) - 1);
+    // Capacitance (junction and diffusion)
+    if (Vd &lt;= Fcp)
+      Qd = Tt * Id + Area * Cjo * Vj  * (1 - pow((1 - Vd / Vj), (1 - M)))/(1 - M);
+    else
+      Qd = Tt * Id + Area * Cjo * (f1 + (1 / f2) * (f3 * (Vd - Fcp) + (0.5 * M / Vj) * (Vd * Vd - Fcp * Fcp)));
+      I(anode, internal) &lt;+ Id + ddt(Qd);;
+      V(internal, cathode) &lt;+ I(internal, cathode) * (Rs / Area);
+end
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br /><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1111622"></span><a name="AboutModelDevelopmentinVerilogA-1111622"></a>
+                                                </p>
+                                                <h3 id="AboutModelDevelopmentinVerilogA-AddingNoisetotheDiode">
+   Adding Noise to the Diode
+  </h3><a name="AboutModelDevelopmentinVerilogA-AddingNoisetotheDiode"></a>
+                                                <p>
+   Noise is contributed in the same way as it was for the basic resistor. In this case, the shot noise equation shows the dependence on the diode current. The
+   <code>
+    1/f
+   </code>
+   noise is added using the
+   <code>
+    flicker_noise()
+   </code>
+   operator, which takes as arguments the value of the noise contribution as well as the exponent to apply to the 1/f term.
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">// Noise
+   I(anode, cathode) &lt;+ white_noise(2 * `P_Q * Id, "shot");
+   I(anode, cathode) &lt;+ flicker_noise(Kf * pow(Id, Af), 1.0, "flicker");      
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   The thermal noise from the series resistor is added in the same fashion as was done for the resistor. Note that the label is modified to indicate which resistor the noise is generated from. This is useful when the analysis supports Sort Noise by Name.
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">// Series resistor
+   V(internal, cathode) &lt;+ white_noise(4 * `P_K * T * (Rs / Area), "Rs");
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br /><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1113879"></span><a name="AboutModelDevelopmentinVerilogA-1113879"></a>
+                                                </p>
+                                                <h3 id="AboutModelDevelopmentinVerilogA-AddingLimitingtotheDiodeforBetterConvergence">
+   Adding Limiting to the Diode for Better Convergence
+  </h3><a name="AboutModelDevelopmentinVerilogA-AddingLimitingtotheDiodeforBetterConvergence"></a>
+                                                <p>
+   The exponential function used in the diode code can result in large swings in currents for small changes in voltage during the simulator's attempts to solve the circuit equations. A special operator,
+   <code>
+    limexp()
+   </code>
+   can be used instead of
+   <code>
+    exp()
+   </code>
+   to allow the simulator algorithms to limit the exponential in simulator-specific ways. The specific algorithm used is simulator dependent.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1111625"></span><a name="AboutModelDevelopmentinVerilogA-1111625"></a>
+                                                </p>
+                                                <h2 id="AboutModelDevelopmentinVerilogA-UsingParameterRangestoRestrictVerilog-AParameterValues">
+   Using Parameter Ranges to Restrict Verilog-A Parameter Values
+  </h2><a name="AboutModelDevelopmentinVerilogA-UsingParameterRangestoRestrictVerilog-AParameterValues"></a>
+                                                <p>
+   The parameter declaration allows the range of the parameter to be conveniently restricted. At runtime, the parameter value is checked to be sure it is acceptable. If it is not, the simulator issues an error and stops.
+  </p>
+                                                <p>
+   By default, parameters can range from -infinity to infinity. To restrict a range either the exclusive from ( : ) can be used, or the inclusive from [ : ] or a combination of the two. For example,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     from (0 : 10]
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   will restrict the parameter from 0 to 10, excluding the value of 0 but including the value of 10.
+  </p>
+                                                <p>
+   Exceptions to ranges are indicated by the
+   <em>
+    except
+   </em>
+   attribute. For example,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     except 5
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   will not allow the value of 5 to be passed.
+  </p>
+                                                <p>
+   Ranges and exceptions can be repeated and combined. For example,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     parameter real X = 20.0 from (-inf: -10] from [10:inf);
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   can also be written as,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     parameter real X = 20.0 exclude (-10:10);
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   If a simulator supports sweeping of parameters, the model developer will have to be aware of issues related to sweeping through ranges.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1111627"></span><a name="AboutModelDevelopmentinVerilogA-1111627"></a>
+                                                </p>
+                                                <h2 id="AboutModelDevelopmentinVerilogA-CreatingSourcesinVerilog-A">
+   Creating Sources in Verilog-A
+  </h2><a name="AboutModelDevelopmentinVerilogA-CreatingSourcesinVerilog-A"></a>
+                                                <p>
+   Analog sources can also be described with Verilog-A using the same concepts. Sources typically have some relation to the specific time during the simulation. The time is available from the
+   <code>
+    $abstime
+   </code>
+   function, which simply returns the real time (in seconds) of the simulation.
+  </p>
+                                                <p>
+   A simple sine wave source would have the form:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">`include "disciplines.vams"
+`include "constants.vams"
+module sine_wave(n1,n2);
+  electrical n1,n2;
+  parameter real gain = 1.0, freq = 1.0;
+  analog begin
+       V(n1,n2) &lt;+ gain * sin(2 * `M_PI * freq* $abstime);
+       $bound_step(0.05/freq);
+  end
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   The mathematical constant for PI is available as M_PI from the
+   <em>
+    constants.vams
+   </em>
+   header file. Note that the multiple parameter declarations were combined on one line as an alternative to declaring each on its own line.
+  </p>
+                                                <p>
+   The system function
+   <code>
+    $bound_step()
+   </code>
+   restricts the simulator's transient steps to the size
+   <code>
+    0.05/freq
+   </code>
+   . This allows the model to define the resolution of the signal to be controlled.
+  </p>
+                                                <p>
+   An additional use of defining sources in Verilog-A is to create test bench circuits as part of the model source file. This test module would provide sources with appropriate values and sweep ranges to allow the validation of the model to be contained within the code definition. This is a useful method of providing portable tests when distributing models among different simulators.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1111628"></span><a name="AboutModelDevelopmentinVerilogA-1111628"></a>
+                                                </p>
+                                                <h2 id="AboutModelDevelopmentinVerilogA-CreatingBehavioralModelsinVerilog-A">
+   Creating Behavioral Models in Verilog-A
+  </h2><a name="AboutModelDevelopmentinVerilogA-CreatingBehavioralModelsinVerilog-A"></a>
+                                                <p>
+   Verilog-A enables the user to trade off between various levels of abstraction. Certain circuit blocks lend themselves to simple analog descriptions, resulting in improvements in simulator execution time compared to transistor level descriptions. Since Verilog-A supports all of the analysis functionality, the user is typically only trading off simulation accuracy when using a behavioral description of a circuit.
+  </p>
+                                                <p>
+   The Phase-Locked Loop (PLL) is a good example of a circuit that can be represented in behavioral blocks.
+  </p>
+                                                <p>
+   The Verilog-A source code below demonstrates a PLL circuit. The PLL consists of a phase detector, an amplifier, and a voltage controlled oscillator. In this example, a swept sine source is used to test the circuit.
+  </p>
+                                                <p>
+   The VCO and phase detector are defined as:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">// Voltage Controlled Oscillator
+module vco(in, out);
+  inout in, out;
+  electrical in, out;
+  parameter real gain = 1, fc = 1;
+  analog V(out) &lt;+ sin(2*`M_PI*(fc*$abstime() + idt(gain*V(in))));
+endmodule
+
+// Phase Detector
+module phaseDetector(lo, rf, if_);
+  inout lo, rf, if_;
+  electrical lo, rf, if_;
+  parameter real gain=1;
+  analog function real chopper;
+    input sw, in;
+    real sw, in;
+    chopper = sw &gt; 0 ? in : -in;
+  endfunction // chopper
+  analog V(if_) &lt;+ gain*chopper(V(lo),V(rf));
+endmodule 
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   The modules use the keyword
+   <code>
+    inout
+   </code>
+   to declare that the ports are both input and output. Some simulators will check the consistency of connection of ports (useful when ports are declared input or output only). ADS will not.
+  </p>
+                                                <p>
+   The
+   <code>
+    phaseDetector
+   </code>
+   makes use of an analog function definition of chopper to simplify the code. Analog functions can be thought of sub-routines that can take many values but return one value. This is in contrast to macros, which should be thought of as in-line text substitutions.
+  </p>
+                                                <p>
+   The PLL module uses hierarchy to instantiate these components:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">// Phase Locked Loop
+module pll(rf, out, ref, if_);
+  inout rf, out, ref, if_;
+  electrical rf, out, ref, if_;
+  parameter real tau = 1m from (0:inf);
+  parameter real loopGain = 1 from (0:inf);
+  parameter real fc = 2.0k from (0:inf);
+  real cap, res ;
+  electrical lo;
+  phaseDetector #(.gain(2)) pd1(lo, rf, if_);
+  vco #(.gain(loopGain/2), .fc(fc) ) vco1(out, lo);
+  analog begin
+    cap = 150e-9;
+    res = tau / cap;
+    V(out, if_) &lt;+ I(out, if_)*res;
+    I(out, ref) &lt;+ ddt(cap*V(out,ref));
+  end
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   For testing, a swept frequency source is defined:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">module sinRampSrc(p,n);
+  inout p,n;
+  electrical p,n;
+  parameter real fStart = 1, hzPerSec = 1;
+  analog  V(p,n) &lt;+ sin(2*`M_PI*(fStart+hzPerSec/2*$abstime)*$abstime);
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   The modules are connected in a circuit (using appropriate AEL and symbol definitions) and a transient simulation is run.
+  </p>
+                                                <p><span class="confluence-embedded-file-wrapper"><img alt="" data-base-url="https://docs.keysight.com" data-image-src="/download/attachments/905249550/veriloga-4-1-1.gif" data-linked-resource-container-id="905249550" data-linked-resource-container-version="1" data-linked-resource-content-type="image/gif" data-linked-resource-default-alias="veriloga-4-1-1.gif" data-linked-resource-id="905249552" data-linked-resource-type="attachment" data-linked-resource-version="1" data-unresolved-comment-count="0" src="../docimages/veriloga-4-1-1.gif" /></span>
+                                                </p>
+                                                <h6 id="AboutModelDevelopmentinVerilogA-Phased-LockedLoopTestCircuit1113987">
+   Phased-Locked Loop Test Circuit
+   <span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1113987"></span><a name="AboutModelDevelopmentinVerilogA-1113987"></a></h6><a name="AboutModelDevelopmentinVerilogA-Phased-LockedLoopTestCircuit1113987"></a>
+                                                <p>
+   Plotting the Out node shows the VCO control voltage response to the swept frequency input, indicating the locking range of the circuit.
+  </p>
+                                                <p><span class="confluence-embedded-file-wrapper"><img alt="" data-base-url="https://docs.keysight.com" data-image-src="/download/attachments/905249550/veriloga-4-1-2.gif" data-linked-resource-container-id="905249550" data-linked-resource-container-version="1" data-linked-resource-content-type="image/gif" data-linked-resource-default-alias="veriloga-4-1-2.gif" data-linked-resource-id="905249551" data-linked-resource-type="attachment" data-linked-resource-version="1" data-unresolved-comment-count="0" src="../docimages/veriloga-4-1-2.gif" /></span>
+                                                </p>
+                                                <h6 id="AboutModelDevelopmentinVerilogA-VCOLockingRange1112568">
+   VCO Locking Range
+   <span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1112568"></span><a name="AboutModelDevelopmentinVerilogA-1112568"></a></h6><a name="AboutModelDevelopmentinVerilogA-VCOLockingRange1112568"></a>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="AboutModelDevelopmentinVerilogA-1111619"></span><a name="AboutModelDevelopmentinVerilogA-1111619"></a>
+                                                </p>
+                                                <h2 id="AboutModelDevelopmentinVerilogA-UsingHierarchytoManageModelComplexity">
+   Using Hierarchy to Manage Model Complexity
+  </h2><a name="AboutModelDevelopmentinVerilogA-UsingHierarchytoManageModelComplexity"></a>
+                                                <p>
+   In Verilog-A, a module may have an analog block, or may describe a circuit hierarchy, or may have both. Circuit topologies may be defined much like sub-circuits but with many additional features allowing repeated and parameterized structures.
+  </p>
+                                                <p>
+   Child device instantiation format is:
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     module_name #(.paramName(value),...) instance name(.portName(nodeName),...);
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   For example, the previous definitions of R, L, and C can be used with a new module to create an RLC filter.
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">module RLC(in, out);
+  electrical in, out, n1, n2;
+  parameter real RR = 50.0 from [0:inf);
+  parameter real LL = 0.0 from [0:inf);
+  parameter real CC = 0.0 from [0:inf);
+  R #(.R(RR)) R1(in, n1);
+  L #(.L(LL)) L1(n1, n2);
+  C #(.C(CC)) C1(n2, out);
+endmodule
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   The RLC module creates a series R-L-C from the input port
+   <em>
+    in
+   </em>
+   to the output port out, using two internal nodes, n1 and n2. The RLC module's parameter values of RR, LL, and CC are passed to the modules R, L, and C's parameters R, L, and C via #(.R(RR)), #(.L(LL)), and #(.C(CC)).
+  </p>
+                                                <form action="https://feedback.software.keysight.com/pathwave/feedback/form" id="FeedForm" method="post" onsubmit="target_popup(this)">
+                                                    <input id="spacename" name="spacename" type="hidden" value="ADS.2025update2" />
+                                                    <input id="spacekey" name="spacekey" type="hidden" value="ads2025update2" />
+                                                    <input id="pagetitle" name="pagetitle" type="hidden" value="About Model Development in Verilog-A" />
+                                                    <input id="pageid" name="pageid" type="hidden" value="905249550" />
+                                                    <input id="DocGroup" name="DocGroup" type="hidden" value="PSS" />
+                                                    <input id="feedbacktype" name="feedbacktype" type="hidden" value="offline" />
+                                                    <div class="lozenge-body" id="Unpluggedfeedbackbar" style="width:320px;padding-top: 20px;">
+    Was this page helpful ?
+    <input class="washelpful" name="washelpful" type="submit" value="Yes" /><input class="washelpful" name="washelpful" type="submit" value="No" /></div>
+                                                </form>
+                                                <div id="buildmetadata" style="display:none">
+                                                    <img id="productlogo" src="../docimages/product_logo.png">
+                                                        <li id="productname">
+                                                        </li>
+                                                        <li id="productrelease">
+                                                        </li>
+                                                        <li id="buildtimestamp">
+     04:29:02, Mon 02/24/2025
+    </li>
+                                                        <li id="showpdflink">
+     1
+    </li>
+                                                    </img>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--On this page -->
+                                        <div id="onthispage_wrapper">
+                                            <div class="ks-onthispage" id="stickytoc"><span id="onthispageheader">On this page</span>
+                                                <div class="ks-stickytoc js-toc" id="onthispage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Previous Next Links-->
+                                    <p>
+                                        <div class="buttons popup-container clearfix topicToolbarProxy _Skins_unpluggedPreviousNextLinks mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic;">
+                                            <div class="button-group-container-left">
+                                                <button class="button needs-pie previous-topic-button" title="Navigate previous" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate previous">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                                <button class="button needs-pie next-topic-button" title="Navigate next" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate next">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </p>
+                                    <!--Feedback-->
+                                    <script>/* <![CDATA[ */
+			function target_popup(form) {
+			window.open(
+			'',
+			'FeedForm',
+			'width=950,height=700,resizeable,scrollbars,toolbar=no,status=no,location=no,left=0,top=0,directori' +
+			'es=no'
+			);
+			form.target = 'FeedForm';
+			}
+		/* ]]> */</script>
+                                    <!--
+        <form id="FeedForm" action="https://feedback.software.keysight.com/pathwave/feedback/form" method="post" onsubmit="target_popup(this)">
+            <input type="hidden" name="spacename" value="" />
+            <input type="hidden" name="spacename" value="$space.name" />
+            <input type="hidden" name="spacekey" value="$space.key" />
+            <input type="hidden" name="pageid" value="$page.id" />
+            <input type="hidden" name="wikilogin" value="$user.email" />
+            <input type="hidden" name="DocGroup" value="eesof" />
+            <input type="hidden" name="feedbacktype" value="ONLINE" />
+            <div id="feedbackbar" class="lozenge-body" style="width:320px;padding-top: 20px;">
+                Was this page helpful ?
+                <input type="submit" class="washelpful" name="washelpful" value="Yes"/>
+                <input type="submit" class="washelpful" name="washelpful" value="No"/>
+            </div>
+        </form>
+     -->
+                                    <!--Footer-->
+                                    <div id="footer">
+                                        <div id="copyright">
+                                            <ul>
+                                                <li>
+                    © Keysight Technologies 2000–<span class="mc-variable unplugged.CopyrightYearRangeYearTo variable">2025</span><![CDATA[
+                    ]]></li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/privacy.html" class="dtmData">Privacy</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/terms-of-use.html" class="dtmData">Terms</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/support/site-feedback.html" class="dtmData">Feedback</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--Back To Top-->
+                                    <button onclick="backToTop()" id="backtotop" title="Go to top">
+Top</button>
+                                    <!--Variables--><span class="mc-variable unplugged.BuildTimeStamp variable">11:51 PM, Sunday, Feb 23, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><a data-close="true"></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

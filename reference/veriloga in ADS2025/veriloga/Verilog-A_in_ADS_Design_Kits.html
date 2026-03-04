@@ -1,0 +1,595 @@
+﻿<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_unplugged" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-toc-path="Home|Component Libraries|Verilog-A|Using Verilog-A in Advanced Design System" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> </meta>
+        <meta Name="header-title" content=""> </meta>
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta charset="utf-8" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>
+   Verilog-A in ADS Design Kits
+  </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/foundation.6.2.3.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/unplugged.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/normalize.css" />
+        <link rel="stylesheet" id="stylesheet" href="../../Resources/Stylesheets/darktheme.css" disabled="Disabled" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/load_first.css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/github.min.css" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../Resources/Scripts/PIE.htc');
+}
+
+</style>
+        <style>
+        </style>
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script language="JavaScript" src="../CallFeedBack.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
+        </script>
+        <script src="../../../Resources/Scripts/purify.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.6.2.3_custom.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/config.js">
+        </script>
+        <script src="../../Resources/Scripts/photoswipe.js">
+        </script>
+        <script src="../../Resources/Scripts/unplugged.min.js">
+        </script>
+        <script src="../../Resources/Scripts/highlight.min.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-left" role="navigation" id="offCanvas" data-off-canvas="" data-position="left" data-mc-ignore="true">
+                    <ul class="off-canvas-accordion vertical menu off-canvas-list" data-accordion-menu="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" role="banner" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="only screen and (max-device-width: 300px)" data-mc-ignore="true"><a class="skip-to-content fluid-skip showOnFocus" href="#">Skip To Main Content</a>
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <div class="central-account-wrapper">
+                                        <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                            <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                                <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="menu-icon" aria-label="Show Navigation Panel" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../support/Home.html" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" role="navigation" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="central-account-wrapper">
+                                    <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                        <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                            <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" aria-label="Search Field" placeholder="Search" />
+                                                <div class="search-filter-wrapper"><span class="invisible-label" id="search-filters-label">Filter: </span>
+                                                    <div class="search-filter" aria-haspopup="true" aria-controls="sf-content" aria-expanded="false" aria-label="Search Filter" title="All Files" role="button" tabindex="0">
+                                                    </div>
+                                                    <div class="search-filter-content" id="sf-content">
+                                                        <ul>
+                                                            <li>
+                                                                <button class="mc-dropdown-item" aria-labelledby="search-filters-label filterSelectorLabel-00001"><span id="filterSelectorLabel-00001">All Files</span>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search" role="button" tabindex="0"><span class="invisible-label">Submit Search</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <nav class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </nav>
+                            <div class="body-container">
+                                <div data-mc-content-body="True">
+                                    <!--Toolbar-->
+                                    <div id="header-bottom" style="visibility:hidden">
+                                        <div id="header-bottom-wrapper">
+                                            <div id="breadcrumbs">
+                                                <div class="nocontent">
+                                                    <div class="MCBreadcrumbsBox_breadcrumbsProxy_0 breadcrumbs" role="navigation" aria-label="Breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="toolbar">
+                                                <button id="pdfbutton" class="btn scroll-pdf-launcher featurebutton tippy" tooltip-content="Download PDF (P)"><i class="material-icons material-icons-filled" style="font-size:18px">picture_as_pdf</i><span id="pdficontext" class="featurebarlabels">PDF</span>
+                                                </button>
+                                                <button id="themebutton" class="themetoggle featurebutton tippy" type="button" tooltip-content="Change Theme Settings (T)"><i class="material-icons material-icons-filled" style="font-size:18px">invert_colors</i><span id="themeicontext" class="featurebarlabels">Theme</span>
+                                                </button>
+                                                <button id="feedbackbutton" class="featurebutton tippy" tooltip-content="Share Feedback (F)"><i class="material-icons material-icons-round" style="font-size:18px">rate_review</i><span id="feedbackicontext" class="featurebarlabels">Feedback</span>
+                                                </button>
+                                                <button id="sidebarlightboxbutton" class="btn btn-info featurebutton tippy" type="button" tooltip-content="Display TOC ([)"><i class="material-icons material-icons-outlined" style="font-size:18px">menu</i><span id="contentsicontext" class="featurebarlabels">Contents</span>
+                                                </button>
+                                                <button id="viewonlinebutton" class="btn btn-info featurebutton tippy" tooltip-content="View Online Version (W)"><i class="material-icons" style="font-size:18px">public</i><span id="viewonlineicontext" class="featurebarlabels">Online</span>
+                                                </button>
+                                                <div class="helpmenu featurebutton">
+                                                    <button id="helpbutton"><i class="material-icons material-icons-round" style="font-size:18px">help_center</i><span id="helpicontext" class="featurebarlabels">Help</span>
+                                                    </button>
+                                                    <div class="help-content featurebutton" id="helpcontent"><a id="helplink1" href=""></a><a id="helplink2" href=""></a><a id="helplink3" href=""></a><a id="launchtour">Help Tour</a><a id="keyboardshortcuts">Keyboard Shortcuts (?)</a><a id="qrcodegen">QR Code (Q)</a><a id="about">About</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Uncomment the following Breadcrumbs code if using JS to insert toolbar and breadcrumbs and then comment the Toolbar snippet above-->
+                                    <!--Breadcrumbs-->
+                                    <!--
+            <div id="crumbs">
+            <MadCap:breadcrumbsProxy class="breadcrumbsProxy" />
+        </div>
+		 -->
+                                    <div id="unplugged-content">
+                                        <!--Content -->
+                                        <div class="js-toc-content">
+                                            <div role="main" id="mc-main-content">
+                                                <div class="conf-macro output-block" data-hasbody="true" data-macro-name="scroll-ignore" style=" background-color: #efefef" title="The content of this Scroll Ignore macro will not be part of the export for selected Scroll apps"><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span>
+                                                </div>
+                                                <p>
+                                                    <br /><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="VerilogAinADSDesignKits-1183440"></span><a name="VerilogAinADSDesignKits-1183440"></a>
+                                                </p>
+                                                <h1 id="VerilogAinADSDesignKits-Verilog-AinADSDesignKits">
+   Verilog-A in ADS Design Kits
+  </h1><a name="VerilogAinADSDesignKits-Verilog-AinADSDesignKits"></a>
+                                                <p>
+   This topic describes the steps necessary to distribute Verilog-A models in an ADS Design Kit either as Verilog-A source or as a set of compiled libraries. Design Kits provide a convenient way to distribute Verilog-A models and the steps are very similar to the steps to create conventional Design Kits.
+  </p>
+                                                <p>
+   For an overview of the process and the specific steps involved in creating an ADS Design Kit, refer to the
+   <a href="../dkarch/Design_Kit_Development.html">
+    Design Kit Development
+   </a>
+   documentation.
+  </p>
+                                                <p>
+   Verilog-A modules in a Design Kit are automatically made available to workspaces using that design kit. Verilog-A files must be placed in the design kit
+   <code>
+    veriloga
+   </code>
+   directory:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">design_kit/veriloga
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+   If the Verilog-A source will be shipped in the kit then this is all that needs to be done since the design kit Verilog-A directory is in the simulators Verilog-A auto-compile path. When a simulation is run all Verilog-A files in the auto-compile path are compiled if required and then loaded into the system. The auto-compile path is specified in hpeesofsim.cfg. When a design kit is made part of a project ADS automatically creates a config file with the design kit Verilog-A directory added to the auto-compile path.
+  </p>
+                                                <p>
+   With factory settings the following directories are in the path:
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">CURRENT_PROJECT/veriloga
+DESIGN_KIT/veriloga
+$HOME/hpeesof/veriloga
+$HPEESOF_DIR/custom/veriloga
+$HPEESOF_DIR/veriloga</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+   Each Verilog-A file in each directory is compiled; the file must have a .va extension. A compilation error in any directory will stop the simulation. The path is searched from the top. Modules with the same name higher in the path hide those lower in the path. What's important for design kits is to understand that if the user places a module in the Verilog-A directory of their current project and it has the same name as one in a design kit then the users module will be used over a module of the same name in the design kit.
+  </p>
+                                                <h2 id="VerilogAinADSDesignKits-EnvironmentSetuptoRunVerilog-ACompiler">
+   Environment Setup to Run&#160;Verilog-A Compiler
+  </h2><a name="VerilogAinADSDesignKits-EnvironmentSetuptoRunVerilog-ACompiler"></a>
+                                                <p>
+   The Verilog-A compiler,&#160;vamscomp,&#160;is run from the command line. If the system is already configured to run ADS tools from the command line then the following setup may be ignored. Below we assume an ADS installation directory when setting HPEESOF_DIR.
+  </p>
+                                                <h6 id="VerilogAinADSDesignKits-Linux(bashsyntax)">
+   Linux (bash syntax)
+  </h6><a name="VerilogAinADSDesignKits-Linux(bashsyntax)"></a>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">export HPEESOF_DIR=&lt;ADS_Install_DIR&gt;
+export TIBURON_HOME=$HPEESOF_DIR/tiburonda
+export PATH=$HPEESOF_DIR/bin:$PATH
+export LD_LIBRARY_PATH=$HPEESOF_DIR/lib/linux_x86_64/:$LD_LIBRARY_PATH</pre>
+                                                    </div>
+                                                </div>
+                                                <h6 id="VerilogAinADSDesignKits-Windows">
+   Windows
+  </h6><a name="VerilogAinADSDesignKits-Windows"></a>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">set HPEESOF_DIR=&lt;ADS_Install_DIR&gt;
+set TIBURON_HOME=%HPEESOF_DIR%\tiburonda
+set PATH=%HPEESOF_DIR%\bin;%PATH%</pre>
+                                                    </div>
+                                                </div>
+                                                <h2 id="VerilogAinADSDesignKits-ProtectingIPbyDistributingVerilog-AinCompiledForm">
+   Protecting IP by Distributing Verilog-A in Compiled Form
+  </h2><a name="VerilogAinADSDesignKits-ProtectingIPbyDistributingVerilog-AinCompiledForm"></a>
+                                                <p>
+   When sharing a Verilog-A model with a third party, the model may be provided in compiled form only with no Verilog-A source provided. The compiled model is instantiated and simulated in exactly the same way as a model provided with source. When the system is processing a directory in the Verilog-A auto compile path, if it detects the directory contains pre-compiled modules it will load these modules into the system.
+   <span style="font-size: 10.0pt;line-height: 13.0pt;">
+    A directory is identified as being configured to load pre-compiled modules when the system sees a design database called work.db in a directory named with the current Tiburon-DA version number. For example for ADS 2019 this is,
+   </span></p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">2.91.101/work.db</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+   If this file is present then the system assumes this is a valid compiled Verilog-A directory. It will open the database and load all pre-compiled Verilog-A modules into the system making them ready for simulation.&#160;If the database load fails then this is a fatal error, the system will stop the simulation. Any VA files in the directory are ignored.
+  </p>
+                                                <h3 id="VerilogAinADSDesignKits-Creatingacompileddatabaseandplatformlibraries">
+   Creating a compiled database and platform libraries
+  </h3><a name="VerilogAinADSDesignKits-Creatingacompileddatabaseandplatformlibraries"></a>
+                                                <p>
+   The Verilog-A compiler, vamscomp, is used to create a compiled database. One or more files may be compiled into a compiled database; there is always one database per directory.
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default"># Go to the directory of interest
+&gt;cd design_kit/veriloga&#160;
+# Remove any existing compiled database
+&gt;rm -rf 2.91.101
+# Run the compiler                   
+&gt;vamscomp -distribute -amswork . file.va file2.va file3.va
+Keysight Technologies Verilog-A Compiler Version 2.91.101.041818
+Copyright 2018, Keysight Technologies.
+Making the database ready for distribution.
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+   Options:
+  </p>
+                                                <ul>
+                                                    <li>
+    -distribute option to strip all sources and encrypt any remaining information required for simulation.
+   </li>
+                                                    <li>
+    -amswork option to name the output directory. For ADS design kits, if we are in the kit Verilog-A
+    <span>
+     directory then we need the db directly in this&#160;directory&#160;and so the argument to this option is&#160;always&#160;".".
+    </span></li>
+                                                    <li>
+    the list of sources to compile
+   </li>
+                                                    <li>
+    you must completely delete the compiled database directory before running the compiler.
+   </li>
+                                                    <li><u><strong>
+      The distribute option must be used.
+     </strong></u>
+    It strips all IP out of the database and encrypts all remaining information. The only information available in clear text in the database after calling -distribute are the generic Verilog-A natures and disciplines. Once the -distribute option is used the compiler will no longer run successfully in this directory.
+   </li>
+                                                </ul>
+                                                <p><span>
+    The original Verilog-A source may now be removed. When the simulator is processing this directory it will find the database, open it, and load the compiled modules making them available for simulation.
+   </span>
+                                                </p>
+                                                <h3 id="VerilogAinADSDesignKits-CompiledVerilog-ADirectoryStructure">
+   Compiled Verilog-A Directory Structure
+  </h3><a name="VerilogAinADSDesignKits-CompiledVerilog-ADirectoryStructure"></a>
+                                                <p>
+   Inspecting the
+   <code>
+    veriloga
+   </code>
+   directory, the module database and the compiled module library for this directory will be available. These are the only files required. Any other log files may be deleted. When supporting a single ADS release, with a single platform, only two files will be present. All others may be deleted.
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">veriloga/2.91.101/work.db
+veriloga/2.91.101/analog_files/lib.linux_x86_64/lib_tmc.so
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+   If both Linux and Windows are compiled then we will see the following structure; with one database file used on all platforms and one shared library per platform, typically one for Linux 64 and one for Windows 64.
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">veriloga/2.91.101/work.db
+veriloga/2.91.101/analog_files/lib.linux_x86_64/lib_tmc.so
+veriloga/2.91.101/analog_files/lib.win64/lib_tmc.dll</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+   If multiple ADS releases are supported then there will be a directory per ADS release as follows
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">veriloga/2.80.910/...  # 2014_01
+veriloga/2.90.320/...  # 2015_01
+veriloga/2.91.101/...  # 2019</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+   When ADS boots it will look in the associated version directory to load the compiled models from that directory. Note that at the time of writing the release version for 2019 is 2.91.101. This may change in the final release.
+  </p>
+                                                <h3 id="VerilogAinADSDesignKits-SupportingMultiplePlatforms">
+   Supporting Multiple Platforms
+  </h3><a name="VerilogAinADSDesignKits-SupportingMultiplePlatforms"></a>
+                                                <p>
+   The compiler must be run and platform-specific compiled libraries created for each supported platform. Compiles must always be done starting in a clean directory. The procedure to follow is as follows
+  </p>
+                                                <ol>
+                                                    <li value="1">
+    Run the compiler on one platform, creating the database and the shared library for this platform, if we ran on Linux we will see the following two files
+    <br /><pre>...2.91.101/work.db
+...2.91.101/analog_files/lib.linux_x86_64/lib_tmc.so<br /><span style="font-size: 10.0pt;line-height: 13.0pt;font-family: Arial , Helvetica , FreeSans , sans-serif;">&#160;</span></pre></li>
+                                                    <li value="2">
+                                                        <p>
+     Copy the source to another directory and do the same compile on win64
+     <br /></p>
+                                                    </li>
+                                                    <li value="3">
+    Copy the win64 DLL:
+    <br /><pre>...2.91.101/analog_files/lib.win64/lib_tmc.dll</pre></li>
+                                                    <li value="4">
+    Once complete we will have 3 files in total used to support all ADS platforms; the database which is platform independent and shared libraries, one per platform.
+    <br /><pre>...2.91.101/work.db
+...2.91.101/analog_files/lib.linux_x86_64/lib_tmc.so<br />...2.91.101/analog_files/lib.win64/lib_tmc.dll</pre><pre><br /></pre></li>
+                                                </ol>
+                                                <h3 id="VerilogAinADSDesignKits-FinalChecksBeforeDistributingtheCompiledKit">
+   Final Checks Before Distributing the Compiled Kit
+  </h3><a name="VerilogAinADSDesignKits-FinalChecksBeforeDistributingtheCompiledKit"></a>
+                                                <ol>
+                                                    <li value="1">
+    Compiled Verilog-A directories should contain no Verilog-A source files; check that only the design database and the shared libraries are present
+   </li>
+                                                    <li value="2">
+                                                        <p>
+     The compiler -distribute option cannot be omitted otherwise IP will exist in the database in clear text. Verify that there is no IP in the database by dumping and visually inspecting the file
+    </p>
+                                                        <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                            <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">sqlite3 ...veriloga/2.91.101/work.db .dump
+</pre>
+                                                            </div>
+                                                        </div>
+                                                        <p>
+                                                            <br />
+     It should contain only generic discipline information and encrypted fragments.
+    </p>
+                                                    </li>
+                                                </ol>
+                                                <h2 id="VerilogAinADSDesignKits-ProtectingIPbyencryptingVerilog-Acode">
+   Protecting IP by encrypting Verilog-A code
+  </h2><a name="VerilogAinADSDesignKits-ProtectingIPbyencryptingVerilog-Acode"></a>
+                                                <p>
+   Verilog-A code can be encrypted through
+   <code>
+    -encrypt
+   </code>
+   option of
+   <code>
+    vamscomp
+   </code>
+   tool. The encrypted code is simulated in the usual way.
+  </p>
+                                                <div class="conf-macro output-block" data-hasbody="true" data-macro-name="lp_note">
+                                                    <div class="table-wrap">
+                                                        <table class="note_table confluenceTable">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="note_td_one confluenceTd" style="width:56px; border:none !important;"><span class="confluence-embedded-file-wrapper"><img alt="" data-base-url="https://docs.keysight.com" data-image-src="/download/attachments/4402026/note.svg" data-linked-resource-container-id="4402026" data-linked-resource-container-version="6" data-linked-resource-content-type="image/svg+xml" data-linked-resource-default-alias="note.svg" data-linked-resource-id="733725370" data-linked-resource-type="attachment" data-linked-resource-version="2" data-unresolved-comment-count="0" src="../docimages/note.svg" /></span>
+                                                                    </td>
+                                                                    <td class="note_td_two confluenceTd" style="vertical-align:top !important; border:none !important;">
+                                                                        <ul>
+                                                                            <li>
+          Verilog-A file encrypted in versions prior to ADS 2019 cannot be used in ADS 2019 or later.
+         </li>
+                                                                            <li>
+          When
+          <code>
+           -encrypt
+          </code>
+          is used with other vamscomp options, only -encrypt option is used and other options are ignored.
+         </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <h4 id="VerilogAinADSDesignKits-CalltheencryptiontoolonaVerilog-Afile">
+                                                    <br />
+   Call the encryption tool on a Verilog-A file
+  </h4><a name="VerilogAinADSDesignKits-CalltheencryptiontoolonaVerilog-Afile"></a>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">&gt;vamscomp -encrypt test.va
+Keysight Technologies Verilog-A Compiler Version 2.91.101.041818
+Copyright 2018, Keysight Technologies.
+Created verilog encrypted file "test.vax"
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+   The .vax file may be placed in the design kit Verilog-A directory and the original Verilog-A may be deleted.
+  </p>
+                                                <p>
+   When the Verilog-A code contains an analog block then generated C representing parts of the model will exist on disk in the Verilog-A object cache. This code is compiled by gcc and then deleted. Compilation only happens if the contents of the file are uniquely different than existing compiled modules available in the Verilog-A object cache. The C code does not contain the original Verilog-A source; however, it is derived from that source. This should be considered when using encryption to share IP.
+  </p>
+                                                <p>
+   Once encrypted the .vax file will run in all future versions of ADS, GoldenGate and any simulator integrating the Keysight Verilog-A simulation component.
+  </p>
+                                                <p>
+                                                    <br />
+                                                </p>
+                                                <form action="https://feedback.software.keysight.com/pathwave/feedback/form" id="FeedForm" method="post" onsubmit="target_popup(this)">
+                                                    <input id="spacename" name="spacename" type="hidden" value="ADS.2025update2" />
+                                                    <input id="spacekey" name="spacekey" type="hidden" value="ads2025update2" />
+                                                    <input id="pagetitle" name="pagetitle" type="hidden" value="Verilog-A in ADS Design Kits" />
+                                                    <input id="pageid" name="pageid" type="hidden" value="905249554" />
+                                                    <input id="DocGroup" name="DocGroup" type="hidden" value="PSS" />
+                                                    <input id="feedbacktype" name="feedbacktype" type="hidden" value="offline" />
+                                                    <div class="lozenge-body" id="Unpluggedfeedbackbar" style="width:320px;padding-top: 20px;">
+    Was this page helpful ?
+    <input class="washelpful" name="washelpful" type="submit" value="Yes" /><input class="washelpful" name="washelpful" type="submit" value="No" /></div>
+                                                </form>
+                                                <div id="buildmetadata" style="display:none">
+                                                    <img id="productlogo" src="../docimages/product_logo.png">
+                                                        <li id="productname">
+                                                        </li>
+                                                        <li id="productrelease">
+                                                        </li>
+                                                        <li id="buildtimestamp">
+     04:19:45, Mon 02/24/2025
+    </li>
+                                                        <li id="showpdflink">
+     1
+    </li>
+                                                    </img>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--On this page -->
+                                        <div id="onthispage_wrapper">
+                                            <div class="ks-onthispage" id="stickytoc"><span id="onthispageheader">On this page</span>
+                                                <div class="ks-stickytoc js-toc" id="onthispage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Previous Next Links-->
+                                    <p>
+                                        <div class="buttons popup-container clearfix topicToolbarProxy _Skins_unpluggedPreviousNextLinks mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic;">
+                                            <div class="button-group-container-left">
+                                                <button class="button needs-pie previous-topic-button" title="Navigate previous" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate previous">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                                <button class="button needs-pie next-topic-button" title="Navigate next" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate next">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </p>
+                                    <!--Feedback-->
+                                    <script>/* <![CDATA[ */
+			function target_popup(form) {
+			window.open(
+			'',
+			'FeedForm',
+			'width=950,height=700,resizeable,scrollbars,toolbar=no,status=no,location=no,left=0,top=0,directori' +
+			'es=no'
+			);
+			form.target = 'FeedForm';
+			}
+		/* ]]> */</script>
+                                    <!--
+        <form id="FeedForm" action="https://feedback.software.keysight.com/pathwave/feedback/form" method="post" onsubmit="target_popup(this)">
+            <input type="hidden" name="spacename" value="" />
+            <input type="hidden" name="spacename" value="$space.name" />
+            <input type="hidden" name="spacekey" value="$space.key" />
+            <input type="hidden" name="pageid" value="$page.id" />
+            <input type="hidden" name="wikilogin" value="$user.email" />
+            <input type="hidden" name="DocGroup" value="eesof" />
+            <input type="hidden" name="feedbacktype" value="ONLINE" />
+            <div id="feedbackbar" class="lozenge-body" style="width:320px;padding-top: 20px;">
+                Was this page helpful ?
+                <input type="submit" class="washelpful" name="washelpful" value="Yes"/>
+                <input type="submit" class="washelpful" name="washelpful" value="No"/>
+            </div>
+        </form>
+     -->
+                                    <!--Footer-->
+                                    <div id="footer">
+                                        <div id="copyright">
+                                            <ul>
+                                                <li>
+                    © Keysight Technologies 2000–<span class="mc-variable unplugged.CopyrightYearRangeYearTo variable">2025</span><![CDATA[
+                    ]]></li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/privacy.html" class="dtmData">Privacy</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/terms-of-use.html" class="dtmData">Terms</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/support/site-feedback.html" class="dtmData">Feedback</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--Back To Top-->
+                                    <button onclick="backToTop()" id="backtotop" title="Go to top">
+Top</button>
+                                    <!--Variables--><span class="mc-variable unplugged.BuildTimeStamp variable">11:51 PM, Sunday, Feb 23, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><a data-close="true"></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,618 @@
+﻿<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_unplugged" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-toc-path="Home|Component Libraries|Verilog-A|Using Verilog-A in Advanced Design System" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> </meta>
+        <meta Name="header-title" content=""> </meta>
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta charset="utf-8" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>
+   Using Verilog-A with the ADS Analog RF Simulator (ADSsim)
+  </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/foundation.6.2.3.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Fluid/Stylesheets/Print.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/unplugged.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/normalize.css" />
+        <link rel="stylesheet" id="stylesheet" href="../../Resources/Stylesheets/darktheme.css" disabled="Disabled" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/load_first.css" />
+        <link rel="stylesheet" href="../../Resources/Stylesheets/github.min.css" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../Resources/Scripts/PIE.htc');
+}
+
+</style>
+        <style>
+        </style>
+        <link rel="apple-touch-icon" sizes="167x167" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script language="JavaScript" src="../CallFeedBack.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
+        </script>
+        <script src="../../../Resources/Scripts/purify.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.6.2.3_custom.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
+        </script>
+        <script src="../../Resources/Scripts/config.js">
+        </script>
+        <script src="../../Resources/Scripts/photoswipe.js">
+        </script>
+        <script src="../../Resources/Scripts/unplugged.min.js">
+        </script>
+        <script src="../../Resources/Scripts/highlight.min.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-left" role="navigation" id="offCanvas" data-off-canvas="" data-position="left" data-mc-ignore="true">
+                    <ul class="off-canvas-accordion vertical menu off-canvas-list" data-accordion-menu="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" role="banner" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="only screen and (max-device-width: 300px)" data-mc-ignore="true"><a class="skip-to-content fluid-skip showOnFocus" href="#">Skip To Main Content</a>
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <div class="central-account-wrapper">
+                                        <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                            <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                                <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="menu-icon" aria-label="Show Navigation Panel" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../support/Home.html" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" role="navigation" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="central-account-wrapper">
+                                    <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                                        <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings">Settings</a>
+                                            <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" aria-label="Search Field" placeholder="Search" />
+                                                <div class="search-filter-wrapper"><span class="invisible-label" id="search-filters-label">Filter: </span>
+                                                    <div class="search-filter" aria-haspopup="true" aria-controls="sf-content" aria-expanded="false" aria-label="Search Filter" title="All Files" role="button" tabindex="0">
+                                                    </div>
+                                                    <div class="search-filter-content" id="sf-content">
+                                                        <ul>
+                                                            <li>
+                                                                <button class="mc-dropdown-item" aria-labelledby="search-filters-label filterSelectorLabel-00001"><span id="filterSelectorLabel-00001">All Files</span>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search" role="button" tabindex="0"><span class="invisible-label">Submit Search</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <nav class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </nav>
+                            <div class="body-container">
+                                <div data-mc-content-body="True">
+                                    <!--Toolbar-->
+                                    <div id="header-bottom" style="visibility:hidden">
+                                        <div id="header-bottom-wrapper">
+                                            <div id="breadcrumbs">
+                                                <div class="nocontent">
+                                                    <div class="MCBreadcrumbsBox_breadcrumbsProxy_0 breadcrumbs" role="navigation" aria-label="Breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="toolbar">
+                                                <button id="pdfbutton" class="btn scroll-pdf-launcher featurebutton tippy" tooltip-content="Download PDF (P)"><i class="material-icons material-icons-filled" style="font-size:18px">picture_as_pdf</i><span id="pdficontext" class="featurebarlabels">PDF</span>
+                                                </button>
+                                                <button id="themebutton" class="themetoggle featurebutton tippy" type="button" tooltip-content="Change Theme Settings (T)"><i class="material-icons material-icons-filled" style="font-size:18px">invert_colors</i><span id="themeicontext" class="featurebarlabels">Theme</span>
+                                                </button>
+                                                <button id="feedbackbutton" class="featurebutton tippy" tooltip-content="Share Feedback (F)"><i class="material-icons material-icons-round" style="font-size:18px">rate_review</i><span id="feedbackicontext" class="featurebarlabels">Feedback</span>
+                                                </button>
+                                                <button id="sidebarlightboxbutton" class="btn btn-info featurebutton tippy" type="button" tooltip-content="Display TOC ([)"><i class="material-icons material-icons-outlined" style="font-size:18px">menu</i><span id="contentsicontext" class="featurebarlabels">Contents</span>
+                                                </button>
+                                                <button id="viewonlinebutton" class="btn btn-info featurebutton tippy" tooltip-content="View Online Version (W)"><i class="material-icons" style="font-size:18px">public</i><span id="viewonlineicontext" class="featurebarlabels">Online</span>
+                                                </button>
+                                                <div class="helpmenu featurebutton">
+                                                    <button id="helpbutton"><i class="material-icons material-icons-round" style="font-size:18px">help_center</i><span id="helpicontext" class="featurebarlabels">Help</span>
+                                                    </button>
+                                                    <div class="help-content featurebutton" id="helpcontent"><a id="helplink1" href=""></a><a id="helplink2" href=""></a><a id="helplink3" href=""></a><a id="launchtour">Help Tour</a><a id="keyboardshortcuts">Keyboard Shortcuts (?)</a><a id="qrcodegen">QR Code (Q)</a><a id="about">About</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Uncomment the following Breadcrumbs code if using JS to insert toolbar and breadcrumbs and then comment the Toolbar snippet above-->
+                                    <!--Breadcrumbs-->
+                                    <!--
+            <div id="crumbs">
+            <MadCap:breadcrumbsProxy class="breadcrumbsProxy" />
+        </div>
+		 -->
+                                    <div id="unplugged-content">
+                                        <!--Content -->
+                                        <div class="js-toc-content">
+                                            <div role="main" id="mc-main-content">
+                                                <div class="conf-macro output-block" data-hasbody="true" data-macro-name="scroll-ignore" style=" background-color: #efefef" title="The content of this Scroll Ignore macro will not be part of the export for selected Scroll apps">
+                                                    <p><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span>
+                                                    </p>
+                                                    <p><span class="conf-macro output-inline" data-hasbody="true" data-macro-name="htmlcomment"></span>
+                                                    </p>
+                                                </div>
+                                                <p>
+                                                    <br /><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111909"></span><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111909"></a>
+                                                </p>
+                                                <h1 id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-UsingVerilog-AwiththeADSAnalogRFSimulator(ADSsim)">
+   Using Verilog-A with the ADS Analog RF Simulator (ADSsim)
+  </h1><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-UsingVerilog-AwiththeADSAnalogRFSimulator(ADSsim)"></a>
+                                                <p>
+   Once Verilog-A modules are loaded into the simulation environment, they may be used just like any other device in the system. The module name becomes the device definition name, the module parameters become device parameters, and, uniquely to Verilog-A, the module may have an optional model card.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111911"></span><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111911"></a>
+                                                </p>
+                                                <h2 id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-LoadingVerilog-Amodules">
+   Loading Verilog-A modules
+  </h2><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-LoadingVerilog-Amodules"></a>
+                                                <p>
+   ADSsim has a Verilog-A model search path. Any Verilog-A module in the search path is available to be instantiated in the netlist or used on the schematic. This Verilog-A module loading mechanism is called
+   <em>
+    autoloading
+   </em>
+   as the search path is only traversed and modules are only loaded when the simulator encounters an unknown device definition. The alternative loading mechanism is called explicit loading. In this case, the system always loads a particular Verilog-A module whether the simulator needs it or not. These loading mechanisms complement each other and are explained below in detail.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111914"></span><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111914"></a>
+                                                </p>
+                                                <h3 id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-Theautocompileandloadmechanism">
+   The auto compile and load mechanism
+  </h3><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-Theautocompileandloadmechanism"></a>
+                                                <p>
+   Verilog-A files (files with a
+   <code>
+    .va
+   </code>
+   &#160;extension) that reside in the simulator's Verilog-A model search path are automatically compiled and loaded by the simulator, on demand, when an unknown device is encountered in the netlist. The Verilog-A model search path has four components,
+  </p>
+                                                <blockquote>
+                                                    <p>
+    wrk_dir/veriloga
+   </p>
+                                                    <p>
+    design_kit/veriloga
+   </p>
+                                                    <p>
+    $HOME/hpeesof/veriloga
+   </p>
+                                                    <p>
+    $HPEESOF_DIR/custom/veriloga
+   </p>
+                                                    <p>
+    $HPEESOF_DIR/veriloga
+   </p>
+                                                </blockquote>
+                                                <p>
+   When searching for an unknown device, the system will sequentially look for a matching Verilog-A module name in each of the above directories. The first module found is loaded and a status message issued informing you that a Verilog-A module has been loaded from a particular file in the model search path.
+  </p>
+                                                <p>
+   If you want the Verilog-A module to only have visibility within the current workspace, then create a Verilog-A directory under the current workspace (
+   <code>
+    wrk_dir/veriloga
+   </code>
+   ) and copy the Verilog-A file to that location. Putting a Verilog-A module in the local user directory (
+   <code>
+    $HOME/hpeesof/veriloga
+   </code>
+   ) will make it visible to simulations in all workspaces for this user account. The site custom directory (
+   <code>
+    $HPEESOF_DIR/custom/veriloga
+   </code>
+   ) should be used to make Verilog-A modules available to all users of a particular ADS installation. Finally, the site directory (
+   <code>
+    $HPEESOF_DIR/veriloga
+   </code>
+   ) should not be used by you as an end user, this directory is used by Keysight Technologies to deliver new Verilog-A modules as part of the ADS system. Note that Verilog-A files placed in the site directory will not be compiled.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111978"></span><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111978"></a>
+                                                </p>
+                                                <h3 id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-AddingmoredirectoriestotheVerilog-Aautocompilepath">
+   Adding more directories to the Verilog-A auto compile path
+  </h3><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-AddingmoredirectoriestotheVerilog-Aautocompilepath"></a>
+                                                <p>
+   The simulator defines the Verilog-A auto compile path in
+   <code>
+    hpeesofsim.cfg
+   </code>
+   . To extend the path, add the line,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     USER_VERILOGA_PATH=myDir1:myDir2:...
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   to a local configuration file, either in the ADS project directory or $HOME/hpeesof/config. The directory or set of directories defined via USER_VERILOGA_PATH are pre-pended to the Verilog-A auto compile path. The system will process all Verilog-A files in the path, only doing a full compile if a module is instantiated when a design is elaborated.
+  </p>
+                                                <p>
+   In addition to the configuration parameter, an environment variable of the same name and the same syntax may be used. Use of the configuration file is preferred as its location determines the visibility of the additions.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1112309"></span><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1112309"></a>
+                                                </p>
+                                                <h2 id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-UsingModelswithVerilog-ADevices">
+   Using Models with Verilog-A Devices
+  </h2><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-UsingModelswithVerilog-ADevices"></a>
+                                                <p>
+   The model card is a simulator convenience that enables you to share device parameters among multiple device instances. Each Verilog-A module loaded into the system introduces a new device and a new model - both of the same name.
+  </p>
+                                                <p>
+   All parameters on a Verilog-A device may either be specified on the model, on the instance, or in both places. When a Verilog-A device references a model, it first reads all of the model parameters. Parameters specified directly on the instance then override the model settings. This behavior is particularly convenient when two devices share almost the same model. In this situation, they may reference a single model and override the parameters that are particular to the instances themselves.
+  </p>
+                                                <p>
+   For example, let us take the diode module (
+   <code>
+    PNDIODE
+   </code>
+   ) from the tutorial workspace. The module may be instantiated directly as,
+  </p>
+                                                <blockquote>
+                                                    <p><code>
+     PNDIODE:d1 1 0 Is=3e-14 Rs=1 N=1.1 CJ0=1e-12 TT=0
+    </code>
+                                                    </p>
+                                                </blockquote>
+                                                <p>
+   or it may be used more conventionally with a model card as,
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">Model PNDIODE Dmod1 IS=3e-14 RS=1 N=1.1 CJ0=1e-12 TT=0
+Dmod1:d1
+Dmod1:d2
+Dmod1:d3
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   Generally, models are convenient when there are two or more instances that have the same parameter sets, as above where
+   <code>
+    d1
+   </code>
+   ,
+   <code>
+    d2
+   </code>
+   , and
+   <code>
+    d3
+   </code>
+   all share the same model. We can go one step further in Verilog-A when almost all model parameters are the same. For the
+   <code>
+    PNDIODE
+   </code>
+   let us assume that
+   <code>
+    RS i
+   </code>
+   s the only parameter that varies from instance to instance. We use
+   <code>
+    Dmod1
+   </code>
+   again but simply override
+   <code>
+    RS
+   </code>
+   on each instance that requires an
+   <code>
+    RS
+   </code>
+   different from the model
+  </p>
+                                                <div class="code panel pdl conf-macro output-block" data-hasbody="true" data-macro-name="code" style="border-width: 1px;">
+                                                    <div class="codeContent panelContent pdl"><pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Default" data-theme="Default">Dmod1:d1 RS=2
+Dmod1:d2 RS=3
+Dmod1:d3 RS=4
+Dmod1:d4
+</pre>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <br />
+   In this example,
+   <code>
+    d1
+   </code>
+   through
+   <code>
+    d3
+   </code>
+   override
+   <code>
+    RS
+   </code>
+   while
+   <code>
+    d4
+   </code>
+   inherits its value from the model,
+   <code>
+    Dmod1
+   </code>
+   . This model parameter inheritance with instance parameter override is ideally suited to mismatch modeling where two devices share almost the same model except for one or two parameters.
+  </p>
+                                                <p>
+   Device instance parameter sweeping operates in the usual way. To sweep a Verilog-A instance parameter, simply reference the parameter in the normal way in the sweep dialog box. To sweep a model parameter, reference the model parameter, again in the same way as is done for any model.
+  </p>
+                                                <p>
+   When a model parameter is swept, only those instances that inherit the parameter are affected. Instances that reference the model but override the swept model parameter are not affected. When all instances override the model parameter, you will see no change in results as a function of the sweep variable. In the above example, if
+   <code>
+    RS
+   </code>
+   on
+   <code>
+    DMod1
+   </code>
+   was being swept, then the only instance affected by the sweep would be
+   <code>
+    d4
+   </code>
+   .
+  </p>
+                                                <div class="conf-macro output-block" data-hasbody="true" data-macro-name="lp_note">
+                                                    <div class="table-wrap">
+                                                        <table class="note_table confluenceTable">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="note_td_one confluenceTd" style="width:56px; border:none !important;"><span class="confluence-embedded-file-wrapper"><img alt="" data-base-url="https://docs.keysight.com" data-image-src="/download/attachments/4402026/note.svg" data-linked-resource-container-id="4402026" data-linked-resource-container-version="6" data-linked-resource-content-type="image/svg+xml" data-linked-resource-default-alias="note.svg" data-linked-resource-id="733725370" data-linked-resource-type="attachment" data-linked-resource-version="2" data-unresolved-comment-count="0" src="../docimages/note.svg" /></span>
+                                                                    </td>
+                                                                    <td class="note_td_two confluenceTd" style="vertical-align:top !important; border:none !important;">
+        Only those model parameters that are actually specified on the model card may be swept. This is a model only limitation.
+       </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111961"></span><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111961"></a>
+                                                <h2 id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-Verilog-AOperatorLimitationsinHarmonicBalanceandCircuitEnvelope">
+   Verilog-A Operator Limitations in Harmonic Balance and Circuit Envelope
+  </h2><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-Verilog-AOperatorLimitationsinHarmonicBalanceandCircuitEnvelope"></a>
+                                                <p>
+   The Verilog-A language was first designed with time-domain simulation algorithms in mind and, as such, has a set of features that are not easily supported in Harmonic Balance, Circuit Envelope analysis and their derivatives (LSSP, XDB, etc.). In these cases, we either approximate the behavior and/or issue an appropriate warning or error message.
+  </p>
+                                                <p>
+   Event-driven constructs such as cross and timer will not be triggered in Harmonic Balance analysis or in Circuit Envelope analysis. Since the cross event does not trigger in these analyses, it follows that the
+   <code>
+    last_crossing()
+   </code>
+   function is likewise not triggered. When these events are present in a Verilog-A module the system issues a warning message saying they will not be triggered.
+  </p>
+                                                <p>
+   The
+   <code>
+    $abstime()
+   </code>
+   function will return zero (0) in Harmonic Balance analysis. In this release, users should use built-in ADS source components to generate time-varying waveforms.
+  </p>
+                                                <p>
+   The
+   <code>
+    idtmod()
+   </code>
+   operator and Z-transform filters are not supported for Harmonic Balance or Circuit Envelope in this release. The transition and slew filters act as simple all pass elements. This latter behavior is consistent with the language reference specification for frequency domain analysis.
+  </p>
+                                                <p>
+   Modules which contain
+   <em>
+    memory states
+   </em>
+   are not compatible with Harmonic Balance. A module contains a
+   <em>
+    memory state
+   </em>
+   if it has local variables which retain values that are used at subsequent time steps.
+  </p>
+                                                <p><span class="confluence-anchor-link conf-macro output-inline" data-hasbody="false" data-macro-name="anchor" id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111969"></span><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-1111969"></a>
+                                                </p>
+                                                <h2 id="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-Parameters">
+   Parameters
+  </h2><a name="UsingVerilogAwiththeADSAnalogRFSimulator(ADSsim)-Parameters"></a>
+                                                <p>
+   Verilog-A supports real, integer and string parameters, and real or integer parameter arrays. When an integer value is passed to a real parameter, it is converted to a real. When a real value is passed to an integer parameter, the real value is rounded to the nearest integer value and the system issues a warning indicating loss of precision in a parameter assignment. Ties are rounded away from zero.
+  </p>
+                                                <p>
+   The ADS functions
+   <code>
+    list()
+   </code>
+   and
+   <code>
+    makearray()
+   </code>
+   are two of several functions that may be used to generate arrays to be passed to Verilog-A array type module parameters.
+  </p>
+                                                <p>
+   As with scalar integer parameters, if a real array is assigned to an integer parameter array then a loss of precision warning message is issued and the system rounds each real in the array to the nearest integer value.
+  </p>
+                                                <p>
+   If a complex scalar or complex array are passed to Verilog-A devices then an unsupported type message is issued.
+  </p>
+                                                <p>
+   Verilog-A parameters also have an optional range specification. If a parameter value is specified that is outside the allowed range, then an out of range error message is issued and the system exits. Parameters can go out of range during a sweep, a tune, an optimization, or a statistical analysis. In each case, an out of range error is issued and the system exits. To avoid the problem, you must ensure that during parameterized analyses such as sweeps, Verilog-A parameter values are only varied across their allowed ranges.
+  </p>
+                                                <form action="https://feedback.software.keysight.com/pathwave/feedback/form" id="FeedForm" method="post" onsubmit="target_popup(this)">
+                                                    <input id="spacename" name="spacename" type="hidden" value="ADS.2025update2" />
+                                                    <input id="spacekey" name="spacekey" type="hidden" value="ads2025update2" />
+                                                    <input id="pagetitle" name="pagetitle" type="hidden" value="Using Verilog-A with the ADS Analog RF Simulator (ADSsim)" />
+                                                    <input id="pageid" name="pageid" type="hidden" value="905249548" />
+                                                    <input id="DocGroup" name="DocGroup" type="hidden" value="PSS" />
+                                                    <input id="feedbacktype" name="feedbacktype" type="hidden" value="offline" />
+                                                    <div class="lozenge-body" id="Unpluggedfeedbackbar" style="width:320px;padding-top: 20px;">
+    Was this page helpful ?
+    <input class="washelpful" name="washelpful" type="submit" value="Yes" /><input class="washelpful" name="washelpful" type="submit" value="No" /></div>
+                                                </form>
+                                                <div id="buildmetadata" style="display:none">
+                                                    <img id="productlogo" src="../docimages/product_logo.png">
+                                                        <li id="productname">
+                                                        </li>
+                                                        <li id="productrelease">
+                                                        </li>
+                                                        <li id="buildtimestamp">
+     04:06:45, Mon 02/24/2025
+    </li>
+                                                        <li id="showpdflink">
+     1
+    </li>
+                                                    </img>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--On this page -->
+                                        <div id="onthispage_wrapper">
+                                            <div class="ks-onthispage" id="stickytoc"><span id="onthispageheader">On this page</span>
+                                                <div class="ks-stickytoc js-toc" id="onthispage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Previous Next Links-->
+                                    <p>
+                                        <div class="buttons popup-container clearfix topicToolbarProxy _Skins_unpluggedPreviousNextLinks mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic;">
+                                            <div class="button-group-container-left">
+                                                <button class="button needs-pie previous-topic-button" title="Navigate previous" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate previous">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                                <button class="button needs-pie next-topic-button" title="Navigate next" disabled="true">
+                                                    <div>
+                                                        <div role="img" class="button-icon-wrapper" aria-label="Navigate next">
+                                                            <div class="button-icon"> </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </p>
+                                    <!--Feedback-->
+                                    <script>/* <![CDATA[ */
+			function target_popup(form) {
+			window.open(
+			'',
+			'FeedForm',
+			'width=950,height=700,resizeable,scrollbars,toolbar=no,status=no,location=no,left=0,top=0,directori' +
+			'es=no'
+			);
+			form.target = 'FeedForm';
+			}
+		/* ]]> */</script>
+                                    <!--
+        <form id="FeedForm" action="https://feedback.software.keysight.com/pathwave/feedback/form" method="post" onsubmit="target_popup(this)">
+            <input type="hidden" name="spacename" value="" />
+            <input type="hidden" name="spacename" value="$space.name" />
+            <input type="hidden" name="spacekey" value="$space.key" />
+            <input type="hidden" name="pageid" value="$page.id" />
+            <input type="hidden" name="wikilogin" value="$user.email" />
+            <input type="hidden" name="DocGroup" value="eesof" />
+            <input type="hidden" name="feedbacktype" value="ONLINE" />
+            <div id="feedbackbar" class="lozenge-body" style="width:320px;padding-top: 20px;">
+                Was this page helpful ?
+                <input type="submit" class="washelpful" name="washelpful" value="Yes"/>
+                <input type="submit" class="washelpful" name="washelpful" value="No"/>
+            </div>
+        </form>
+     -->
+                                    <!--Footer-->
+                                    <div id="footer">
+                                        <div id="copyright">
+                                            <ul>
+                                                <li>
+                    © Keysight Technologies 2000–<span class="mc-variable unplugged.CopyrightYearRangeYearTo variable">2025</span><![CDATA[
+                    ]]></li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/privacy.html" class="dtmData">Privacy</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/terms-of-use.html" class="dtmData">Terms</a>
+                                                </li>
+                                                <li><a href="https://www.keysight.com/in/en/contact/support/site-feedback.html" class="dtmData">Feedback</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--Back To Top-->
+                                    <button onclick="backToTop()" id="backtotop" title="Go to top">
+Top</button>
+                                    <!--Variables--><span class="mc-variable unplugged.BuildTimeStamp variable">11:51 PM, Sunday, Feb 23, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><a data-close="true"></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
