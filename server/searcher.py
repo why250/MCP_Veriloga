@@ -1,8 +1,9 @@
 """
-Searcher for VerilogA MCP Server (SQLite FTS5 version).
+Searcher for VerilogA MCP Server — SQLite FTS5 edition.
 
-Uses SQLite's FTS5 extension to perform full-text search with BM25 ranking.
-Extremely lightweight, no heavy ML dependencies.
+Uses SQLite's built-in FTS5 extension with BM25 ranking.
+Peak runtime memory: ~10–20 MB (SQLite page cache only).
+No heavy ML dependencies required.
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ from indexer import (
 
 
 class SQLiteSearcher:
-    """Connects to the SQLite FTS5 index and executes queries."""
+    """Connects to the SQLite FTS5 index and executes BM25 queries."""
 
     def __init__(self) -> None:
         self._conn: Optional[sqlite3.Connection] = None
@@ -29,102 +30,75 @@ class SQLiteSearcher:
         if self._conn is not None:
             return
 
-        if not DB_FILE.exists():
+        if not DB_FILE.exists() or DB_FILE.stat().st_size == 0:
             print("[searcher] Index not found, building now...")
             build_index(force=False)
 
-        # Connect in read-only mode if possible, or standard mode
+        # Open read-only if possible, fall back to read-write
         try:
             self._conn = sqlite3.connect(f"file:{DB_FILE}?mode=ro", uri=True)
         except sqlite3.OperationalError:
             self._conn = sqlite3.connect(str(DB_FILE))
-        
-        # Enable row factory for dict-like access if needed, but tuple is fine for speed
 
     def search(self, query: str, top_k: int = 5) -> List[dict]:
-        """
-        Return top_k most relevant chunks using FTS5 BM25 ranking.
-        """
+        """Return top_k most relevant chunks using FTS5 BM25 ranking."""
         self._ensure_connected()
-        
+
         query = query.strip()
         if not query:
             return []
 
-        # Sanitize query for FTS5 syntax
-        # We treat the whole string as a phrase or set of tokens
-        # Simple approach: escape double quotes and wrap in quotes for phrase search 
-        # OR just split by space and AND them.
-        # Let's try standard MATCH with simple sanitization.
-        
-        # Remove characters that might interfere with FTS5 syntax
-        safe_query = re.sub(r'[^a-zA-Z0-9\s_\.]', ' ', query)
+        # Strip characters that break FTS5 syntax; keep alphanumeric, underscore, dot
+        safe_query = re.sub(r'[^a-zA-Z0-9\s_\.\-]', ' ', query)
         tokens = safe_query.split()
         if not tokens:
             return []
-            
-        # Construct a query that looks for ALL tokens (AND logic)
-        # fts5 string: "token1" AND "token2" ...
-        # But for better recall, OR logic might be better, or just standard "token1 token2"
-        # SQLite FTS5 default is that tokens are implicitly ANDed if just separated by space? 
-        # No, default is usually phrase or NEAR. 
-        # Actually, standard FTS5 syntax: 
-        #   "foo bar" -> phrase
-        #   foo bar -> implicit AND in recent versions? Let's verify.
-        #   Actually, let's use the OR operator for broader recall, or just space.
-        #   Let's stick to simple token matching.
-        
+
+        # OR-join quoted tokens for broad recall across all search terms
         fts_query = " OR ".join(f'"{t}"' for t in tokens)
-        
-        # Execute query
-        # bm25(chunks_fts) returns the score. Lower is better? No, FTS5 bm25() returns 
-        # a negative value where more negative is better (magnitude is score).
-        # Wait, documentation says: "The value returned by bm25() is a real number... 
-        # The lower the value (more negative), the better the match."
-        
+
         sql = """
-            SELECT 
-                text, 
-                source, 
-                title, 
-                doc_type, 
-                description, 
-                bm25(chunks_fts) as rank
-            FROM chunks_fts 
-            WHERE chunks_fts MATCH ? 
-            ORDER BY rank 
+            SELECT
+                text,
+                source,
+                title,
+                doc_type,
+                description,
+                bm25(chunks_fts) AS rank
+            FROM chunks_fts
+            WHERE chunks_fts MATCH ?
+            ORDER BY rank
             LIMIT ?
         """
-        
+
         try:
-            cursor = self._conn.execute(sql, (fts_query, top_k))
-            rows = cursor.fetchall()
-        except sqlite3.OperationalError as e:
-            # Fallback for syntax errors
-            print(f"[searcher] Query error: {e}")
-            return []
+            rows = self._conn.execute(sql, (fts_query, top_k)).fetchall()
+        except sqlite3.OperationalError as exc:
+            print(f"[searcher] Query error ({exc}), retrying with plain tokens")
+            # Fall back to a simpler query with individual unquoted tokens
+            plain_query = " OR ".join(tokens)
+            try:
+                rows = self._conn.execute(sql, (plain_query, top_k)).fetchall()
+            except sqlite3.OperationalError:
+                return []
 
         results = []
-        for row in rows:
-            text, source, title, doc_type, description, rank = row
-            # Convert rank to a positive score for display (just invert sign for intuition)
-            score = -1.0 * rank
-            
+        for text, source, title, doc_type, description, rank in rows:
             results.append({
                 "text": text,
                 "source": source,
                 "title": title,
                 "doc_type": doc_type,
                 "description": description,
-                "score": round(score, 4),
+                "score": round(-rank, 4),  # FTS5 bm25() returns negative; invert for display
             })
-            
         return results
 
     def get_full_document(self, source_file: str) -> Optional[str]:
-        """Return full text of a document by its relative path (from reference/)."""
+        """Return the full extracted text of a document by its relative path."""
         target = REFERENCE_DIR / source_file
         if not target.exists():
+            # Case-insensitive fallback search
             for candidate in REFERENCE_DIR.rglob("*"):
                 if (candidate.is_file()
                         and candidate.name.lower() == Path(source_file).name.lower()):
@@ -145,22 +119,15 @@ class SQLiteSearcher:
                 return None
 
     def list_sources(self) -> List[dict]:
-        """Return metadata for every indexed document (deduplicated by source)."""
+        """Return metadata for every indexed document (deduplicated by source path)."""
         self._ensure_connected()
-        
-        # We can query the DB for distinct sources
-        sql = "SELECT DISTINCT source, doc_type, description FROM chunks_fts ORDER BY source"
-        cursor = self._conn.execute(sql)
-        
-        sources = []
-        for row in cursor:
-            src, dtype, desc = row
-            sources.append({
-                "source": src,
-                "doc_type": dtype,
-                "description": desc,
-            })
-        return sources
+        rows = self._conn.execute(
+            "SELECT DISTINCT source, doc_type, description FROM chunks_fts ORDER BY source"
+        ).fetchall()
+        return [
+            {"source": src, "doc_type": dtype, "description": desc}
+            for src, dtype, desc in rows
+        ]
 
 
 # ---------------------------------------------------------------------------
@@ -168,14 +135,23 @@ class SQLiteSearcher:
 # ---------------------------------------------------------------------------
 
 def _read_pdf_text(path: Path) -> str:
-    from pypdf import PdfReader
+    """Extract full text from a PDF using pymupdf."""
+    import fitz  # pymupdf
 
-    reader = PdfReader(str(path))
     pages = []
-    for i, page in enumerate(reader.pages):
-        text = page.extract_text() or ""
-        if text.strip():
-            pages.append(f"--- Page {i + 1} ---\n{text.strip()}")
+    try:
+        doc = fitz.open(str(path))
+        for i in range(doc.page_count):
+            try:
+                text = doc[i].get_text() or ""
+            except Exception:
+                continue
+            text = text.strip()
+            if text:
+                pages.append(f"--- Page {i + 1} ---\n{text}")
+        doc.close()
+    except Exception as exc:
+        return f"[Error reading PDF: {exc}]"
     return "\n\n".join(pages)
 
 

@@ -1,31 +1,78 @@
 """
-Document indexer for VerilogA MCP Server (SQLite FTS5 version).
+Document indexer for VerilogA MCP Server — SQLite FTS5 edition.
 
 Parses all PDFs and HTML files under reference/, splits them into chunks,
-and builds a SQLite FTS5 index for full-text search.
+and builds a single SQLite database with an FTS5 virtual table for BM25
+full-text search.  No heavy ML dependencies required.
 
-Everything is saved to index_cache/search.db.
+Everything is saved to index_cache/search.db; subsequent starts load
+directly from this file (~3 s vs ~30–90 s for a fresh build).
 """
 
 from __future__ import annotations
 
-import concurrent.futures
 import gc
 import re
 import sqlite3
-from dataclasses import asdict, dataclass
+import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import List
 
 INDEX_CACHE_DIR = Path(__file__).parent / "index_cache"
-DB_FILE        = INDEX_CACHE_DIR / "search.db"
+DB_FILE         = INDEX_CACHE_DIR / "search.db"
 
-CHUNK_SIZE         = 500    # approximate characters per chunk
-CHUNK_OVERLAP      = 80     # character overlap between adjacent chunks
-MAX_PAGE_CHARS     = 15_000 # max characters extracted per PDF page (~30 printed pages worth)
-_PDF_PAGE_TIMEOUT  = 20     # seconds before a single page extraction is abandoned
+CHUNK_SIZE      = 500    # approximate characters per chunk
+CHUNK_OVERLAP   = 80     # character overlap between adjacent chunks
+MAX_PAGE_CHARS  = 15_000 # max characters kept per PDF page
+
+MEM_LIMIT_PCT   = 80     # pause indexing when system RAM use exceeds this %
+MEM_POLL_SEC    = 5      # seconds to wait between memory re-checks
 
 REFERENCE_DIR = Path(__file__).parent.parent / "reference"
+
+
+# ---------------------------------------------------------------------------
+# Memory guard
+# ---------------------------------------------------------------------------
+
+def _wait_for_memory(label: str = "") -> None:
+    """
+    Block until system RAM usage drops below MEM_LIMIT_PCT (default 80 %).
+    Calls gc.collect() on each iteration to release Python-held memory.
+    Prints a single warning line and then a completion line when unblocked.
+    psutil is optional: if unavailable the function is a no-op.
+    """
+    try:
+        import psutil
+    except ImportError:
+        return
+
+    mem = psutil.virtual_memory()
+    if mem.percent < MEM_LIMIT_PCT:
+        return  # fast path — nothing to do
+
+    tag = f" [{label}]" if label else ""
+    print(
+        f"\n[memory]{tag} RAM usage {mem.percent:.1f}% > {MEM_LIMIT_PCT}% limit "
+        f"({mem.used / 1e9:.1f}/{mem.total / 1e9:.1f} GB). Waiting...",
+        flush=True,
+    )
+    while True:
+        gc.collect()
+        time.sleep(MEM_POLL_SEC)
+        mem = psutil.virtual_memory()
+        if mem.percent < MEM_LIMIT_PCT:
+            print(
+                f"[memory]{tag} RAM back to {mem.percent:.1f}%, resuming.",
+                flush=True,
+            )
+            return
+        print(
+            f"[memory]{tag} still {mem.percent:.1f}% — waiting {MEM_POLL_SEC}s...",
+            flush=True,
+        )
+
 
 DOC_DESCRIPTIONS = {
     "OVI_VerilogA.pdf":
@@ -51,7 +98,7 @@ DOC_DESCRIPTIONS = {
 }
 
 
-@dataclass(slots=True)
+@dataclass
 class Chunk:
     text: str
     source: str       # relative path from REFERENCE_DIR
@@ -65,21 +112,8 @@ class Chunk:
 # Parsers
 # ---------------------------------------------------------------------------
 
-def _get_page_text(page) -> str:
-    """Extract text from a single pymupdf page with a hard timeout."""
-    import fitz  # pymupdf
-
-    flags = fitz.TEXT_PRESERVE_WHITESPACE | fitz.TEXT_MEDIABOX_CLIP
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
-        future = ex.submit(page.get_text, "text", flags=flags)
-        try:
-            return future.result(timeout=_PDF_PAGE_TIMEOUT) or ""
-        except concurrent.futures.TimeoutError:
-            return ""
-
-
-def _parse_pdf(pdf_path: Path, max_pages: int = 0) -> List[tuple[str, str]]:
-    """Return list of (page_title, page_text) from a PDF."""
+def _parse_pdf(pdf_path: Path) -> List[tuple[str, str]]:
+    """Return list of (page_title, page_text) using pymupdf (fitz)."""
     import fitz  # pymupdf
 
     pages = []
@@ -87,114 +121,66 @@ def _parse_pdf(pdf_path: Path, max_pages: int = 0) -> List[tuple[str, str]]:
     try:
         doc = fitz.open(str(pdf_path))
         n = doc.page_count
-        limit = min(n, max_pages) if max_pages > 0 else n
-        for i in range(limit):
-            print(f"    page {i+1}/{n}", end="\r", flush=True)
+        for i in range(n):
+            print(f"    page {i + 1}/{n}", end="\r", flush=True)
+            # Check memory every 20 pages and wait if system RAM > 80 %
+            if i % 20 == 0:
+                _wait_for_memory(f"{pdf_path.name} p{i + 1}")
             try:
-                raw = _get_page_text(doc[i])
+                raw = doc[i].get_text() or ""
             except MemoryError:
-                print(f"\n    WARNING: MemoryError on page {i+1}/{n}, skipping")
+                print(f"\n    WARNING: MemoryError on page {i + 1}/{n}, skipping")
                 gc.collect()
                 continue
             except Exception as exc:
-                print(f"\n    WARNING: page {i+1}/{n} failed: {exc}")
-                continue
-            if not raw:
-                print(f"\n    WARNING: page {i+1}/{n} timed out or empty, skipping")
+                print(f"\n    WARNING: page {i + 1}/{n} failed: {exc}")
                 continue
             if len(raw) > MAX_PAGE_CHARS:
                 raw = raw[:MAX_PAGE_CHARS]
             text = _clean_text(raw)
             del raw
             if text.strip():
-                pages.append((f"Page {i+1}", text))
+                pages.append((f"Page {i + 1}", text))
             if i % 50 == 49:
                 gc.collect()
         print()  # end the \r progress line
     except Exception as exc:
-        print(f"    WARNING: could not open {pdf_path.name}: {exc}")
+        print(f"\n    WARNING: could not open {pdf_path.name}: {exc}")
     finally:
         if doc is not None:
-            doc.close()
+            try:
+                doc.close()
+            except Exception:
+                pass
         gc.collect()
     return pages
 
 
-MAX_HTML_READ_BYTES = 200_000   # max bytes read from each HTML file
-MAX_HTML_TEXT_CHARS = 60_000    # max extracted plain-text chars per HTML file
-
-
-class _HTMLTextExtractor(object):
-    """Streaming HTML → plain text using Python's built-in html.parser."""
-    from html.parser import HTMLParser as _HTMLParser
-
-    _SKIP_TAGS  = frozenset({"script", "style", "nav", "header", "footer",
-                              "noscript", "template"})
-    _BLOCK_TAGS = frozenset({"p", "div", "li", "h1", "h2", "h3", "h4", "h5",
-                              "h6", "tr", "td", "th", "section", "article",
-                              "br", "hr", "pre", "blockquote"})
-
-    class _Parser(_HTMLParser):
-        def __init__(self, skip_tags, block_tags):
-            super().__init__(convert_charrefs=True)
-            self._skip_tags  = skip_tags
-            self._block_tags = block_tags
-            self._skip_depth = 0
-            self._in_title   = False
-            self.title: str  = ""
-            self._parts: List[str] = []
-
-        def handle_starttag(self, tag, attrs):
-            tag = tag.lower()
-            if tag in self._skip_tags:
-                self._skip_depth += 1
-            elif tag == "title":
-                self._in_title = True
-            elif tag in self._block_tags:
-                self._parts.append("\n")
-
-        def handle_endtag(self, tag):
-            tag = tag.lower()
-            if tag in self._skip_tags:
-                self._skip_depth = max(0, self._skip_depth - 1)
-            elif tag == "title":
-                self._in_title = False
-            elif tag in self._block_tags:
-                self._parts.append("\n")
-
-        def handle_data(self, data):
-            if self._in_title:
-                self.title += data
-            elif self._skip_depth == 0:
-                self._parts.append(data)
-
-    @classmethod
-    def extract(cls, html_str: str):
-        """Return (title, plain_text) from an HTML string."""
-        parser = cls._Parser(cls._SKIP_TAGS, cls._BLOCK_TAGS)
-        try:
-            parser.feed(html_str)
-            parser.close()
-        except Exception:
-            pass  # best-effort: return whatever was collected
-        return parser.title.strip() or "", "".join(parser._parts)
-
-
 def _parse_html(html_path: Path) -> List[tuple[str, str]]:
     """Return list of (section_title, section_text) from an HTML file."""
+    from bs4 import BeautifulSoup
+
     with open(html_path, encoding="utf-8", errors="ignore") as fh:
-        raw = fh.read(MAX_HTML_READ_BYTES)
+        soup = BeautifulSoup(fh, "lxml")
 
-    title, text = _HTMLTextExtractor.extract(raw)
-    del raw
+    title_tag = soup.find("title")
+    page_title = title_tag.get_text(strip=True) if title_tag else html_path.stem
 
-    page_title = title if title else html_path.stem
+    for tag in soup.find_all(["script", "style", "nav", "header", "footer",
+                               "noscript", "link", "meta"]):
+        tag.decompose()
 
-    if len(text) > MAX_HTML_TEXT_CHARS:
-        text = text[:MAX_HTML_TEXT_CHARS]
+    body = (
+        soup.find("div", class_="body-container")
+        or soup.find("div", id="mc-main-content")
+        or soup.find("div", class_=re.compile(r"body|content|main", re.I))
+        or soup.find("body")
+    )
 
-    full_text = _clean_text(text)
-    del text
+    if body is None:
+        return []
+
+    full_text = _clean_text(body.get_text(separator="\n", strip=True))
     return [(page_title, full_text)] if full_text.strip() else []
 
 
@@ -235,45 +221,38 @@ def _split_text(text: str, size: int = CHUNK_SIZE,
 # Main build function
 # ---------------------------------------------------------------------------
 
-def build_index(force: bool = False, low_memory: bool = False,
-                max_pages: int = 0) -> None:
+def build_index(force: bool = False) -> None:
     """
-    Parse documents and build SQLite FTS5 index.
-    
-    Args:
-        force: Rebuild index even if it exists.
-        low_memory: (Ignored for SQLite implementation, kept for CLI compatibility)
-        max_pages: Only index first N pages per PDF (for testing).
+    Parse documents, build SQLite FTS5 index, save to index_cache/search.db.
+    If the DB already exists and force=False, skip building.
     """
     INDEX_CACHE_DIR.mkdir(exist_ok=True)
 
-    if not force and DB_FILE.exists():
-        print("[indexer] Index already exists (use --build-index to force rebuild).")
+    if not force and DB_FILE.exists() and DB_FILE.stat().st_size > 0:
+        print("[indexer] Index already exists, skipping build.")
         return
 
-    mode_tag = ""
-    if max_pages > 0:
-        mode_tag += f" [test mode: first {max_pages} page(s) per PDF]"
-    print(f"[indexer] Building SQLite index from documents...{mode_tag}")
-    
-    chunks = _collect_chunks(max_pages=max_pages)
+    print("[indexer] Building FTS5 index from documents...")
+    chunks = _collect_chunks()
     if not chunks:
-        raise RuntimeError("No chunks extracted — check that reference/ contains PDF/HTML files.")
+        raise RuntimeError(
+            "No chunks extracted — check that reference/ contains PDF/HTML files."
+        )
 
-    _build_sqlite_index(chunks)
-    
-    print(f"[indexer] Done. {len(chunks)} chunks indexed.")
+    _build_fts5(chunks)
+    print(f"[indexer] Done. {len(chunks)} chunks indexed → {DB_FILE}")
 
 
-def _collect_chunks(max_pages: int = 0) -> List[Chunk]:
+def _collect_chunks() -> List[Chunk]:
     chunks: List[Chunk] = []
 
     for pdf_path in sorted(REFERENCE_DIR.glob("*.pdf")):
         description = DOC_DESCRIPTIONS.get(pdf_path.name, pdf_path.name)
         rel_path = str(pdf_path.relative_to(REFERENCE_DIR))
+        _wait_for_memory(pdf_path.name)
         print(f"  [pdf] {pdf_path.name}")
         try:
-            sections = _parse_pdf(pdf_path, max_pages=max_pages)
+            sections = _parse_pdf(pdf_path)
         except MemoryError:
             print(f"    WARNING: MemoryError parsing {pdf_path.name}, skipping")
             gc.collect()
@@ -285,7 +264,7 @@ def _collect_chunks(max_pages: int = 0) -> List[Chunk]:
             try:
                 page_chunks = _split_text(text)
             except MemoryError:
-                print(f"    WARNING: MemoryError splitting '{title}', skipping page")
+                print(f"    WARNING: MemoryError splitting '{title}', skipping")
                 gc.collect()
                 continue
             for idx, chunk_text in enumerate(page_chunks):
@@ -297,14 +276,10 @@ def _collect_chunks(max_pages: int = 0) -> List[Chunk]:
         gc.collect()
 
     html_dir = REFERENCE_DIR / "veriloga in ADS2025" / "veriloga"
-    html_files = sorted(html_dir.glob("*.html"), key=lambda p: p.stat().st_size)
-    if max_pages > 0:
-        # test mode: only process the smallest HTML file to verify the pipeline
-        html_files = html_files[:1]
-        print(f"  [html] test mode: only processing smallest file ({html_files[0].name})")
-    for html_path in html_files:
+    for html_path in sorted(html_dir.glob("*.html")):
         description = DOC_DESCRIPTIONS.get(html_path.name, html_path.name)
         rel_path = str(html_path.relative_to(REFERENCE_DIR))
+        _wait_for_memory(html_path.name)
         print(f"  [html] {html_path.name}")
         try:
             sections = _parse_html(html_path)
@@ -333,42 +308,49 @@ def _collect_chunks(max_pages: int = 0) -> List[Chunk]:
     return chunks
 
 
-def _build_sqlite_index(chunks: List[Chunk]) -> None:
+# ---------------------------------------------------------------------------
+# SQLite FTS5 index
+# ---------------------------------------------------------------------------
+
+def _build_fts5(chunks: List[Chunk]) -> None:
+    """Write all chunks into a SQLite FTS5 virtual table for BM25 search."""
+    _wait_for_memory("fts5-build")
+    print(f"[indexer] Writing {len(chunks)} chunks to SQLite FTS5...")
+
+    # Remove any stale DB first so the CREATE is always clean
     if DB_FILE.exists():
         DB_FILE.unlink()
-        
-    conn = sqlite3.connect(str(DB_FILE))
-    
-    # Enable FTS5
-    # Create a virtual table for full-text search
-    conn.execute("""
-        CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts 
-        USING fts5(text, title, source, doc_type, description, chunk_idx UNINDEXED);
-    """)
-    
-    print(f"[indexer] Inserting {len(chunks)} chunks into SQLite...")
-    
-    # Batch insert
-    data = [
-        (c.text, c.title, c.source, c.doc_type, c.description, c.chunk_idx)
-        for c in chunks
-    ]
-    
-    conn.executemany(
-        "INSERT INTO chunks_fts(text, title, source, doc_type, description, chunk_idx) VALUES (?, ?, ?, ?, ?, ?)",
-        data
-    )
-    
-    conn.commit()
-    
-    # Optimize the FTS index
-    print("[indexer] Optimizing FTS index...")
-    conn.execute("INSERT INTO chunks_fts(chunks_fts) VALUES('optimize');")
-    conn.commit()
-    conn.close()
-    
-    print(f"[indexer] SQLite index saved to {DB_FILE}")
 
+    conn = sqlite3.connect(str(DB_FILE))
+    try:
+        conn.execute("""
+            CREATE VIRTUAL TABLE chunks_fts USING fts5(
+                chunk_idx   UNINDEXED,
+                source      UNINDEXED,
+                title       UNINDEXED,
+                doc_type    UNINDEXED,
+                description UNINDEXED,
+                text,
+                tokenize = 'porter ascii'
+            )
+        """)
+        conn.executemany(
+            "INSERT INTO chunks_fts VALUES (?,?,?,?,?,?)",
+            [
+                (c.chunk_idx, c.source, c.title,
+                 c.doc_type, c.description, c.text)
+                for c in chunks
+            ],
+        )
+        conn.commit()
+        print("[indexer] FTS5 index saved.")
+    finally:
+        conn.close()
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     build_index(force=True)

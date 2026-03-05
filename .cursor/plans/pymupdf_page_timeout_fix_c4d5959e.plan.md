@@ -66,7 +66,7 @@ for i in range(n):
 
 ## 需改动的文件
 
-- [`server/indexer.py`](server/indexer.py) — 新增 `_get_page_text()` 辅助函数；修改 `_parse_pdf()` 循环内的调用；更新 docstring
+- `[server/indexer.py](server/indexer.py)` — 新增 `_get_page_text()` 辅助函数；修改 `_parse_pdf()` 循环内的调用；更新 docstring
 
 ## 验证步骤
 
@@ -74,3 +74,4 @@ for i in range(n):
 2. 应看到每个 PDF 的逐页进度持续推进，不再卡在某页
 3. 如果某页超时，会打印 `WARNING: page X/N timed out, skipping` 并继续
 4. 完成后 `index_cache\` 下生成 4 个文件，启动 MCP 服务验证检索正常
+

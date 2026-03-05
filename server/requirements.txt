@@ -2,5 +2,6 @@ fastmcp>=2.0
 pymupdf>=1.24
 beautifulsoup4>=4.12
 lxml>=5.0
+psutil>=5.9
 uvicorn>=0.30
 starlette>=0.40
