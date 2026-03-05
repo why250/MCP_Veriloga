@@ -1,37 +1,29 @@
 """
-Document indexer for VerilogA MCP Server.
+Document indexer for VerilogA MCP Server (SQLite FTS5 version).
 
 Parses all PDFs and HTML files under reference/, splits them into chunks,
-and builds:
-  - A FAISS vector index (TF-IDF + TruncatedSVD / LSA, no torch/onnx needed)
-  - A BM25 keyword index (rank-bm25)
-  - A serialized sklearn pipeline (TfidfVectorizer + TruncatedSVD)
+and builds a SQLite FTS5 index for full-text search.
 
-Everything is saved to index_cache/ and reloaded on subsequent starts.
+Everything is saved to index_cache/search.db.
 """
 
 from __future__ import annotations
 
+import concurrent.futures
 import gc
-import json
-import pickle
 import re
+import sqlite3
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import List
 
 INDEX_CACHE_DIR = Path(__file__).parent / "index_cache"
-CHUNKS_FILE    = INDEX_CACHE_DIR / "chunks.json"
-FAISS_FILE     = INDEX_CACHE_DIR / "faiss.index"
-BM25_FILE      = INDEX_CACHE_DIR / "bm25.pkl"
-PIPELINE_FILE  = INDEX_CACHE_DIR / "tfidf_svd_pipeline.pkl"
+DB_FILE        = INDEX_CACHE_DIR / "search.db"
 
-LSA_COMPONENTS     = 256    # SVD latent dimensions (normal mode)
-LSA_COMPONENTS_LM  = 128    # SVD latent dimensions (low-memory mode)
-MAX_FEATURES_LM    = 50_000 # TF-IDF vocabulary cap for low-memory mode
 CHUNK_SIZE         = 500    # approximate characters per chunk
 CHUNK_OVERLAP      = 80     # character overlap between adjacent chunks
 MAX_PAGE_CHARS     = 15_000 # max characters extracted per PDF page (~30 printed pages worth)
+_PDF_PAGE_TIMEOUT  = 20     # seconds before a single page extraction is abandoned
 
 REFERENCE_DIR = Path(__file__).parent.parent / "reference"
 
@@ -59,7 +51,7 @@ DOC_DESCRIPTIONS = {
 }
 
 
-@dataclass
+@dataclass(slots=True)
 class Chunk:
     text: str
     source: str       # relative path from REFERENCE_DIR
@@ -73,69 +65,136 @@ class Chunk:
 # Parsers
 # ---------------------------------------------------------------------------
 
-def _parse_pdf(pdf_path: Path) -> List[tuple[str, str]]:
+def _get_page_text(page) -> str:
+    """Extract text from a single pymupdf page with a hard timeout."""
+    import fitz  # pymupdf
+
+    flags = fitz.TEXT_PRESERVE_WHITESPACE | fitz.TEXT_MEDIABOX_CLIP
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
+        future = ex.submit(page.get_text, "text", flags=flags)
+        try:
+            return future.result(timeout=_PDF_PAGE_TIMEOUT) or ""
+        except concurrent.futures.TimeoutError:
+            return ""
+
+
+def _parse_pdf(pdf_path: Path, max_pages: int = 0) -> List[tuple[str, str]]:
     """Return list of (page_title, page_text) from a PDF."""
-    from pypdf import PdfReader
+    import fitz  # pymupdf
 
     pages = []
+    doc = None
     try:
-        reader = PdfReader(str(pdf_path))
-        n = len(reader.pages)
-        for i, page in enumerate(reader.pages):
+        doc = fitz.open(str(pdf_path))
+        n = doc.page_count
+        limit = min(n, max_pages) if max_pages > 0 else n
+        for i in range(limit):
+            print(f"    page {i+1}/{n}", end="\r", flush=True)
             try:
-                raw = page.extract_text() or ""
+                raw = _get_page_text(doc[i])
             except MemoryError:
-                print(f"    WARNING: MemoryError extracting page {i+1}/{n}, skipping")
+                print(f"\n    WARNING: MemoryError on page {i+1}/{n}, skipping")
                 gc.collect()
                 continue
             except Exception as exc:
-                print(f"    WARNING: page {i+1}/{n} extraction failed: {exc}")
+                print(f"\n    WARNING: page {i+1}/{n} failed: {exc}")
                 continue
-            # Truncate before _clean_text so we never hold an enormous string
+            if not raw:
+                print(f"\n    WARNING: page {i+1}/{n} timed out or empty, skipping")
+                continue
             if len(raw) > MAX_PAGE_CHARS:
                 raw = raw[:MAX_PAGE_CHARS]
             text = _clean_text(raw)
             del raw
-            if not text.strip():
-                continue
-            pages.append((f"Page {i + 1}", text))
-            # Free page resources as we go
+            if text.strip():
+                pages.append((f"Page {i+1}", text))
             if i % 50 == 49:
                 gc.collect()
+        print()  # end the \r progress line
+    except Exception as exc:
+        print(f"    WARNING: could not open {pdf_path.name}: {exc}")
     finally:
-        try:
-            del reader
-        except NameError:
-            pass
+        if doc is not None:
+            doc.close()
         gc.collect()
     return pages
 
 
+MAX_HTML_READ_BYTES = 200_000   # max bytes read from each HTML file
+MAX_HTML_TEXT_CHARS = 60_000    # max extracted plain-text chars per HTML file
+
+
+class _HTMLTextExtractor(object):
+    """Streaming HTML → plain text using Python's built-in html.parser."""
+    from html.parser import HTMLParser as _HTMLParser
+
+    _SKIP_TAGS  = frozenset({"script", "style", "nav", "header", "footer",
+                              "noscript", "template"})
+    _BLOCK_TAGS = frozenset({"p", "div", "li", "h1", "h2", "h3", "h4", "h5",
+                              "h6", "tr", "td", "th", "section", "article",
+                              "br", "hr", "pre", "blockquote"})
+
+    class _Parser(_HTMLParser):
+        def __init__(self, skip_tags, block_tags):
+            super().__init__(convert_charrefs=True)
+            self._skip_tags  = skip_tags
+            self._block_tags = block_tags
+            self._skip_depth = 0
+            self._in_title   = False
+            self.title: str  = ""
+            self._parts: List[str] = []
+
+        def handle_starttag(self, tag, attrs):
+            tag = tag.lower()
+            if tag in self._skip_tags:
+                self._skip_depth += 1
+            elif tag == "title":
+                self._in_title = True
+            elif tag in self._block_tags:
+                self._parts.append("\n")
+
+        def handle_endtag(self, tag):
+            tag = tag.lower()
+            if tag in self._skip_tags:
+                self._skip_depth = max(0, self._skip_depth - 1)
+            elif tag == "title":
+                self._in_title = False
+            elif tag in self._block_tags:
+                self._parts.append("\n")
+
+        def handle_data(self, data):
+            if self._in_title:
+                self.title += data
+            elif self._skip_depth == 0:
+                self._parts.append(data)
+
+    @classmethod
+    def extract(cls, html_str: str):
+        """Return (title, plain_text) from an HTML string."""
+        parser = cls._Parser(cls._SKIP_TAGS, cls._BLOCK_TAGS)
+        try:
+            parser.feed(html_str)
+            parser.close()
+        except Exception:
+            pass  # best-effort: return whatever was collected
+        return parser.title.strip() or "", "".join(parser._parts)
+
+
 def _parse_html(html_path: Path) -> List[tuple[str, str]]:
     """Return list of (section_title, section_text) from an HTML file."""
-    from bs4 import BeautifulSoup
-
     with open(html_path, encoding="utf-8", errors="ignore") as fh:
-        soup = BeautifulSoup(fh, "lxml")
+        raw = fh.read(MAX_HTML_READ_BYTES)
 
-    title_tag = soup.find("title")
-    page_title = title_tag.get_text(strip=True) if title_tag else html_path.stem
+    title, text = _HTMLTextExtractor.extract(raw)
+    del raw
 
-    for tag in soup.find_all(["script", "style", "nav", "header", "footer",
-                               "noscript", "link", "meta"]):
-        tag.decompose()
+    page_title = title if title else html_path.stem
 
-    body = (
-        soup.find("div", class_="body-container")
-        or soup.find("div", id="mc-main-content")
-        or soup.find("div", class_=re.compile(r"body|content|main", re.I))
-        or soup.find("body")
-    )
+    if len(text) > MAX_HTML_TEXT_CHARS:
+        text = text[:MAX_HTML_TEXT_CHARS]
 
-    if body is None:
-        return []
-
-    full_text = _clean_text(body.get_text(separator="\n", strip=True))
+    full_text = _clean_text(text)
+    del text
     return [(page_title, full_text)] if full_text.strip() else []
 
 
@@ -176,49 +235,37 @@ def _split_text(text: str, size: int = CHUNK_SIZE,
 # Main build function
 # ---------------------------------------------------------------------------
 
-def build_index(force: bool = False, low_memory: bool = False) -> List[Chunk]:
+def build_index(force: bool = False, low_memory: bool = False,
+                max_pages: int = 0) -> None:
     """
-    Parse documents, build FAISS + BM25 indexes, save to index_cache/.
-    If cache exists and force=False, load from cache instead.
-
-    low_memory: limit TF-IDF vocabulary and LSA dimensions to reduce peak RAM
-                usage at the cost of slightly lower retrieval quality.
-                Recommended when the normal build freezes on your machine.
+    Parse documents and build SQLite FTS5 index.
+    
+    Args:
+        force: Rebuild index even if it exists.
+        low_memory: (Ignored for SQLite implementation, kept for CLI compatibility)
+        max_pages: Only index first N pages per PDF (for testing).
     """
     INDEX_CACHE_DIR.mkdir(exist_ok=True)
 
-    cache_complete = (
-        CHUNKS_FILE.exists()
-        and FAISS_FILE.exists()
-        and BM25_FILE.exists()
-        and PIPELINE_FILE.exists()
-    )
-    if not force and cache_complete:
-        print("[indexer] Loading from cache...")
-        return load_chunks()
+    if not force and DB_FILE.exists():
+        print("[indexer] Index already exists (use --build-index to force rebuild).")
+        return
 
-    mode_tag = " [low-memory mode]" if low_memory else ""
-    print(f"[indexer] Building index from documents...{mode_tag}")
-    chunks = _collect_chunks()
+    mode_tag = ""
+    if max_pages > 0:
+        mode_tag += f" [test mode: first {max_pages} page(s) per PDF]"
+    print(f"[indexer] Building SQLite index from documents...{mode_tag}")
+    
+    chunks = _collect_chunks(max_pages=max_pages)
     if not chunks:
         raise RuntimeError("No chunks extracted — check that reference/ contains PDF/HTML files.")
 
-    _build_lsa_faiss(chunks, low_memory=low_memory)
-    _build_bm25(chunks)
-
-    with open(CHUNKS_FILE, "w", encoding="utf-8") as fh:
-        json.dump([asdict(c) for c in chunks], fh, ensure_ascii=False, indent=2)
-
+    _build_sqlite_index(chunks)
+    
     print(f"[indexer] Done. {len(chunks)} chunks indexed.")
-    return chunks
 
 
-def load_chunks() -> List[Chunk]:
-    with open(CHUNKS_FILE, encoding="utf-8") as fh:
-        return [Chunk(**d) for d in json.load(fh)]
-
-
-def _collect_chunks() -> List[Chunk]:
+def _collect_chunks(max_pages: int = 0) -> List[Chunk]:
     chunks: List[Chunk] = []
 
     for pdf_path in sorted(REFERENCE_DIR.glob("*.pdf")):
@@ -226,7 +273,7 @@ def _collect_chunks() -> List[Chunk]:
         rel_path = str(pdf_path.relative_to(REFERENCE_DIR))
         print(f"  [pdf] {pdf_path.name}")
         try:
-            sections = _parse_pdf(pdf_path)
+            sections = _parse_pdf(pdf_path, max_pages=max_pages)
         except MemoryError:
             print(f"    WARNING: MemoryError parsing {pdf_path.name}, skipping")
             gc.collect()
@@ -250,7 +297,12 @@ def _collect_chunks() -> List[Chunk]:
         gc.collect()
 
     html_dir = REFERENCE_DIR / "veriloga in ADS2025" / "veriloga"
-    for html_path in sorted(html_dir.glob("*.html")):
+    html_files = sorted(html_dir.glob("*.html"), key=lambda p: p.stat().st_size)
+    if max_pages > 0:
+        # test mode: only process the smallest HTML file to verify the pipeline
+        html_files = html_files[:1]
+        print(f"  [html] test mode: only processing smallest file ({html_files[0].name})")
+    for html_path in html_files:
         description = DOC_DESCRIPTIONS.get(html_path.name, html_path.name)
         rel_path = str(html_path.relative_to(REFERENCE_DIR))
         print(f"  [html] {html_path.name}")
@@ -281,83 +333,42 @@ def _collect_chunks() -> List[Chunk]:
     return chunks
 
 
-# ---------------------------------------------------------------------------
-# LSA (TF-IDF + TruncatedSVD) → FAISS index
-# ---------------------------------------------------------------------------
+def _build_sqlite_index(chunks: List[Chunk]) -> None:
+    if DB_FILE.exists():
+        DB_FILE.unlink()
+        
+    conn = sqlite3.connect(str(DB_FILE))
+    
+    # Enable FTS5
+    # Create a virtual table for full-text search
+    conn.execute("""
+        CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts 
+        USING fts5(text, title, source, doc_type, description, chunk_idx UNINDEXED);
+    """)
+    
+    print(f"[indexer] Inserting {len(chunks)} chunks into SQLite...")
+    
+    # Batch insert
+    data = [
+        (c.text, c.title, c.source, c.doc_type, c.description, c.chunk_idx)
+        for c in chunks
+    ]
+    
+    conn.executemany(
+        "INSERT INTO chunks_fts(text, title, source, doc_type, description, chunk_idx) VALUES (?, ?, ?, ?, ?, ?)",
+        data
+    )
+    
+    conn.commit()
+    
+    # Optimize the FTS index
+    print("[indexer] Optimizing FTS index...")
+    conn.execute("INSERT INTO chunks_fts(chunks_fts) VALUES('optimize');")
+    conn.commit()
+    conn.close()
+    
+    print(f"[indexer] SQLite index saved to {DB_FILE}")
 
-def _build_lsa_faiss(chunks: List[Chunk], low_memory: bool = False) -> None:
-    import faiss
-    import numpy as np
-    from sklearn.decomposition import TruncatedSVD
-    from sklearn.pipeline import Pipeline
-    from sklearn.preprocessing import Normalizer
-    from sklearn.feature_extraction.text import TfidfVectorizer
-
-    print("[indexer] Building TF-IDF + LSA pipeline...")
-    texts = [c.text for c in chunks]
-
-    lsa_dims = LSA_COMPONENTS_LM if low_memory else LSA_COMPONENTS
-    max_features = MAX_FEATURES_LM if low_memory else None
-    n_components = min(lsa_dims, len(texts) - 1)
-
-    if low_memory:
-        print(f"[indexer] Low-memory mode: max_features={MAX_FEATURES_LM}, "
-              f"LSA dims={n_components}")
-
-    pipeline = Pipeline([
-        ("tfidf", TfidfVectorizer(
-            analyzer="word",
-            token_pattern=r"[a-zA-Z_$][\w$]*",
-            ngram_range=(1, 2),
-            min_df=2,
-            max_df=0.95,
-            sublinear_tf=True,
-            max_features=max_features,
-            dtype=np.float32,
-        )),
-        ("svd",  TruncatedSVD(n_components=n_components, random_state=42)),
-        ("norm", Normalizer(copy=False)),
-    ])
-
-    print(f"[indexer] Fitting pipeline on {len(texts)} chunks (LSA dims={n_components})...")
-    embeddings = pipeline.fit_transform(texts).astype("float32")
-    del texts
-    gc.collect()
-
-    dim = embeddings.shape[1]
-    index = faiss.IndexFlatIP(dim)
-    index.add(embeddings)
-    del embeddings
-    gc.collect()
-    faiss.write_index(index, str(FAISS_FILE))
-
-    with open(PIPELINE_FILE, "wb") as fh:
-        pickle.dump(pipeline, fh)
-
-    print(f"[indexer] FAISS index saved ({dim}d, {len(chunks)} vectors).")
-
-
-# ---------------------------------------------------------------------------
-# BM25 index
-# ---------------------------------------------------------------------------
-
-def _build_bm25(chunks: List[Chunk]) -> None:
-    from rank_bm25 import BM25Okapi
-
-    tokenized = [_tokenize(c.text) for c in chunks]
-    bm25 = BM25Okapi(tokenized)
-    with open(BM25_FILE, "wb") as fh:
-        pickle.dump(bm25, fh)
-    print("[indexer] BM25 index saved.")
-
-
-def _tokenize(text: str) -> List[str]:
-    return re.findall(r"[a-zA-Z_$][\w$]*|[0-9]+(?:\.[0-9]+)?", text.lower())
-
-
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     build_index(force=True)

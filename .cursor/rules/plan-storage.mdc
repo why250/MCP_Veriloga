@@ -1,0 +1,16 @@
+---
+description: Plan files must be saved in the project directory, not the user home directory
+alwaysApply: true
+---
+
+# Plan File Storage
+
+Always save plan files to the **project-level** plans directory:
+
+```
+.cursor/plans/<plan-name>.plan.md
+```
+
+Do NOT save plans to `C:\Users\*\.cursor\plans\` (user home).
+
+After `CreatePlan` runs (which defaults to the home directory), immediately move the file into the workspace `.cursor/plans/` folder using the Shell tool.

@@ -99,7 +99,7 @@ pip install --upgrade pip
 pip install -r server\requirements.txt
 ```
 
-安装耗时约 1-3 分钟（主要是 faiss-cpu 和 scikit-learn）。
+安装耗时约 1-3 分钟（主要是 faiss-cpu、pymupdf 和 scikit-learn）。
 
 #### 5. 预构建文档索引（推荐）
 
@@ -107,16 +107,14 @@ pip install -r server\requirements.txt
 python server\main.py --build-index
 ```
 
-构建过程：解析所有 PDF 和 HTML → 生成约 1000+ 文本块 → 拟合 TF-IDF+LSA 模型 → 保存到 `server\index_cache\`  
-**耗时约 30-90 秒**（取决于机器性能）。之后每次启动直接加载缓存，约 3 秒。
+构建过程：解析所有 PDF 和 HTML（逐页显示进度）→ 生成约 1000+ 文本块 → 拟合 TF-IDF+LSA 模型 → 保存到 `server\index_cache\`  
+**耗时约 15-60 秒**（pymupdf C 底层解析，比旧版快 5-10 倍）。之后每次启动直接加载缓存，约 3 秒。
 
 > 如果跳过此步骤，第一次调用 MCP 工具时会自动触发构建。
 
-**如果构建过程卡死（进程无响应）：**
+**如果构建过程仍然卡死：**
 
-原因：默认模式下 TF-IDF 双词组（bigram）词汇表可能膨胀至 10–50 万个特征，随后 SVD 分解需要在内存中同时维护多个大矩阵，导致系统内存被耗尽、进程假死。
-
-使用 `--low-memory` 参数解决：
+原因通常是 SVD 内存压力。使用 `--low-memory` 参数进一步降低内存占用：
 
 ```powershell
 python server\main.py --build-index --low-memory
@@ -126,11 +124,11 @@ python server\main.py --build-index --low-memory
 
 | 参数 | 默认模式 | 低内存模式 |
 |---|---|---|
-| TF-IDF 词汇表上限 | 无限制（可达 50 万+） | **5 万**（约降低 10 倍内存） |
+| TF-IDF 词汇表上限 | 8 万 | **5 万** |
 | LSA 语义维度 | 256 | **128** |
-| 峰值内存占用 | ~4–8 GB | **~1–2 GB** |
+| SVD 迭代次数 | 3 | **3**（相同） |
+| 峰值内存占用 | ~1 GB | **~500 MB** |
 | 检索质量影响 | 基准 | 轻微下降，日常使用无感知差异 |
-| 构建耗时 | ~30–90 秒 | **~60–180 秒**（词汇量小但分块多时略慢） |
 
 > `--low-memory` 构建的索引与正常模式完全兼容，无需改动其他配置。
 

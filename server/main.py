@@ -224,8 +224,11 @@ def _parse_args() -> argparse.Namespace:
                         help="Force-rebuild the document index, then exit")
     parser.add_argument("--low-memory", action="store_true",
                         help="Build index with reduced memory usage "
-                             "(caps TF-IDF vocabulary at 50k, LSA dims=128). "
-                             "Use this if --build-index freezes your machine.")
+                             "(Deprecated: SQLite FTS5 implementation is always low-memory).")
+    parser.add_argument("--test-pages", type=int, default=0, metavar="N",
+                        help="Only index the first N pages of each PDF (0 = all). "
+                             "Use to quickly verify the full pipeline before a "
+                             "complete build, e.g. --test-pages 1.")
     return parser.parse_args()
 
 
@@ -234,7 +237,8 @@ if __name__ == "__main__":
 
     if args.build_index:
         from indexer import build_index
-        build_index(force=True, low_memory=args.low_memory)
+        build_index(force=True, low_memory=args.low_memory,
+                    max_pages=args.test_pages)
         sys.exit(0)
 
     print(f"[veriloga-help] Starting MCP server on {args.host}:{args.port}")

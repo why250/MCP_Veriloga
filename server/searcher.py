@@ -1,129 +1,124 @@
 """
-Hybrid searcher for VerilogA MCP Server.
+Searcher for VerilogA MCP Server (SQLite FTS5 version).
 
-Combines:
-  - Semantic search  : TF-IDF + TruncatedSVD (LSA) vectors in FAISS
-  - Keyword search   : BM25Okapi (rank-bm25)
-
-Final score = ALPHA * lsa_score + (1 - ALPHA) * bm25_score
-
-No torch or onnxruntime dependency — pure Python + numpy + sklearn + FAISS.
+Uses SQLite's FTS5 extension to perform full-text search with BM25 ranking.
+Extremely lightweight, no heavy ML dependencies.
 """
 
 from __future__ import annotations
 
-import pickle
 import re
+import sqlite3
 from pathlib import Path
 from typing import List, Optional
 
-import faiss
-import numpy as np
-
 from indexer import (
-    FAISS_FILE,
-    BM25_FILE,
-    PIPELINE_FILE,
+    DB_FILE,
     REFERENCE_DIR,
-    Chunk,
     build_index,
-    _tokenize,
 )
 
-ALPHA = 0.6   # weight for LSA/semantic score
 
-
-class HybridSearcher:
-    """Loads (or builds) the index once and serves repeated queries."""
+class SQLiteSearcher:
+    """Connects to the SQLite FTS5 index and executes queries."""
 
     def __init__(self) -> None:
-        self._chunks: Optional[List[Chunk]] = None
-        self._faiss_index = None
-        self._bm25 = None
-        self._pipeline = None   # sklearn TF-IDF + SVD + Normalizer pipeline
+        self._conn: Optional[sqlite3.Connection] = None
 
-    # ------------------------------------------------------------------
-    # Lazy initialization
-    # ------------------------------------------------------------------
-
-    def _ensure_loaded(self) -> None:
-        if self._chunks is not None:
+    def _ensure_connected(self) -> None:
+        if self._conn is not None:
             return
 
-        self._chunks = build_index(force=False)
-        self._faiss_index = faiss.read_index(str(FAISS_FILE))
+        if not DB_FILE.exists():
+            print("[searcher] Index not found, building now...")
+            build_index(force=False)
 
-        with open(BM25_FILE, "rb") as fh:
-            self._bm25 = pickle.load(fh)
-
-        with open(PIPELINE_FILE, "rb") as fh:
-            self._pipeline = pickle.load(fh)
-
-    # ------------------------------------------------------------------
-    # Public API
-    # ------------------------------------------------------------------
+        # Connect in read-only mode if possible, or standard mode
+        try:
+            self._conn = sqlite3.connect(f"file:{DB_FILE}?mode=ro", uri=True)
+        except sqlite3.OperationalError:
+            self._conn = sqlite3.connect(str(DB_FILE))
+        
+        # Enable row factory for dict-like access if needed, but tuple is fine for speed
 
     def search(self, query: str, top_k: int = 5) -> List[dict]:
         """
-        Return top_k most relevant chunks as a list of dicts:
-          {text, source, title, doc_type, description, score}
+        Return top_k most relevant chunks using FTS5 BM25 ranking.
         """
-        self._ensure_loaded()
-
+        self._ensure_connected()
+        
         query = query.strip()
         if not query:
             return []
 
-        n = len(self._chunks)
-        k = min(top_k * 4, n)
-
-        # --- LSA semantic scores ---
-        q_vec = self._pipeline.transform([query]).astype("float32")
-        sem_scores_raw, sem_indices = self._faiss_index.search(q_vec, k)
-        sem_scores_raw = sem_scores_raw[0]
-        sem_indices = sem_indices[0]
-
-        # Normalize semantic scores to [0, 1]
-        s_min, s_max = sem_scores_raw.min(), sem_scores_raw.max()
-        if s_max > s_min:
-            sem_norm = (sem_scores_raw - s_min) / (s_max - s_min)
-        else:
-            sem_norm = np.ones_like(sem_scores_raw)
-
-        # --- BM25 scores (full corpus) ---
-        tokens = _tokenize(query)
-        bm25_all = np.array(self._bm25.get_scores(tokens), dtype="float32")
-        bm25_max = bm25_all.max()
-        if bm25_max > 0:
-            bm25_all /= bm25_max
-
-        # --- Combine on candidate set ---
-        candidates: dict[int, float] = {}
-        for i, sem_s in zip(sem_indices, sem_norm):
-            if i < 0:
-                continue
-            combined = ALPHA * float(sem_s) + (1 - ALPHA) * float(bm25_all[i])
-            candidates[int(i)] = combined
-
-        # Also promote top BM25 hits that may have been outside FAISS top-k
-        bm25_top_k_idx = np.argsort(bm25_all)[::-1][:k]
-        for i in bm25_top_k_idx:
-            if i not in candidates:
-                candidates[int(i)] = (1 - ALPHA) * float(bm25_all[i])
-
-        ranked = sorted(candidates.items(), key=lambda x: x[1], reverse=True)[:top_k]
+        # Sanitize query for FTS5 syntax
+        # We treat the whole string as a phrase or set of tokens
+        # Simple approach: escape double quotes and wrap in quotes for phrase search 
+        # OR just split by space and AND them.
+        # Let's try standard MATCH with simple sanitization.
+        
+        # Remove characters that might interfere with FTS5 syntax
+        safe_query = re.sub(r'[^a-zA-Z0-9\s_\.]', ' ', query)
+        tokens = safe_query.split()
+        if not tokens:
+            return []
+            
+        # Construct a query that looks for ALL tokens (AND logic)
+        # fts5 string: "token1" AND "token2" ...
+        # But for better recall, OR logic might be better, or just standard "token1 token2"
+        # SQLite FTS5 default is that tokens are implicitly ANDed if just separated by space? 
+        # No, default is usually phrase or NEAR. 
+        # Actually, standard FTS5 syntax: 
+        #   "foo bar" -> phrase
+        #   foo bar -> implicit AND in recent versions? Let's verify.
+        #   Actually, let's use the OR operator for broader recall, or just space.
+        #   Let's stick to simple token matching.
+        
+        fts_query = " OR ".join(f'"{t}"' for t in tokens)
+        
+        # Execute query
+        # bm25(chunks_fts) returns the score. Lower is better? No, FTS5 bm25() returns 
+        # a negative value where more negative is better (magnitude is score).
+        # Wait, documentation says: "The value returned by bm25() is a real number... 
+        # The lower the value (more negative), the better the match."
+        
+        sql = """
+            SELECT 
+                text, 
+                source, 
+                title, 
+                doc_type, 
+                description, 
+                bm25(chunks_fts) as rank
+            FROM chunks_fts 
+            WHERE chunks_fts MATCH ? 
+            ORDER BY rank 
+            LIMIT ?
+        """
+        
+        try:
+            cursor = self._conn.execute(sql, (fts_query, top_k))
+            rows = cursor.fetchall()
+        except sqlite3.OperationalError as e:
+            # Fallback for syntax errors
+            print(f"[searcher] Query error: {e}")
+            return []
 
         results = []
-        for idx, score in ranked:
-            chunk = self._chunks[idx]
+        for row in rows:
+            text, source, title, doc_type, description, rank = row
+            # Convert rank to a positive score for display (just invert sign for intuition)
+            score = -1.0 * rank
+            
             results.append({
-                "text": chunk.text,
-                "source": chunk.source,
-                "title": chunk.title,
-                "doc_type": chunk.doc_type,
-                "description": chunk.description,
-                "score": round(float(score), 4),
+                "text": text,
+                "source": source,
+                "title": title,
+                "doc_type": doc_type,
+                "description": description,
+                "score": round(score, 4),
             })
+            
         return results
 
     def get_full_document(self, source_file: str) -> Optional[str]:
@@ -151,16 +146,21 @@ class HybridSearcher:
 
     def list_sources(self) -> List[dict]:
         """Return metadata for every indexed document (deduplicated by source)."""
-        self._ensure_loaded()
-        seen: dict[str, dict] = {}
-        for chunk in self._chunks:
-            if chunk.source not in seen:
-                seen[chunk.source] = {
-                    "source": chunk.source,
-                    "doc_type": chunk.doc_type,
-                    "description": chunk.description,
-                }
-        return list(seen.values())
+        self._ensure_connected()
+        
+        # We can query the DB for distinct sources
+        sql = "SELECT DISTINCT source, doc_type, description FROM chunks_fts ORDER BY source"
+        cursor = self._conn.execute(sql)
+        
+        sources = []
+        for row in cursor:
+            src, dtype, desc = row
+            sources.append({
+                "source": src,
+                "doc_type": dtype,
+                "description": desc,
+            })
+        return sources
 
 
 # ---------------------------------------------------------------------------
@@ -203,11 +203,11 @@ def _read_html_text(path: Path) -> str:
 # Module-level singleton
 # ---------------------------------------------------------------------------
 
-_searcher: Optional[HybridSearcher] = None
+_searcher: Optional[SQLiteSearcher] = None
 
 
-def get_searcher() -> HybridSearcher:
+def get_searcher() -> SQLiteSearcher:
     global _searcher
     if _searcher is None:
-        _searcher = HybridSearcher()
+        _searcher = SQLiteSearcher()
     return _searcher
