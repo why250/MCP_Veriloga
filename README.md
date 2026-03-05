@@ -48,7 +48,7 @@ MCP_Veriloga/
 | Python | **3.10 或更高**（推荐 3.11 / 3.12） |
 | 操作系统 | Windows 10+、Linux（Ubuntu 20.04+）、macOS 12+ |
 | 网络 | **首次安装需联网**下载 pip 包；索引构建和运行完全离线 |
-| 内存 | 建议 ≥ 4 GB（索引构建约占 500 MB） |
+| 内存 | 建议 ≥ 4 GB；默认模式构建索引峰值 4–8 GB，`--low-memory` 模式约 1–2 GB |
 
 > **无需 GPU，无需下载 AI 模型**。语义搜索基于 TF-IDF + LSA（scikit-learn），完全本地计算。
 
@@ -112,6 +112,28 @@ python server\main.py --build-index
 
 > 如果跳过此步骤，第一次调用 MCP 工具时会自动触发构建。
 
+**如果构建过程卡死（进程无响应）：**
+
+原因：默认模式下 TF-IDF 双词组（bigram）词汇表可能膨胀至 10–50 万个特征，随后 SVD 分解需要在内存中同时维护多个大矩阵，导致系统内存被耗尽、进程假死。
+
+使用 `--low-memory` 参数解决：
+
+```powershell
+python server\main.py --build-index --low-memory
+```
+
+`--low-memory` 模式的区别：
+
+| 参数 | 默认模式 | 低内存模式 |
+|---|---|---|
+| TF-IDF 词汇表上限 | 无限制（可达 50 万+） | **5 万**（约降低 10 倍内存） |
+| LSA 语义维度 | 256 | **128** |
+| 峰值内存占用 | ~4–8 GB | **~1–2 GB** |
+| 检索质量影响 | 基准 | 轻微下降，日常使用无感知差异 |
+| 构建耗时 | ~30–90 秒 | **~60–180 秒**（词汇量小但分块多时略慢） |
+
+> `--low-memory` 构建的索引与正常模式完全兼容，无需改动其他配置。
+
 #### 6. 启动 MCP 服务
 
 ```powershell
@@ -170,6 +192,12 @@ pip install -r server/requirements.txt
 
 ```bash
 python server/main.py --build-index
+```
+
+如果内存不足导致进程卡死，改用低内存模式：
+
+```bash
+python server/main.py --build-index --low-memory
 ```
 
 #### 6. 启动 MCP 服务
@@ -250,6 +278,8 @@ python3 -m venv .venv
 
 ```bash
 .venv/bin/python server/main.py --build-index
+# 内存不足时改用：
+# .venv/bin/python server/main.py --build-index --low-memory
 ```
 
 #### 4. 创建 systemd 服务（开机自启）

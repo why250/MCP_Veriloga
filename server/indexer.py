@@ -12,6 +12,7 @@ Everything is saved to index_cache/ and reloaded on subsequent starts.
 
 from __future__ import annotations
 
+import gc
 import json
 import pickle
 import re
@@ -25,9 +26,12 @@ FAISS_FILE     = INDEX_CACHE_DIR / "faiss.index"
 BM25_FILE      = INDEX_CACHE_DIR / "bm25.pkl"
 PIPELINE_FILE  = INDEX_CACHE_DIR / "tfidf_svd_pipeline.pkl"
 
-LSA_COMPONENTS = 256   # SVD latent dimensions
-CHUNK_SIZE     = 500   # approximate characters per chunk
-CHUNK_OVERLAP  = 80    # character overlap between adjacent chunks
+LSA_COMPONENTS     = 256    # SVD latent dimensions (normal mode)
+LSA_COMPONENTS_LM  = 128    # SVD latent dimensions (low-memory mode)
+MAX_FEATURES_LM    = 50_000 # TF-IDF vocabulary cap for low-memory mode
+CHUNK_SIZE         = 500    # approximate characters per chunk
+CHUNK_OVERLAP      = 80     # character overlap between adjacent chunks
+MAX_PAGE_CHARS     = 15_000 # max characters extracted per PDF page (~30 printed pages worth)
 
 REFERENCE_DIR = Path(__file__).parent.parent / "reference"
 
@@ -73,13 +77,37 @@ def _parse_pdf(pdf_path: Path) -> List[tuple[str, str]]:
     """Return list of (page_title, page_text) from a PDF."""
     from pypdf import PdfReader
 
-    reader = PdfReader(str(pdf_path))
     pages = []
-    for i, page in enumerate(reader.pages):
-        text = page.extract_text() or ""
-        text = _clean_text(text)
-        if text.strip():
+    try:
+        reader = PdfReader(str(pdf_path))
+        n = len(reader.pages)
+        for i, page in enumerate(reader.pages):
+            try:
+                raw = page.extract_text() or ""
+            except MemoryError:
+                print(f"    WARNING: MemoryError extracting page {i+1}/{n}, skipping")
+                gc.collect()
+                continue
+            except Exception as exc:
+                print(f"    WARNING: page {i+1}/{n} extraction failed: {exc}")
+                continue
+            # Truncate before _clean_text so we never hold an enormous string
+            if len(raw) > MAX_PAGE_CHARS:
+                raw = raw[:MAX_PAGE_CHARS]
+            text = _clean_text(raw)
+            del raw
+            if not text.strip():
+                continue
             pages.append((f"Page {i + 1}", text))
+            # Free page resources as we go
+            if i % 50 == 49:
+                gc.collect()
+    finally:
+        try:
+            del reader
+        except NameError:
+            pass
+        gc.collect()
     return pages
 
 
@@ -148,10 +176,14 @@ def _split_text(text: str, size: int = CHUNK_SIZE,
 # Main build function
 # ---------------------------------------------------------------------------
 
-def build_index(force: bool = False) -> List[Chunk]:
+def build_index(force: bool = False, low_memory: bool = False) -> List[Chunk]:
     """
     Parse documents, build FAISS + BM25 indexes, save to index_cache/.
     If cache exists and force=False, load from cache instead.
+
+    low_memory: limit TF-IDF vocabulary and LSA dimensions to reduce peak RAM
+                usage at the cost of slightly lower retrieval quality.
+                Recommended when the normal build freezes on your machine.
     """
     INDEX_CACHE_DIR.mkdir(exist_ok=True)
 
@@ -165,12 +197,13 @@ def build_index(force: bool = False) -> List[Chunk]:
         print("[indexer] Loading from cache...")
         return load_chunks()
 
-    print("[indexer] Building index from documents...")
+    mode_tag = " [low-memory mode]" if low_memory else ""
+    print(f"[indexer] Building index from documents...{mode_tag}")
     chunks = _collect_chunks()
     if not chunks:
         raise RuntimeError("No chunks extracted — check that reference/ contains PDF/HTML files.")
 
-    _build_lsa_faiss(chunks)
+    _build_lsa_faiss(chunks, low_memory=low_memory)
     _build_bm25(chunks)
 
     with open(CHUNKS_FILE, "w", encoding="utf-8") as fh:
@@ -194,15 +227,27 @@ def _collect_chunks() -> List[Chunk]:
         print(f"  [pdf] {pdf_path.name}")
         try:
             sections = _parse_pdf(pdf_path)
+        except MemoryError:
+            print(f"    WARNING: MemoryError parsing {pdf_path.name}, skipping")
+            gc.collect()
+            continue
         except Exception as exc:
             print(f"    WARNING: {exc}")
             continue
         for title, text in sections:
-            for idx, chunk_text in enumerate(_split_text(text)):
+            try:
+                page_chunks = _split_text(text)
+            except MemoryError:
+                print(f"    WARNING: MemoryError splitting '{title}', skipping page")
+                gc.collect()
+                continue
+            for idx, chunk_text in enumerate(page_chunks):
                 chunks.append(Chunk(
                     text=chunk_text, source=rel_path, title=title,
                     doc_type="pdf", description=description, chunk_idx=idx,
                 ))
+        del sections
+        gc.collect()
 
     html_dir = REFERENCE_DIR / "veriloga in ADS2025" / "veriloga"
     for html_path in sorted(html_dir.glob("*.html")):
@@ -211,15 +256,27 @@ def _collect_chunks() -> List[Chunk]:
         print(f"  [html] {html_path.name}")
         try:
             sections = _parse_html(html_path)
+        except MemoryError:
+            print(f"    WARNING: MemoryError parsing {html_path.name}, skipping")
+            gc.collect()
+            continue
         except Exception as exc:
             print(f"    WARNING: {exc}")
             continue
         for title, text in sections:
-            for idx, chunk_text in enumerate(_split_text(text)):
+            try:
+                page_chunks = _split_text(text)
+            except MemoryError:
+                print(f"    WARNING: MemoryError splitting '{html_path.name}', skipping")
+                gc.collect()
+                continue
+            for idx, chunk_text in enumerate(page_chunks):
                 chunks.append(Chunk(
                     text=chunk_text, source=rel_path, title=title,
                     doc_type="html", description=description, chunk_idx=idx,
                 ))
+        del sections
+        gc.collect()
 
     return chunks
 
@@ -228,7 +285,7 @@ def _collect_chunks() -> List[Chunk]:
 # LSA (TF-IDF + TruncatedSVD) → FAISS index
 # ---------------------------------------------------------------------------
 
-def _build_lsa_faiss(chunks: List[Chunk]) -> None:
+def _build_lsa_faiss(chunks: List[Chunk], low_memory: bool = False) -> None:
     import faiss
     import numpy as np
     from sklearn.decomposition import TruncatedSVD
@@ -239,7 +296,14 @@ def _build_lsa_faiss(chunks: List[Chunk]) -> None:
     print("[indexer] Building TF-IDF + LSA pipeline...")
     texts = [c.text for c in chunks]
 
-    n_components = min(LSA_COMPONENTS, len(texts) - 1)
+    lsa_dims = LSA_COMPONENTS_LM if low_memory else LSA_COMPONENTS
+    max_features = MAX_FEATURES_LM if low_memory else None
+    n_components = min(lsa_dims, len(texts) - 1)
+
+    if low_memory:
+        print(f"[indexer] Low-memory mode: max_features={MAX_FEATURES_LM}, "
+              f"LSA dims={n_components}")
+
     pipeline = Pipeline([
         ("tfidf", TfidfVectorizer(
             analyzer="word",
@@ -248,6 +312,8 @@ def _build_lsa_faiss(chunks: List[Chunk]) -> None:
             min_df=2,
             max_df=0.95,
             sublinear_tf=True,
+            max_features=max_features,
+            dtype=np.float32,
         )),
         ("svd",  TruncatedSVD(n_components=n_components, random_state=42)),
         ("norm", Normalizer(copy=False)),
@@ -255,10 +321,14 @@ def _build_lsa_faiss(chunks: List[Chunk]) -> None:
 
     print(f"[indexer] Fitting pipeline on {len(texts)} chunks (LSA dims={n_components})...")
     embeddings = pipeline.fit_transform(texts).astype("float32")
+    del texts
+    gc.collect()
 
     dim = embeddings.shape[1]
     index = faiss.IndexFlatIP(dim)
     index.add(embeddings)
+    del embeddings
+    gc.collect()
     faiss.write_index(index, str(FAISS_FILE))
 
     with open(PIPELINE_FILE, "wb") as fh:
